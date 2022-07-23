@@ -31,6 +31,7 @@
     "unplugin-vue-components": "^0.21.1",
     "vite": "^3.0.0",
     "vite-plugin-pages": "^0.25.0",
+    "vite-plugin-vue-layouts": "^0.6.0",
     "vue-tsc": "^0.38.4"
   }
 }
