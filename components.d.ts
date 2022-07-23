@@ -10,7 +10,9 @@ declare module '@vue/runtime-core' {
     DarkMode: typeof import('./src/components/DarkMode.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SideBar: typeof import('./src/components/SideBar.vue')['default']
     UCheckBox: typeof import('./src/components/ui/UCheckBox.vue')['default']
+    USlider: typeof import('./src/components/ui/USlider.vue')['default']
     USwitch: typeof import('./src/components/ui/USwitch.vue')['default']
   }
 }
