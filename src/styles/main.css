@@ -53,8 +53,11 @@ button:focus-visible {
   text-align: center;
 }
 
+html {
+  transition: background 0.25s;
+}
+
 html.dark {
   background: #242424;
   color: #ddd;
-  transition: all 0.25s;
 }
