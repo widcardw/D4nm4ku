@@ -1,3 +1,5 @@
 <template>
-  <RouterView />
+  <div ml-2rem>
+    <RouterView />
+  </div>
 </template>

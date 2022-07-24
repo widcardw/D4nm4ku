@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-const opacity = ref('0')
 </script>
 
 <template>
-  <USlider v-model="opacity" />{{ opacity }}
+  <div />
 </template>
 
 <route lang="yaml">
