@@ -24,7 +24,7 @@ interface DanmakuMessage extends MessageType {
       n1: number,
       n2: number,
       n3: number,
-      n4: number,
+      timestamp: number,
       n5: number,
       n6: number,
       n7: string,
@@ -52,7 +52,6 @@ interface DanmakuMessage extends MessageType {
     n6: number,
     perhapsDuard: number, // 不为 0 是舰长
     n8: any,
-    timestamp: { ts: number; ct: string },
   ]
 }
 

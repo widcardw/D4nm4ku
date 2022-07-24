@@ -31,14 +31,22 @@ getAvatar(props.uid).then((url: string) => {
 </script>
 
 <template>
-  <div flex space-x-2>
+  <div flex space-x-2 w-full>
     <MyImg v-if="showAvatar" :src="faceUrl" />
-    <div>
-      <div flex space-x-2>
-        <div leading-normal font-bold :style="{ color }">
-          {{ uname }}
+    <div flex-1>
+      <div flex justify-between>
+        <div flex space-x-2>
+          <div leading-normal font-bold :style="{ color }">
+            {{ uname }}
+          </div>
+          <UGuardTag v-if="level && showGuardTag" :level="level" :label="label" :perhaps-guard="perhapsGuard" />
         </div>
-        <UGuardTag v-if="level && showGuardTag" :level="level" :label="label" :perhaps-guard="perhapsGuard" />
+        <div>
+          {{ new Date(ts).toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+          }) }}
+        </div>
       </div>
       <div leading-normal>
         {{ content }}

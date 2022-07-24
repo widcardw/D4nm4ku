@@ -37,22 +37,23 @@ const connectRoom = () => {
     })
 
     // 收到礼物
-    live.on('SEND_GIFT', (data: SendGiftMessage) => {
-      // eslint-disable-next-line no-console
-      console.log(data)
-    })
+    // live.on('SEND_GIFT', (data: SendGiftMessage) => {
+    //   // eslint-disable-next-line no-console
+    //   console.log(data)
+    // })
 
     // 礼物连击
-    live.on('COMBO_SEND', (data) => {
-      // eslint-disable-next-line no-console
-      console.log(data)
-    })
+    // live.on('COMBO_SEND', (data) => {
+    //   // eslint-disable-next-line no-console
+    //   console.log(data)
+    // })
 
     // 弹幕
     live.on('DANMU_MSG', (data: DanmakuMessage) => {
       const { info } = data
-      const [, content, [uid, uname, , , , , ,color = ''], [level = 0, label = ''],,,,perhapsGuard,,{ ts }] = info
+      const [, content, [uid, uname, , , , , ,color = ''], [level = 0, label = ''],,,,perhapsGuard] = info
       const perhapsLottery = info[0][9]
+      const ts = info[0][4]
 
       const danmaku: DanmakuProps = {
         uid,
@@ -65,6 +66,7 @@ const connectRoom = () => {
         ts,
       }
       if (perhapsLottery === 0) {
+        console.log(info)
         danmakuPool.value.push(danmaku)
         if (typeof info[0][13] === 'object')
           // eslint-disable-next-line no-console
