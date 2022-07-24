@@ -18,7 +18,7 @@ const value = useVModel(props, 'modelValue', emits)
 </script>
 
 <template>
-  <input v-model="value" type="range" :min="minValue" :max="maxValue">
+  <input v-model="value" inline-block type="range" :min="minValue" :max="maxValue">
 </template>
 
 <style scoped>
