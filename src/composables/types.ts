@@ -11,6 +11,8 @@ type MsgCommand = 'INTERACT_WORD'
 | 'SUPER_CHAT_MESSAGE_JPN'
 | 'GUARD_BUY' // 上舰长
 | 'USER_TOAST_MSG' // 续费舰长
+| '__CONNECTED__' // 连接成功
+| '__ERROR__' // 报错
 
 interface MessageType {
   cmd: MsgCommand
@@ -50,7 +52,7 @@ interface DanmakuMessage extends MessageType {
     rank: Array<any>,
     title: [string, string],
     n6: number,
-    perhapsDuard: number, // 不为 0 是舰长
+    perhapsGuard: 0 | 1 | 2 | 3, // 不为 0 是舰长
     n8: any,
   ]
 }
@@ -158,6 +160,11 @@ interface ComboSendMessage extends MessageType {
   }
 }
 
+interface GiftInfo {
+  id: number
+  webp: string
+}
+
 export type {
   MsgCommand,
   DanmakuMessage,
@@ -169,4 +176,6 @@ export type {
   WelcomeGuardMessage,
   InteractiveWordMessage,
   ComboSendMessage,
+  GiftInfo,
 }
+

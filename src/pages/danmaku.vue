@@ -1,17 +1,49 @@
 <script setup lang="ts">
+import { parse } from 'path'
 import { ref } from 'vue'
 import { useStorage } from '@vueuse/core'
 import { KeepLiveWS } from 'bilibili-live-ws'
-import type { DanmakuMessage, SendGiftMessage } from '../composables/types'
+import { fetch } from '@tauri-apps/api/http'
+import type { DanmakuMessage, GiftInfo, SendGiftMessage } from '../composables/types'
+import { GiftProps } from '../composables/components'
 import type { DanmakuProps } from '../composables/components'
-import UDanmaku from '../components/danmaku/UDanmaku.vue'
-import UGift from '../components/danmaku/UGift.vue'
+import { giftInfoBaseUrl } from '../composables/data'
+import URenderer from '../components/danmaku/URenderer.vue'
+import { useStore } from '../stores/giftInfoList'
+import UWatch from '../components/danmaku/UWatch.vue'
+import getLiverInfo from '../composables/getLiverInfo'
+import parseFanNumbers from '../composables/parseFanNumbers'
 const roomId = useStorage('roomId', '')
 let live: KeepLiveWS | null = null
 const linked = ref(false)
-const danmakuPool = ref<DanmakuProps[]>([])
+const danmakuPool = ref<Array<DanmakuProps | GiftProps>>([])
 const clearPool = () => {
   danmakuPool.value = []
+}
+const population = ref(0)
+const fans = ref('')
+
+const store = useStore()
+
+const getLastMatchedGift = (
+  uname: string,
+  giftId: number,
+  ts: number,
+  num: number,
+): boolean => {
+  for (let i = danmakuPool.value.length - 1; i >= 0; i--) {
+    if (danmakuPool.value[i].type !== 'gift')
+      continue
+    const item = danmakuPool.value[i] as GiftProps
+    if (item.uname === uname && item.giftId === giftId) {
+      const item = danmakuPool.value.splice(i, 1) as GiftProps[]
+      item[0].num += num
+      item[0].ts = ts
+      danmakuPool.value.push(item[0])
+      return true
+    }
+  }
+  return false
 }
 
 const connectRoom = () => {
@@ -27,20 +59,72 @@ const connectRoom = () => {
     // 开启连接
     live.on('open', () => {
       // eslint-disable-next-line no-console
-      console.log('Connected')
+      console.log('WebSocket Open')
+      fetch(`${giftInfoBaseUrl}${roomId.value}`)
+        .then((response) => {
+          store.giftInfoList = (response.data as any).data.list.map((it: any) => {
+            return {
+              id: it.id, webp: it.webp,
+            } as GiftInfo
+          })
+        })
+      getLiverInfo(Number.parseInt(roomId.value))
+        .then((res) => {
+          // console.log(res)
+          fans.value = parseFanNumbers(res)
+        })
     })
 
     // 结束连接
     live.on('close', () => {
       // eslint-disable-next-line no-console
-      console.log('Disconnected')
+      console.log('WebSocket Close')
+    })
+
+    live.on('__CONNECTED__', (data) => {
+      // eslint-disable-next-line no-console
+      console.log('__CONNECTED__', data)
+    })
+
+    live.on('__ERROR__', (data) => {
+      // eslint-disable-next-line no-console
+      console.log('__ERROR__', data)
+    })
+
+    live.on('WATCHED_CHANGE', (data) => {
+      const { data: { num } } = data
+      population.value = num
+    })
+
+    live.on('ROOM_REAL_TIME_MESSAGE_UPDATA', (data) => {
+      const { data: { fans_num } } = data
+      fans.value = parseFanNumbers(fans_num)
     })
 
     // 收到礼物
-    // live.on('SEND_GIFT', (data: SendGiftMessage) => {
-    //   // eslint-disable-next-line no-console
-    //   console.log(data)
-    // })
+    live.on('SEND_GIFT', (data: SendGiftMessage) => {
+      const { data: { face, timestamp, coin_type, uid, uname, giftName, num, giftId, action, total_coin } } = data
+
+      if (danmakuPool.value.length > 0) {
+        if (getLastMatchedGift(uname, giftId, timestamp, num))
+          return
+      }
+
+      danmakuPool.value.push({
+        type: 'gift',
+        uname,
+        action,
+        num,
+        face,
+        coinType: coin_type,
+        giftId,
+        giftName,
+        price: total_coin,
+        ts: timestamp,
+      })
+      if (danmakuPool.value.length > 200)
+        danmakuPool.value.shift()
+    })
 
     // 礼物连击
     // live.on('COMBO_SEND', (data) => {
@@ -56,6 +140,7 @@ const connectRoom = () => {
       const ts = info[0][4]
 
       const danmaku: DanmakuProps = {
+        type: 'text',
         uid,
         uname,
         content,
@@ -66,11 +151,9 @@ const connectRoom = () => {
         ts,
       }
       if (perhapsLottery === 0) {
-        console.log(info)
         danmakuPool.value.push(danmaku)
         if (typeof info[0][13] === 'object')
-          // eslint-disable-next-line no-console
-          console.log(info[0][13])
+          danmaku.content = info[0][13].url
 
         if (danmakuPool.value.length > 200)
           danmakuPool.value.shift()
@@ -102,7 +185,8 @@ const disconnectRoom = () => {
     </button>
   </div>
   <div>
-    <UDanmaku
+    <UWatch :population="population" :fans="fans" />
+    <!-- <UDanmaku
       v-for="it in danmakuPool"
       :key="it.ts"
       my-2
@@ -116,6 +200,14 @@ const disconnectRoom = () => {
       :uid="it.uid"
       :show-avatar="true"
       :show-guard-tag="true"
+      :show-time="true"
+    /> -->
+    <URenderer
+      v-for="it in danmakuPool"
+      :key="`${it.ts}${it.uname}${it.type}${it.type === 'gift' ? (it as GiftProps).giftId : ''}`"
+      :type="it.type"
+      :danmaku-props="it.type === 'text' ? it : undefined"
+      :gift-props="it.type === 'gift' ? it : undefined"
     />
   </div>
 </template>
