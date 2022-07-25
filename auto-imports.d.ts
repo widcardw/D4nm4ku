@@ -36,6 +36,9 @@ declare global {
   const getAvatar: typeof import('./src/composables/getAvatar')['default']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
+  const getLiverInfo: typeof import('./src/composables/getLiverInfo')['default']
+  const giftInfoBaseUrl: typeof import('./src/composables/data')['giftInfoBaseUrl']
+  const guardType: typeof import('./src/composables/data')['guardType']
   const h: typeof import('vue')['h']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
   const inject: typeof import('vue')['inject']
@@ -68,6 +71,7 @@ declare global {
   const onStartTyping: typeof import('@vueuse/core')['onStartTyping']
   const onUnmounted: typeof import('vue')['onUnmounted']
   const onUpdated: typeof import('vue')['onUpdated']
+  const parseFanNumbers: typeof import('./src/composables/parseFanNumbers')['default']
   const pausableWatch: typeof import('@vueuse/core')['pausableWatch']
   const preferredDark: typeof import('./src/composables/dark')['preferredDark']
   const provide: typeof import('vue')['provide']
@@ -298,6 +302,9 @@ declare module '@vue/runtime-core' {
     readonly getAvatar: UnwrapRef<typeof import('./src/composables/getAvatar')['default']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
+    readonly getLiverInfo: UnwrapRef<typeof import('./src/composables/getLiverInfo')['default']>
+    readonly giftInfoBaseUrl: UnwrapRef<typeof import('./src/composables/data')['giftInfoBaseUrl']>
+    readonly guardType: UnwrapRef<typeof import('./src/composables/data')['guardType']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
@@ -330,6 +337,7 @@ declare module '@vue/runtime-core' {
     readonly onStartTyping: UnwrapRef<typeof import('@vueuse/core')['onStartTyping']>
     readonly onUnmounted: UnwrapRef<typeof import('vue')['onUnmounted']>
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
+    readonly parseFanNumbers: UnwrapRef<typeof import('./src/composables/parseFanNumbers')['default']>
     readonly pausableWatch: UnwrapRef<typeof import('@vueuse/core')['pausableWatch']>
     readonly preferredDark: UnwrapRef<typeof import('./src/composables/dark')['preferredDark']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
