@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import { createRouter, createWebHistory } from 'vue-router'
 import generatedRoutes from 'virtual:generated-pages'
 import { setupLayouts } from 'virtual:generated-layouts'
@@ -11,6 +12,7 @@ import 'uno.css'
 
 (window as any).Buffer = Buffer
 const app = createApp(App)
+const pinia = createPinia()
 
 const routes = setupLayouts(generatedRoutes)
 
@@ -19,5 +21,6 @@ const router = createRouter({
   routes,
 })
 
+app.use(pinia)
 app.use(router)
 app.mount('#app')
