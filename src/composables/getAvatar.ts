@@ -1,35 +1,3 @@
-// useFetch
-// import { createFetch, useFetch } from '@vueuse/core'
-
-// const useMyFetch = createFetch({
-//   fetchOptions: {
-//     mode: 'cors',
-//   },
-// })
-
-// export default async function (uid: number) {
-//   const { data } = await useMyFetch(`https://api.bilibili.com/x/space/app/index?mid=${uid}`).json()
-//   console.log(data.value)
-//   return (data.value as any).data.info.face
-// }
-
-// axios
-// import axios from 'axios'
-// const BASE_URL = 'https://api.bilibili.com'
-
-// const request = axios.create({
-//   baseURL: BASE_URL,
-//   timeout: 5000,
-// })
-
-// export default async function (uid: number) {
-//   const data = (await request.get('/x/space/app/index', {
-//     params: { mid: uid },
-//   })).data
-//   console.log(data)
-//   return ''
-// }
-
 import { fetch } from '@tauri-apps/api/http'
 
 interface SpaceApiResponse {
@@ -45,5 +13,15 @@ export default async function (uid: number) {
     method: 'GET',
     timeout: 5000,
   })
-  return (response.data as SpaceApiResponse).data.info.face
+  try {
+    return (response.data as SpaceApiResponse).data.info.face
+  }
+  catch (e) {
+    // eslint-disable-next-line no-console
+    console.log(e)
+    // eslint-disable-next-line no-console
+    console.log(response.data)
+  }
 }
+// https://api.bilibili.com/x/space/app/index?mid=${uid}
+// https://api.bilibili.com/x/space/acc/info?mid=${uid}
