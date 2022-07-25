@@ -1,14 +1,16 @@
 <script setup lang="ts">
-defineProps<{
+const props = withDefaults(defineProps<{
   src: string
-}>()
+  errSrc?: string
+}>(), {
+  errSrc: '/noface.gif',
+})
 
 const onError = (e: Event) => {
-  (e.target as HTMLImageElement).src = '/noface.gif'
+  (e.target as HTMLImageElement).src = props.errSrc
 }
 </script>
 
 <template>
-  <img loading="/noface.gif" w-3rem h-3rem :src="src" rounded-full shadow-md @error="onError">
-  <!-- <img v-if="loading || !imgVisible" w-3rem h-3rem src="/noface.gif"> -->
+  <img :loading="errSrc" :src="src" @error="onError">
 </template>
