@@ -1,4 +1,7 @@
 import { fetch } from '@tauri-apps/api/http'
+import { useStore } from '../stores/store'
+
+const store = useStore()
 
 interface SpaceApiResponse {
   data: {
@@ -9,12 +12,21 @@ interface SpaceApiResponse {
 }
 
 export default async function (uid: number) {
+  const preload = store.avatarMap.find(x => x.uid === uid)
+  if (preload) {
+    // // eslint-disable-next-line no-console
+    // console.log('Load url from cache')
+    return preload.url
+  }
+
   const response = await fetch(`https://api.bilibili.com/x/space/app/index?mid=${uid}`, {
     method: 'GET',
     timeout: 5000,
   })
   try {
-    return (response.data as SpaceApiResponse).data.info.face
+    const url = (response.data as SpaceApiResponse).data.info.face
+    store.avatarMap.push({ uid, url })
+    return url
   }
   catch (e) {
     // eslint-disable-next-line no-console

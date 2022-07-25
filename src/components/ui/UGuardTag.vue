@@ -8,7 +8,16 @@ defineProps<{
 
 <template>
   <div flex class="text-0.75rem" border="~ rounded">
-    <div border-r px-1 wsn :style="{ backgroundColor: `rgba(54, 105, 230, ${level / 25})`, color: level <= 20 ? '' : 'white' }">
+    <div
+      border-r
+      rounded-l
+      px-1
+      wsn
+      :style="{
+        backgroundColor: `rgba(54, 105, 230, ${level / 25})`,
+        color: level <= 20 ? '' : 'white',
+      }"
+    >
       {{ label }}
     </div>
     <div px-1 wsn>

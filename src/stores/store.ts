@@ -5,6 +5,7 @@ export const useStore = defineStore('giftInfoList', {
   state: () => {
     return {
       giftInfoList: [] as GiftInfo[],
+      avatarMap: [] as { uid: number; url: string }[],
     }
   },
 })

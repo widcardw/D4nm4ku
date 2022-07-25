@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { parse } from 'path'
 import { ref } from 'vue'
 import { useStorage } from '@vueuse/core'
 import { KeepLiveWS } from 'bilibili-live-ws'
@@ -9,7 +8,7 @@ import { GiftProps } from '../composables/components'
 import type { DanmakuProps } from '../composables/components'
 import { giftInfoBaseUrl } from '../composables/data'
 import URenderer from '../components/danmaku/URenderer.vue'
-import { useStore } from '../stores/giftInfoList'
+import { useStore } from '../stores/store'
 import UWatch from '../components/danmaku/UWatch.vue'
 import getLiverInfo from '../composables/getLiverInfo'
 import parseFanNumbers from '../composables/parseFanNumbers'
@@ -120,7 +119,7 @@ const connectRoom = () => {
         giftId,
         giftName,
         price: total_coin,
-        ts: timestamp,
+        ts: timestamp * 1000,
       })
       if (danmakuPool.value.length > 200)
         danmakuPool.value.shift()

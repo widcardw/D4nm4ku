@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useStore } from '../../stores/giftInfoList'
+import { useStore } from '../../stores/store'
 import Avatar from '../Avatar.vue'
 import MyImg from '../img/MyImg.vue'
-defineProps<{
+const props = defineProps<{
   uname: string
   action: string
   num: number
@@ -15,6 +15,9 @@ defineProps<{
 }>()
 
 const store = useStore()
+
+// // eslint-disable-next-line no-console
+// console.log('gift', props.ts, new Date(props.ts))
 </script>
 
 <template>

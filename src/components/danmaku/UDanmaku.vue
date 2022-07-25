@@ -30,10 +30,13 @@ const faceUrl = ref('')
 getAvatar(props.uid).then((url: string | undefined) => {
   faceUrl.value = url ?? ''
 })
+
+// // eslint-disable-next-line no-console
+// console.log('danmaku', props.ts, new Date(props.ts))
 </script>
 
 <template>
-  <div flex space-x-2 w-full px-2 my-2>
+  <div flex space-x-2 w-full p-2 my-2>
     <!-- 头像 -->
     <Avatar v-if="showAvatar" :src="faceUrl" />
     <div flex-1>
