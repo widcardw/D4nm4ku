@@ -24,7 +24,7 @@ export default async function (uid: number) {
     timeout: 5000,
   })
   try {
-    const url = (response.data as SpaceApiResponse).data.info.face
+    const url = `${(response.data as SpaceApiResponse).data.info.face}@72w_72h`
     store.avatarMap.push({ uid, url })
     return url
   }

@@ -114,7 +114,7 @@ const connectRoom = () => {
         uname,
         action,
         num,
-        face,
+        face: `${face}@72w_72h`,
         coinType: coin_type,
         giftId,
         giftName,
