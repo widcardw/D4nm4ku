@@ -35,7 +35,7 @@ const store = useStore()
       :src="(store.giftInfoList.find(x => x.id === giftId) || { webp: '' }).webp" class="w-3rem h-3rem"
     />
     <div text-sm wsn>
-      {{ new Date(ts).toLocaleTimeString('en-US', {
+      {{ new Date(ts * 1000).toLocaleTimeString('en-US', {
         hour: '2-digit',
         minute: '2-digit',
       }) }}
