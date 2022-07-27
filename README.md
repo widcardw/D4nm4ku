@@ -1,4 +1,4 @@
-# D4nm4ku
+# D4nm4ku (WIP)
 
 使用 Tauri 和 Vue 实现一个弹幕姬。
 
