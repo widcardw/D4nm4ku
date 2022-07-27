@@ -4,8 +4,8 @@ import { useStorage } from '@vueuse/core'
 import { KeepLiveWS } from 'bilibili-live-ws'
 import { fetch } from '@tauri-apps/api/http'
 import type { DanmakuMessage, GiftInfo, SendGiftMessage } from '../composables/types'
-import { GiftProps } from '../composables/components'
-import type { DanmakuProps } from '../composables/components'
+import { isDanmakuProps, isGiftProps } from '../composables/components'
+import type { DanmakuProps, GiftProps } from '../composables/components'
 import { giftInfoBaseUrl } from '../composables/data'
 import URenderer from '../components/danmaku/URenderer.vue'
 import { useStore } from '../stores/store'
@@ -119,7 +119,7 @@ const connectRoom = () => {
         giftId,
         giftName,
         price: total_coin,
-        ts: timestamp * 1000,
+        ts: timestamp,
       })
       if (danmakuPool.value.length > 200)
         danmakuPool.value.shift()
@@ -203,10 +203,8 @@ const disconnectRoom = () => {
     /> -->
     <URenderer
       v-for="it in danmakuPool"
-      :key="`${it.ts}${it.uname}${it.type}${it.type === 'gift' ? (it as GiftProps).giftId : ''}`"
-      :type="it.type"
-      :danmaku-props="it.type === 'text' ? it : undefined"
-      :gift-props="it.type === 'gift' ? it : undefined"
+      :key="`${it.ts}${it.uname}${it.type}${isGiftProps(it) ? it.giftId : ''}`"
+      :obj="it"
     />
   </div>
 </template>

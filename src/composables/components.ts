@@ -10,6 +10,10 @@ interface DanmakuProps {
   uid: number
 }
 
+function isDanmakuProps(obj: DanmakuProps | GiftProps | undefined): obj is DanmakuProps {
+  return obj !== undefined && obj.type === 'text'
+}
+
 interface GiftProps {
   type: 'gift'
   uname: string
@@ -23,7 +27,19 @@ interface GiftProps {
   ts: number
 }
 
+function isGiftProps(obj: DanmakuProps | GiftProps | undefined): obj is GiftProps {
+  return obj !== undefined && obj.type === 'gift'
+}
+
+type PropsType = 'text' | 'gift'
+
 export type {
   DanmakuProps,
   GiftProps,
+  PropsType,
+}
+
+export {
+  isDanmakuProps,
+  isGiftProps,
 }
