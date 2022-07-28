@@ -160,6 +160,18 @@ interface ComboSendMessage extends MessageType {
   }
 }
 
+interface SendMessageProps {
+  bubble: number // 0
+  msg: string // 发出的消息
+  color: number // 颜色
+  mode: number // 1
+  fontsize: number // 25
+  rnd: number // 时间戳 / 1000
+  roomid: number // 直播间房间号
+  csrf: string
+  csrf_token: string
+}
+
 interface GiftInfo {
   id: number
   webp: string
@@ -177,5 +189,6 @@ export type {
   InteractiveWordMessage,
   ComboSendMessage,
   GiftInfo,
+  SendMessageProps,
 }
 

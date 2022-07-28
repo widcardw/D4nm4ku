@@ -6,7 +6,7 @@ import { fetch } from '@tauri-apps/api/http'
 import type { DanmakuMessage, GiftInfo, SendGiftMessage } from '../composables/types'
 import { isDanmakuProps, isGiftProps } from '../composables/components'
 import type { DanmakuProps, GiftProps } from '../composables/components'
-import { giftInfoBaseUrl } from '../composables/data'
+import { giftInfo } from '../composables/api'
 import URenderer from '../components/danmaku/URenderer.vue'
 import { useStore } from '../stores/store'
 import UWatch from '../components/danmaku/UWatch.vue'
@@ -59,7 +59,8 @@ const connectRoom = () => {
     live.on('open', () => {
       // eslint-disable-next-line no-console
       console.log('WebSocket Open')
-      fetch(`${giftInfoBaseUrl}${roomId.value}`)
+      // 获取直播间礼物信息
+      fetch(`${giftInfo}${roomId.value}`)
         .then((response) => {
           store.giftInfoList = (response.data as any).data.list.map((it: any) => {
             return {

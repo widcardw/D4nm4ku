@@ -1,5 +1,6 @@
 import { fetch } from '@tauri-apps/api/http'
 import { useStore } from '../stores/store'
+import { spaceInfo } from './api'
 
 const store = useStore()
 
@@ -19,7 +20,7 @@ export default async function (uid: number) {
     return preload.url
   }
 
-  const response = await fetch(`https://api.bilibili.com/x/space/app/index?mid=${uid}`, {
+  const response = await fetch(`${spaceInfo}${uid}`, {
     method: 'GET',
     timeout: 5000,
   })

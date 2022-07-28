@@ -16,9 +16,6 @@ const guardType = {
   },
 }
 
-const giftInfoBaseUrl = 'https://api.live.bilibili.com/xlive/web-room/v1/giftPanel/giftConfig?platform=pc&room_id='
-
 export {
   guardType,
-  giftInfoBaseUrl,
 }

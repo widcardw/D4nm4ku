@@ -1,13 +1,14 @@
 import { fetch } from '@tauri-apps/api/http'
+import { roomInfo, spaceInfo } from './api'
 
 export default async function (roomId: number) {
-  const data = (await fetch(`https://api.live.bilibili.com/room/v1/Room/get_info?id=${roomId}`, {
+  const data = (await fetch(`${roomInfo}${roomId}`, {
     method: 'GET',
     timeout: 5000,
   })).data as any
 
   //   console.log(data, data.data.uid)
-  const data2 = (await fetch(`https://api.bilibili.com/x/space/app/index?mid=${data.data.uid}`, {
+  const data2 = (await fetch(`${spaceInfo}${data.data.uid}`, {
     method: 'GET',
     timeout: 5000,
   })).data as any
