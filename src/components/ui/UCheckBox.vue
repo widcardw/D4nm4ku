@@ -16,7 +16,7 @@ const checked = useVModel(props, 'modelValue', emits)
 
 <template>
   <label
-    class="inline-flex items-center select-none space-x-1 cursor-pointer"
+    class="inline-flex items-center leading-relaxed select-none space-x-1 cursor-pointer"
     :checked="checked || null"
     :disabled="disabled || null"
   >
@@ -27,8 +27,14 @@ const checked = useVModel(props, 'modelValue', emits)
       display-none
       @keypress.enter="checked = !checked"
     >
-    <div v-if="checked" i-ri-checkbox-line text-active icon-btn self-center />
-    <div v-else i-ri-checkbox-blank-line icon-btn self-center />
+    <div flex items-center text-lg>
+      <div i-ri-checkbox-blank-line icon-btn />
+      <div
+        i-ri-checkbox-fill text-active icon-btn absolute
+        :class="{ 'scale-0': !checked }"
+      />
+    </div>
+
     <span><slot /></span>
   </label>
 </template>
