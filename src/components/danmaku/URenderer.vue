@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import type { DanmakuProps, GiftProps } from '../../composables/components'
 import { isDanmakuProps, isGiftProps } from '../../composables/components'
+import { useStore } from '../../stores/store'
 import UDanmaku from './UDanmaku.vue'
 import UGift from './UGift.vue'
 
 defineProps<{
   obj?: DanmakuProps | GiftProps
 }>()
+
+const store = useStore()
 </script>
 
 <template>
@@ -20,9 +23,9 @@ defineProps<{
     :perhaps-guard="obj.perhapsGuard"
     :ts="obj.ts"
     :uid="obj.uid"
-    :show-avatar="true"
-    :show-guard-tag="true"
-    :show-time="true"
+    :show-avatar="store.getConfig.showAvatar"
+    :show-guard-tag="store.getConfig.showGuardTag"
+    :show-time="store.getConfig.showTime"
   />
   <UGift
     v-else-if="isGiftProps(obj)"

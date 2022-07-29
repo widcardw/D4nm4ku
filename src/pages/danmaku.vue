@@ -110,12 +110,18 @@ const connectRoom = () => {
           return
       }
 
+      if (coin_type === 'silver' && !store.getConfig.showSilverGift)
+        return
+
+      if (!store.getConfig.showGoldGift)
+        return
+
       danmakuPool.value.push({
         type: 'gift',
         uname,
         action,
         num,
-        face: `${face}@72w_72h`,
+        face: `${face}@96w_96h`,
         coinType: coin_type,
         giftId,
         giftName,
@@ -124,6 +130,8 @@ const connectRoom = () => {
       })
       if (danmakuPool.value.length > 200)
         danmakuPool.value.shift()
+      // eslint-disable-next-line no-console
+      console.log(data)
     })
 
     // 礼物连击
