@@ -9,7 +9,11 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Avatar: typeof import('./src/components/Avatar.vue')['default']
     DarkMode: typeof import('./src/components/DarkMode.vue')['default']
+    Login: typeof import('./src/components/settings/Login.vue')['default']
+    MtQrCode: typeof import('./src/components/img/MtQrCode.vue')['default']
+    MyCanvas: typeof import('./src/components/img/MyCanvas.vue')['default']
     MyImg: typeof import('./src/components/img/MyImg.vue')['default']
+    MyQrCode: typeof import('./src/components/img/MyQrCode.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SideBar: typeof import('./src/components/SideBar.vue')['default']
