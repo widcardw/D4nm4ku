@@ -1,6 +1,5 @@
-import { fetch } from '@tauri-apps/api/http'
 import { useStore } from '../stores/store'
-import { spaceInfo } from './api'
+import getInfoFromUid from './getInfoFromUid'
 
 const store = useStore()
 
@@ -20,12 +19,9 @@ export default async function (uid: number) {
     return preload.url
   }
 
-  const response = await fetch(`${spaceInfo}${uid}`, {
-    method: 'GET',
-    timeout: 5000,
-  })
+  const responseData = await getInfoFromUid(uid)
   try {
-    const url = `${(response.data as SpaceApiResponse).data.info.face}@72w_72h`
+    const url = `${(responseData as SpaceApiResponse).data.info.face}@96w_96h`
     store.avatarMap.push({ uid, url })
     return url
   }
@@ -33,7 +29,7 @@ export default async function (uid: number) {
     // eslint-disable-next-line no-console
     console.log(e)
     // eslint-disable-next-line no-console
-    console.log(response.data)
+    console.log(responseData)
   }
 }
 // https://api.bilibili.com/x/space/app/index?mid=${uid}
