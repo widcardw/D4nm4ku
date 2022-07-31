@@ -1,7 +1,8 @@
 import { Body, fetch } from '@tauri-apps/api/http'
-import { useStore } from '../stores/store'
-import { qrcodeLogin } from '../composables/api'
-import getInfoFromUid from '../composables/getInfoFromUid'
+import { ref } from 'vue'
+import { useStore } from '~/stores/store'
+import { qrcodeLogin } from '~/composables/api'
+import getInfoFromUid from '~/composables/getInfoFromUid'
 
 const store = useStore()
 
@@ -18,15 +19,17 @@ const getUrlParams = (url: string) => {
   }
 }
 
-const clearLoop = (interval: any) => {
-  if (interval) {
-    clearInterval(interval)
-    interval = null
+const interval = ref(0)
+
+const clearLoop = () => {
+  if (interval.value) {
+    clearInterval(interval.value)
+    interval.value = 0
   }
 }
 
 function createLoginLoop(oauthKey: string) {
-  const interval = setInterval(async () => {
+  interval.value = setInterval(async () => {
     const { data: loginResponse }: {
       data: {
         data: -1 | -2 | -4 | -5 | { url: string }
@@ -41,7 +44,7 @@ function createLoginLoop(oauthKey: string) {
     })
 
     if (typeof loginResponse.data === 'object') {
-      clearLoop(interval)
+      clearLoop()
       const params = getUrlParams(loginResponse.data.url)
       const fullUserInfo = await getInfoFromUid(params.DedeUserID) as any
       store.userInfo = {
@@ -60,11 +63,10 @@ function createLoginLoop(oauthKey: string) {
     // eslint-disable-next-line no-console
     console.log('待确认', loginResponse)
   }, 3000)
-
-  return interval
 }
 
 export {
+  interval,
   createLoginLoop,
   clearLoop,
 }

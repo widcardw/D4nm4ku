@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { fetch } from '@tauri-apps/api/http'
-import type { Ref } from 'vue'
 import { computed, ref } from 'vue'
 import { qrcodeGet } from '../../composables/api'
 import { useStore } from '../../stores/store'
 import MyQrCode from '../img/MyQrCode.vue'
-import { clearLoop, createLoginLoop } from '../../composables/loginLoop'
+import { clearLoop, createLoginLoop, interval } from '../../composables/loginLoop'
 import Avatar from '../Avatar.vue'
 
 const store = useStore()
@@ -17,9 +16,8 @@ interface QrProps {
 
 const getQrcodeEnabled = ref(true)
 const qrurl = ref('')
-const interval: Ref<NodeJS.Timer | null> = ref(null)
 
-const showQrCode = computed(() => interval.value !== null)
+const showQrCode = computed(() => interval.value !== 0)
 
 const login = async () => {
   getQrcodeEnabled.value = false
@@ -31,29 +29,30 @@ const login = async () => {
   qrurl.value = data.url
   store.userInfo.oauthKey = data.oauthKey
 
-  interval.value = createLoginLoop(data.oauthKey)
+  createLoginLoop(data.oauthKey)
+  // eslint-disable-next-line no-console
+  console.log(interval, interval.value)
 }
 
 const cancelLogin = () => {
-  clearLoop(interval.value)
-  interval.value = null
+  clearLoop()
 }
 </script>
 
 <template>
-  <div flex space-x-2 m-2>
+  <div flex space-x-2 items-center>
     <Avatar :src="store.getUserInfo.avatarUrl || ''" />
     <div flex-1>
       <div v-if="!store.getUserInfo.mid" flex>
-        <div>
+        <div space-x-2>
           <button btn :disabled="!getQrcodeEnabled" @click="login">
-            登录
+            {{ showQrCode ? '刷新' : '登录' }}
           </button>
           <button v-if="showQrCode" btn @click="cancelLogin">
             关闭二维码
           </button>
         </div>
-        <div v-if="showQrCode" absolute>
+        <div v-if="showQrCode" absolute class="left-1/2 translate--1/2 top-1/2">
           <MyQrCode ma :url="qrurl" />
         </div>
       </div>
@@ -64,7 +63,7 @@ const cancelLogin = () => {
         <div>已登录</div>
       </div>
     </div>
-    <button btn text-sm @click="store.removeUserInfo">
+    <button v-if="store.getUserInfo.mid" btn @click="store.removeUserInfo">
       退出登录
     </button>
   </div>
