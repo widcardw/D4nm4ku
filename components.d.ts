@@ -22,11 +22,14 @@ declare module '@vue/runtime-core' {
     UEnter: typeof import('./src/components/danmaku/UEnter.vue')['default']
     UGift: typeof import('./src/components/danmaku/UGift.vue')['default']
     UGuardTag: typeof import('./src/components/ui/UGuardTag.vue')['default']
+    UMessage: typeof import('./src/components/ui/UMessage.vue')['default']
+    UMessageProvider: typeof import('./src/components/ui/UMessageProvider.vue')['default']
     URenderer: typeof import('./src/components/danmaku/URenderer.vue')['default']
     USlider: typeof import('./src/components/ui/USlider.vue')['default']
     USubscribe: typeof import('./src/components/danmaku/USubscribe.vue')['default']
     USuperChat: typeof import('./src/components/danmaku/USuperChat.vue')['default']
     USwitch: typeof import('./src/components/ui/USwitch.vue')['default']
     UWatch: typeof import('./src/components/danmaku/UWatch.vue')['default']
+    UWidget: typeof import('./src/components/UWidget.vue')['default']
   }
 }
