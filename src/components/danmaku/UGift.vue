@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useStore } from '../../stores/store'
-import Avatar from '../Avatar.vue'
-import MyImg from '../img/MyImg.vue'
-const props = defineProps<{
+import { useStore } from '~/stores/store'
+import Avatar from '~/components/Avatar.vue'
+import MyImg from '~/components/img/MyImg.vue'
+defineProps<{
   uname: string
   action: string
   num: number
@@ -34,7 +34,7 @@ const store = useStore()
     <MyImg
       :src="(store.giftInfoList.find(x => x.id === giftId) || { webp: '' }).webp" class="w-3rem h-3rem"
     />
-    <div text-sm wsn>
+    <div v-if="store.getConfig.showTime" text-sm wsn>
       {{ new Date(ts * 1000).toLocaleTimeString('en-US', {
         hour: '2-digit',
         minute: '2-digit',

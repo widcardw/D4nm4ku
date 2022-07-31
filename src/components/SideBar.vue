@@ -18,14 +18,14 @@ const routerSwitch = (target: string, page: number) => {
       @click="routerSwitch('/', 1)"
     />
     <div
-      m-2 icon-btn i-ri-settings-line
+      m-2 icon-btn i-ri-settings-5-line
       :class="{ 'text-#646cff': curPage === 2 }"
       @click="routerSwitch('/settings', 2)"
     />
     <div
       m-2 icon-btn i-ri-live-line
       :class="{ 'text-#646cff': curPage === 3 }"
-      @click="routerSwitch('/danmaku', 3)"
+      @click="routerSwitch('/engine', 3)"
     />
     <DarkMode m-2 absolute bottom-0 />
   </div>

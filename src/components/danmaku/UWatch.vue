@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineProps<{
-  population: number
+  population: string
   fans: string
 }>()
 </script>

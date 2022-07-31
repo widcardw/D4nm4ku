@@ -8,6 +8,7 @@ const props = defineProps<{
 
 const canvasRef = ref<HTMLCanvasElement>()
 
+// 重绘二维码
 const redrawCanvas = () => {
   QRCode.toCanvas(canvasRef.value, props.url, (err: any) => {
     if (err)
@@ -22,6 +23,7 @@ onMounted(() => {
   })
 })
 
+// 当 url 变化时，执行重绘
 watch(
   () => props.url,
   redrawCanvas,

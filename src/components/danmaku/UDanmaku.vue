@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { DanmakuProps } from '../../composables/components'
-import { guardType } from '../../composables/data'
-import UGuardTag from '../ui/UGuardTag.vue'
-import getAvatar from '../../composables/getAvatar'
-import Avatar from '../Avatar.vue'
-
-interface Props extends DanmakuProps {}
+import { guardType } from '~/composables/data'
+import UGuardTag from '~/components/ui/UGuardTag.vue'
+import getAvatar from '~/composables/getAvatar'
+import Avatar from '~/components/Avatar.vue'
 
 const props = withDefaults(defineProps<{
   content: string
@@ -27,12 +24,11 @@ const props = withDefaults(defineProps<{
 })
 
 const faceUrl = ref('')
+
+// 异步获取头像的链接，默认为 noface，当加载出来后替换为真实头像
 getAvatar(props.uid).then((url: string | undefined) => {
   faceUrl.value = url ?? ''
 })
-
-// // eslint-disable-next-line no-console
-// console.log('danmaku', props.ts, new Date(props.ts))
 </script>
 
 <template>
@@ -43,14 +39,14 @@ getAvatar(props.uid).then((url: string | undefined) => {
       <div flex justify-between text-sm>
         <div flex space-x-2>
           <!-- 用户名 -->
-          <div leading-normal font-bold overflow-x-hidden wsn :style="{ color }">
+          <div leading-normal font-bold of-x-hidden wsn :style="{ color }">
             {{ uname }}
           </div>
           <!-- 等级标签 -->
           <UGuardTag v-if="level && showGuardTag" :level="level" :label="label" :perhaps-guard="perhapsGuard" />
           <img v-if="perhapsGuard !== 0 && level >= 20" self-center :src="guardType[perhapsGuard].badge" class="w-1.25rem h-1.25rem" mx-1 rounded-full>
         </div>
-        <!-- 时间 -->
+        <!-- 弹幕发送时间 -->
         <div v-if="showTime" wsn ml-2>
           {{ new Date(ts).toLocaleTimeString('en-US', {
             hour: '2-digit',
@@ -58,9 +54,9 @@ getAvatar(props.uid).then((url: string | undefined) => {
           }) }}
         </div>
       </div>
-      <!-- 弹幕内容 -->
+      <!-- 弹幕内容，初步断定为以 http 开头的是链接，采用 img 渲染 -->
       <div text-lg>
-        <img v-if="content.startsWith('http://')" class="h-2rem" :src="content">
+        <img v-if="content.startsWith('http://')" class="h-2rem" :src="content" loading="/loading.gif">
         <span v-else>{{ content }}</span>
       </div>
     </div>

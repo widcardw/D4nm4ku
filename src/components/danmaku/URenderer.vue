@@ -13,6 +13,7 @@ const store = useStore()
 </script>
 
 <template>
+  <!-- 类型断言为弹幕 -->
   <UDanmaku
     v-if="isDanmakuProps(obj)"
     :content="obj.content"
@@ -27,6 +28,7 @@ const store = useStore()
     :show-guard-tag="store.getConfig.showGuardTag"
     :show-time="store.getConfig.showTime"
   />
+  <!-- 类型断言为礼物 -->
   <UGift
     v-else-if="isGiftProps(obj)"
     :uname="obj.uname"
