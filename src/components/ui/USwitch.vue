@@ -21,7 +21,7 @@ const toggleChecked = () => {
 
 <template>
   <div
-    flex items-center cursor-pointer
+    flex items-center cursor-pointer leading-relaxed
     :class="{ 'opacity-50': disabled }"
     @click="toggleChecked"
   >
