@@ -13,7 +13,6 @@ interface UserInfo {
 }
 
 interface ConfigProps {
-  enabled: boolean
   showGuardTag: boolean
   showAvatar: boolean
   showTime: boolean
@@ -28,7 +27,6 @@ export const useStore = defineStore('giftInfoList', {
     avatarMap: [] as { uid: number; url: string }[],
     userInfo: {} as UserInfo,
     config: {
-      enabled: true,
       showGuardTag: true,
       showAvatar: true,
       showTime: true,
@@ -53,9 +51,7 @@ export const useStore = defineStore('giftInfoList', {
       return this.userInfo
     },
     getConfig(): ConfigProps {
-      if (!this.config.enabled)
-        this.config = JSON.parse(localStorage.getItem('config') || '{"enabled":true}')
-
+      this.config = JSON.parse(localStorage.getItem('config') || '{}')
       return this.config
     },
   },
@@ -72,3 +68,7 @@ export const useStore = defineStore('giftInfoList', {
     },
   },
 })
+
+export type {
+  ConfigProps,
+}

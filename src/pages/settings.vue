@@ -1,22 +1,37 @@
 <script setup lang="ts">
-import Login from '../components/settings/Login.vue'
-import { useStore } from '../stores/store'
-import UCheckBox from '../components/ui/UCheckBox.vue'
-import UGuardTag from '../components/ui/UGuardTag.vue'
+import { watch } from 'vue'
+import { WebviewWindow } from '@tauri-apps/api/window'
+import Login from '~/components/settings/Login.vue'
+import { useStore } from '~/stores/store'
+import USwitch from '~/components/ui/USwitch.vue'
+import UGuardTag from '~/components/ui/UGuardTag.vue'
 
 const store = useStore()
+const saveSettings = () => {
+  store.storeConfig()
+  // msgProvider.value.pushMsg('保存成功')
+  const showWindow = WebviewWindow.getByLabel('danmakuWidget')
+  if (showWindow) {
+    // eslint-disable-next-line no-console
+    console.log('emit')
+    showWindow.emit('saveSettings', store.getConfig)
+  }
+}
+
+watch(
+  () => store.getConfig,
+  () => {
+    saveSettings()
+  },
+  { deep: true },
+)
 </script>
 
 <template>
   <div p-4 space-y-4>
     <Login />
-    <div flex justify-between items-center>
-      <div font-bold text-xl>
-        设置项
-      </div>
-      <button btn @click="store.storeConfig">
-        保存设置
-      </button>
+    <div font-bold text-xl>
+      设置项
     </div>
     <div>
       <div font-bold>
@@ -24,24 +39,24 @@ const store = useStore()
       </div>
       <hr border-zinc opacity-20 py-1>
       <div grid grid-cols-3>
-        <UCheckBox v-model="store.getConfig.showAvatar">
+        <USwitch v-model="store.getConfig.showAvatar">
           显示用户头像
-        </UCheckBox>
-        <UCheckBox v-model="store.getConfig.showTime">
+        </USwitch>
+        <USwitch v-model="store.getConfig.showTime">
           显示弹幕发送时间
-        </UCheckBox>
+        </USwitch>
         <div flex space-x-2>
-          <UCheckBox v-model="store.getConfig.showGuardTag">
+          <USwitch v-model="store.getConfig.showGuardTag">
             显示标签和等级
-          </UCheckBox>
+          </USwitch>
           <UGuardTag v-if="store.getConfig.showGuardTag" label="bilibili" :level="25" :perhaps-guard="3" />
         </div>
-        <UCheckBox v-model="store.getConfig.showSilverGift">
+        <USwitch v-model="store.getConfig.showSilverGift">
           显示免费礼物
-        </UCheckBox>
-        <UCheckBox v-model="store.getConfig.showGoldGift">
+        </USwitch>
+        <USwitch v-model="store.getConfig.showGoldGift">
           显示付费礼物
-        </UCheckBox>
+        </USwitch>
       </div>
     </div>
     <div>
@@ -50,12 +65,12 @@ const store = useStore()
       </div>
       <hr border-zinc opacity-20 py-1>
       <div>
-        <UCheckBox
+        <USwitch
           v-model="store.getConfig.canSendMessage"
           :disabled="!store.getUserInfo.mid"
         >
-          主播可直接发送弹幕
-        </UCheckBox>
+          用户可直接发送弹幕
+        </USwitch>
       </div>
     </div>
   </div>
