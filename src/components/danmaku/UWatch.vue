@@ -7,22 +7,14 @@ defineProps<{
 
 <template>
   <div
-    flex justify-between
+    flex
     p-2
-    data-tauri-drag-region
-    cursor-move
-    class="sel-none"
+    space-x-1
+    items-center
   >
     <div>观看人数 {{ population }}</div>
+    <div flex-1 />
     <div>粉丝数 {{ fans }}</div>
   </div>
 </template>
 
-<style scoped>
-.sel-none {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-</style>

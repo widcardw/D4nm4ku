@@ -21,11 +21,11 @@ defineExpose({ pushMsg })
 </script>
 
 <template>
-  <div v-if="messageQueue.length" fixed left-0 right-0 mt-4rem flex flex-col>
+  <div v-if="messageQueue.length" fixed left-0 right-0 mt-2rem flex flex-col pointer-events-none>
     <div
       v-for="it in messageQueue" :key="it.ts"
-      p-4 my-2 shadow-xl rounded
-      animate-bounce-in ma
+      p="x-10 y-4" my-2 shadow-xl rounded
+      animate-bounce-in ma transition-all
       bg="white dark:#121212"
     >
       {{ it.content }}
