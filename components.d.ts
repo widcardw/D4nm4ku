@@ -18,6 +18,7 @@ declare module '@vue/runtime-core' {
     RouterView: typeof import('vue-router')['RouterView']
     SideBar: typeof import('./src/components/SideBar.vue')['default']
     UCheckBox: typeof import('./src/components/ui/UCheckBox.vue')['default']
+    UColorPicker: typeof import('./src/components/ui/UColorPicker.vue')['default']
     UDanmaku: typeof import('./src/components/danmaku/UDanmaku.vue')['default']
     UEnter: typeof import('./src/components/danmaku/UEnter.vue')['default']
     UGift: typeof import('./src/components/danmaku/UGift.vue')['default']

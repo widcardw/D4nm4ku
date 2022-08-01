@@ -1,38 +1,80 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted } from 'vue'
+import { onBeforeUnmount } from 'vue'
 import { listen } from '@tauri-apps/api/event'
 import { connectRoom, danmakuPool, disconnectRoom, fans, population } from '~/composables/server'
 import { isGiftProps } from '~/composables/components'
 import UWatch from '~/components/danmaku/UWatch.vue'
 import URenderer from '~/components/danmaku/URenderer.vue'
-import type { ConfigProps } from '~/stores/store'
 import { useStore } from '~/stores/store'
 
 const store = useStore()
+const unlistens: Function[] = []
 
-const unlisten = await listen('saveSettings', (event) => {
-  // eslint-disable-next-line no-console
-  console.log(event.payload)
+function parseBoolean(obj: string) {
+  return obj === 'true'
+}
 
-  store.config = event.payload as ConfigProps
-})
+unlistens.push(await listen('show-avatar', (event) => {
+  store.config.showAvatar = parseBoolean(event.payload as string)
+}))
+unlistens.push(await listen('show-guard-tag', (event) => {
+  store.config.showGuardTag = parseBoolean(event.payload as string)
+}))
+unlistens.push(await listen('show-time', (event) => {
+  store.config.showTime = parseBoolean(event.payload as string)
+}))
+unlistens.push(await listen('show-silver-gift', (event) => {
+  store.config.showSilverGift = parseBoolean(event.payload as string)
+}))
+unlistens.push(await listen('show-gold-gift', (event) => {
+  store.config.showGoldGift = parseBoolean(event.payload as string)
+}))
+unlistens.push(await listen('can-send-message', (event) => {
+  store.config.canSendMessage = parseBoolean(event.payload as string)
+}))
+unlistens.push(await listen('text-color-changed', (event) => {
+  store.config.textColor = event.payload as string
+}))
+unlistens.push(await listen('bg-color-changed', (event) => {
+  store.config.bgColor = event.payload as string
+}))
+unlistens.push(await listen('bg-opacity-changed', (event) => {
+  store.config.bgOpacity = event.payload as string
+}))
+unlistens.push(await listen('show-population', (event) => {
+  store.config.showPopulation = parseBoolean(event.payload as string)
+}))
 
-onMounted(() => {
-  connectRoom()
-})
+connectRoom()
 
 onBeforeUnmount(() => {
   disconnectRoom()
-  unlisten()
+  unlistens.map(fn => fn())
 })
+
+const hex2rgb = (hex: string, opacity: string) => {
+  const matches = hex.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i) as [string, string, string, string]
+  return `rgba(${parseInt(matches[1], 16)}, ${parseInt(matches[2], 16)}, ${parseInt(matches[3], 16)}, ${parseInt(opacity) / 255})`
+}
 </script>
 
 <template>
-  <div flex flex-col h-100vh>
-    <UWatch w-full shadow :population="population" :fans="fans" />
+  <div
+    flex flex-col h-100vh
+    :style="{
+      background: hex2rgb(store.getConfig.bgColor, store.getConfig.bgOpacity),
+      color: store.getConfig.textColor,
+    }"
+  >
+    <UWatch
+      v-if="store.getConfig.showPopulation"
+      data-tauri-drag-region
+      :population="population" :fans="fans"
+    />
     <div
       class="scroller"
       flex-1 of-y-auto
+      data-tauri-drag-region
     >
       <URenderer
         v-for="it in danmakuPool"

@@ -18,10 +18,14 @@ interface ConfigProps {
   showTime: boolean
   showSilverGift: boolean
   showGoldGift: boolean
+  showPopulation: boolean
   canSendMessage: boolean
+  textColor: string
+  bgColor: string
+  bgOpacity: string
 }
 
-export const useStore = defineStore('giftInfoList', {
+export const useStore = defineStore('stores', {
   state: () => ({
     giftInfoList: [] as GiftInfo[],
     avatarMap: [] as { uid: number; url: string }[],
@@ -31,8 +35,12 @@ export const useStore = defineStore('giftInfoList', {
       showAvatar: true,
       showTime: true,
       showSilverGift: false,
+      showPopulation: true,
       showGoldGift: true,
       canSendMessage: false,
+      textColor: '#000000',
+      bgColor: '#ffffff',
+      bgOpacity: '255',
     } as ConfigProps,
   }),
   getters: {
@@ -46,8 +54,8 @@ export const useStore = defineStore('giftInfoList', {
       if (!this.userInfo.mid)
         this.userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}')
 
-      // eslint-disable-next-line no-console
-      console.log(this.userInfo)
+      // // eslint-disable-next-line no-console
+      // console.log(this.userInfo)
       return this.userInfo
     },
     getConfig(): ConfigProps {
