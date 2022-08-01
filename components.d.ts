@@ -26,6 +26,7 @@ declare module '@vue/runtime-core' {
     UMessage: typeof import('./src/components/ui/UMessage.vue')['default']
     UMessageProvider: typeof import('./src/components/ui/UMessageProvider.vue')['default']
     URenderer: typeof import('./src/components/danmaku/URenderer.vue')['default']
+    USettingsBox: typeof import('./src/components/ui/USettingsBox.vue')['default']
     USlider: typeof import('./src/components/ui/USlider.vue')['default']
     USubscribe: typeof import('./src/components/danmaku/USubscribe.vue')['default']
     USuperChat: typeof import('./src/components/danmaku/USuperChat.vue')['default']

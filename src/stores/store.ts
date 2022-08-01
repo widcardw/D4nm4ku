@@ -23,6 +23,7 @@ interface ConfigProps {
   textColor: string
   bgColor: string
   bgOpacity: string
+  blur: boolean
 }
 
 export const useStore = defineStore('stores', {
@@ -41,6 +42,7 @@ export const useStore = defineStore('stores', {
       textColor: '#000000',
       bgColor: '#ffffff',
       bgOpacity: '255',
+      blur: false,
     } as ConfigProps,
   }),
   getters: {

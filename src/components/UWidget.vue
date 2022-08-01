@@ -44,6 +44,9 @@ unlistens.push(await listen('bg-opacity-changed', (event) => {
 unlistens.push(await listen('show-population', (event) => {
   store.config.showPopulation = parseBoolean(event.payload as string)
 }))
+unlistens.push(await listen('blur', (event) => {
+  store.config.blur = parseBoolean(event.payload as string)
+}))
 
 connectRoom()
 
@@ -61,6 +64,9 @@ const hex2rgb = (hex: string, opacity: string) => {
 <template>
   <div
     flex flex-col h-100vh
+    :class="{
+      'backdrop-blur-sm': store.getConfig.blur,
+    }"
     :style="{
       background: hex2rgb(store.getConfig.bgColor, store.getConfig.bgOpacity),
       color: store.getConfig.textColor,
@@ -68,7 +74,7 @@ const hex2rgb = (hex: string, opacity: string) => {
   >
     <UWatch
       v-if="store.getConfig.showPopulation"
-      data-tauri-drag-region
+      data-tauri-drag-region shadow
       :population="population" :fans="fans"
     />
     <div

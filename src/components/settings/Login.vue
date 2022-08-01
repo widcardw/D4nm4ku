@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { fetch } from '@tauri-apps/api/http'
+import { confirm } from '@tauri-apps/api/dialog'
 import { computed, ref } from 'vue'
-import { qrcodeGet } from '../../composables/api'
-import { useStore } from '../../stores/store'
-import MyQrCode from '../img/MyQrCode.vue'
-import { clearLoop, createLoginLoop, interval } from '../../composables/loginLoop'
-import Avatar from '../Avatar.vue'
+import MyQrCode from '~/components/img/MyQrCode.vue'
+import Avatar from '~/components/Avatar.vue'
+import { qrcodeGet } from '~/composables/api'
+import { useStore } from '~/stores/store'
+import { clearLoop, createLoginLoop, interval } from '~/composables/loginLoop'
 
 const store = useStore()
 
@@ -37,6 +38,12 @@ const login = async () => {
 const cancelLogin = () => {
   clearLoop()
 }
+
+const logout = async () => {
+  const confirmed = await confirm('确定要退出登录吗？', { title: '退出登录', type: 'warning' })
+  if (confirmed)
+    store.removeUserInfo()
+}
 </script>
 
 <template>
@@ -63,7 +70,7 @@ const cancelLogin = () => {
         <div>已登录</div>
       </div>
     </div>
-    <button v-if="store.getUserInfo.mid" btn @click="store.removeUserInfo">
+    <button v-if="store.getUserInfo.mid" btn @click="logout">
       退出登录
     </button>
   </div>
