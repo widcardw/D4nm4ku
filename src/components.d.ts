@@ -21,7 +21,6 @@ declare module '@vue/runtime-core' {
     UEnter: typeof import('./components/danmaku/UEnter.vue')['default']
     UGift: typeof import('./components/danmaku/UGift.vue')['default']
     UGuardTag: typeof import('./components/ui/UGuardTag.vue')['default']
-    UMessage: typeof import('./components/ui/UMessage.vue')['default']
     UMessageProvider: typeof import('./components/ui/UMessageProvider.vue')['default']
     URenderer: typeof import('./components/danmaku/URenderer.vue')['default']
     USettingsBox: typeof import('./components/ui/USettingsBox.vue')['default']
