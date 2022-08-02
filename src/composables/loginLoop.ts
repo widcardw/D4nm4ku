@@ -2,7 +2,7 @@ import { Body, fetch } from '@tauri-apps/api/http'
 import { ref } from 'vue'
 import { useStore } from '~/stores/store'
 import { qrcodeLogin } from '~/composables/api'
-import getInfoFromUid from '~/composables/getInfoFromUid'
+import { getCardInfo } from '~/composables/getInfoFromUid'
 
 const store = useStore()
 
@@ -19,12 +19,12 @@ const getUrlParams = (url: string) => {
   }
 }
 
-const interval = ref(0)
+const interval = ref<NodeJS.Timer>()
 
 const clearLoop = () => {
   if (interval.value) {
     clearInterval(interval.value)
-    interval.value = 0
+    interval.value = undefined
   }
 }
 
@@ -46,15 +46,15 @@ function createLoginLoop(oauthKey: string) {
     if (typeof loginResponse.data === 'object') {
       clearLoop()
       const params = getUrlParams(loginResponse.data.url)
-      const fullUserInfo = await getInfoFromUid(params.DedeUserID) as any
+      const fullUserInfo = await getCardInfo(params.DedeUserID) as any
       store.userInfo = {
         oauthKey,
         mid: params.DedeUserID,
         bili_jct: params.bili_jct,
         expires: params.Expires,
         sessdata: params.SESSDATA,
-        mname: fullUserInfo.data.info.name,
-        avatarUrl: fullUserInfo.data.info.face,
+        mname: fullUserInfo.data.card.name,
+        avatarUrl: fullUserInfo.data.card.face,
         lastLogin: new Date().getTime(),
       }
       store.storeUserInfo()

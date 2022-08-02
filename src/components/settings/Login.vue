@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { fetch } from '@tauri-apps/api/http'
 import { confirm } from '@tauri-apps/api/dialog'
-import { computed, ref } from 'vue'
 import MyQrCode from '~/components/img/MyQrCode.vue'
 import Avatar from '~/components/Avatar.vue'
 import { qrcodeGet } from '~/composables/api'
@@ -18,7 +17,7 @@ interface QrProps {
 const getQrcodeEnabled = ref(true)
 const qrurl = ref('')
 
-const showQrCode = computed(() => interval.value !== 0)
+// const interval = computed(() => interval.value !== undefined)
 
 const login = async () => {
   getQrcodeEnabled.value = false
@@ -31,8 +30,6 @@ const login = async () => {
   store.userInfo.oauthKey = data.oauthKey
 
   createLoginLoop(data.oauthKey)
-  // eslint-disable-next-line no-console
-  console.log(interval, interval.value)
 }
 
 const cancelLogin = () => {
@@ -53,13 +50,13 @@ const logout = async () => {
       <div v-if="!store.getUserInfo.mid" flex>
         <div space-x-2>
           <button btn :disabled="!getQrcodeEnabled" @click="login">
-            {{ showQrCode ? '刷新' : '登录' }}
+            {{ interval ? '刷新' : '登录' }}
           </button>
-          <button v-if="showQrCode" btn @click="cancelLogin">
+          <button v-if="interval" btn @click="cancelLogin">
             关闭二维码
           </button>
         </div>
-        <div v-if="showQrCode" absolute class="left-1/2 translate--1/2 top-1/2">
+        <div v-if="interval" absolute class="left-1/2 translate--1/2 top-1/2">
           <MyQrCode ma :url="qrurl" />
         </div>
       </div>
