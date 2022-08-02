@@ -1,34 +1,16 @@
 <script setup lang="ts">
-import QRCode from 'qrcode'
+import { useQRCode } from '@vueuse/integrations/useQRCode'
 
 const props = defineProps<{
   url: string
 }>()
 
-const canvasRef = ref<HTMLCanvasElement>()
-
-// 重绘二维码
-const redrawCanvas = () => {
-  QRCode.toCanvas(canvasRef.value, props.url, (err: any) => {
-    if (err)
-    // eslint-disable-next-line no-console
-      console.log(err)
-  })
-}
-
-onMounted(() => {
-  nextTick(() => {
-    redrawCanvas()
-  })
-})
-
-// 当 url 变化时，执行重绘
-watch(
-  () => props.url,
-  redrawCanvas,
-)
+const qrcode = useQRCode(props.url)
 </script>
 
 <template>
-  <canvas ref="canvasRef" width="200" height="200" />
+  <div shadow-lg p-4 bg="white dark:#121212" rounded>
+    <img :src="qrcode" ma>
+    <div>请使用 bilibili 手机客户端扫码</div>
+  </div>
 </template>

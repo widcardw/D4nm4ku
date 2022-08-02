@@ -12,6 +12,7 @@
   "dependencies": {
     "@tauri-apps/api": "^1.0.2",
     "@vueuse/core": "^8.9.4",
+    "@vueuse/integrations": "^9.0.2",
     "pinia": "^2.0.16",
     "vue": "^3.2.37",
     "vue-router": "^4.1.2"

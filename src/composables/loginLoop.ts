@@ -62,7 +62,7 @@ function createLoginLoop(oauthKey: string) {
 
     // eslint-disable-next-line no-console
     console.log('待确认', loginResponse)
-  }, 3000)
+  }, 5000)
 }
 
 export {
