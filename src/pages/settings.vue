@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { WebviewWindow } from '@tauri-apps/api/window'
 
-const msgRef = ref()
+// const msgRef = ref()
+const msgRef = inject('msgRef') as any
 const store = useStore()
-const saveSettings = () => {
+const saveSettings = useThrottleFn(() => {
   store.storeConfig()
-  msgRef.value.pushMsg('保存成功')
-}
+  msgRef.value.pushMsg({ content: '保存成功', type: 'success' })
+}, 1000)
 
 const settingChanged = (event: string, payload: any) => {
   const showWindow = WebviewWindow.getByLabel('danmakuWidget')
@@ -24,7 +25,6 @@ const pinWidget = () => {
 </script>
 
 <template>
-  <UMessageProvider ref="msgRef" />
   <div p-4 space-y-4>
     <Login />
     <div flex justify-between>
