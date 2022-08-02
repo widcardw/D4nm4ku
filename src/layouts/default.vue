@@ -3,8 +3,10 @@ import SideBar from '~/components/SideBar.vue'
 </script>
 
 <template>
-  <SideBar />
-  <div ml-2rem flex-1>
-    <RouterView />
+  <div class="use-dark" h-100vh>
+    <SideBar />
+    <div ml-2rem flex-1>
+      <RouterView />
+    </div>
   </div>
 </template>

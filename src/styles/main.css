@@ -34,7 +34,8 @@ html {
   transition: background 0.25s;
 }
 
-html.dark {
+
+.use-dark.dark {
   background: #242424;
   color: #ddd;
 }
