@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useStorage } from '@vueuse/core'
 import { WebviewWindow } from '@tauri-apps/api/window'
 const roomId = useStorage('roomId', '')
 

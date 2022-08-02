@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { DanmakuProps, GiftProps } from '../../composables/components'
-import { isDanmakuProps, isGiftProps } from '../../composables/components'
-import { useStore } from '../../stores/store'
 import UDanmaku from './UDanmaku.vue'
 import UGift from './UGift.vue'
+import type { DanmakuProps, GiftProps } from '~/composables/components'
+import { isDanmakuProps, isGiftProps } from '~/composables/components'
+import { useStore } from '~/stores/store'
 
 defineProps<{
   obj?: DanmakuProps | GiftProps

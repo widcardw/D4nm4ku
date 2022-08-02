@@ -11,55 +11,57 @@ declare global {
   const EffectScope: typeof import('vue')['EffectScope']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
-  const clearLoop: typeof import('./src/composables/loginLoop')['clearLoop']
+  const cardInfo: typeof import('./composables/api')['cardInfo']
+  const clearLoop: typeof import('./composables/loginLoop')['clearLoop']
   const computed: typeof import('vue')['computed']
   const computedAsync: typeof import('@vueuse/core')['computedAsync']
   const computedEager: typeof import('@vueuse/core')['computedEager']
   const computedInject: typeof import('@vueuse/core')['computedInject']
   const computedWithControl: typeof import('@vueuse/core')['computedWithControl']
-  const connectRoom: typeof import('./src/composables/server')['connectRoom']
+  const connectRoom: typeof import('./composables/server')['connectRoom']
   const controlledComputed: typeof import('@vueuse/core')['controlledComputed']
   const controlledRef: typeof import('@vueuse/core')['controlledRef']
   const createApp: typeof import('vue')['createApp']
   const createEventHook: typeof import('@vueuse/core')['createEventHook']
   const createGlobalState: typeof import('@vueuse/core')['createGlobalState']
   const createInjectionState: typeof import('@vueuse/core')['createInjectionState']
-  const createLoginLoop: typeof import('./src/composables/loginLoop')['createLoginLoop']
+  const createLoginLoop: typeof import('./composables/loginLoop')['createLoginLoop']
   const createReactiveFn: typeof import('@vueuse/core')['createReactiveFn']
   const createSharedComposable: typeof import('@vueuse/core')['createSharedComposable']
   const createUnrefFn: typeof import('@vueuse/core')['createUnrefFn']
   const customRef: typeof import('vue')['customRef']
-  const danmakuPool: typeof import('./src/composables/server')['danmakuPool']
+  const danmakuPool: typeof import('./composables/server')['danmakuPool']
   const debouncedRef: typeof import('@vueuse/core')['debouncedRef']
   const debouncedWatch: typeof import('@vueuse/core')['debouncedWatch']
   const defineAsyncComponent: typeof import('vue')['defineAsyncComponent']
   const defineComponent: typeof import('vue')['defineComponent']
-  const disconnectRoom: typeof import('./src/composables/server')['disconnectRoom']
+  const disconnectRoom: typeof import('./composables/server')['disconnectRoom']
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
   const extendRef: typeof import('@vueuse/core')['extendRef']
-  const fans: typeof import('./src/composables/server')['fans']
-  const getAvatar: typeof import('./src/composables/getAvatar')['default']
+  const fans: typeof import('./composables/server')['fans']
+  const getAvatar: typeof import('./composables/getAvatar')['default']
+  const getCardInfo: typeof import('./composables/getInfoFromUid')['getCardInfo']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
-  const getInfoFromUid: typeof import('./src/composables/getInfoFromUid')['default']
-  const getLastMatchedGift: typeof import('./src/composables/getLastMatchedGift')['default']
-  const getLiverInfo: typeof import('./src/composables/getLiverInfo')['default']
-  const giftInfo: typeof import('./src/composables/api')['giftInfo']
-  const guardType: typeof import('./src/composables/data')['guardType']
+  const getLastMatchedGift: typeof import('./composables/getLastMatchedGift')['default']
+  const getLiverInfo: typeof import('./composables/getLiverInfo')['default']
+  const getSpaceInfo: typeof import('./composables/getInfoFromUid')['getSpaceInfo']
+  const giftInfo: typeof import('./composables/api')['giftInfo']
+  const guardType: typeof import('./composables/data')['guardType']
   const h: typeof import('vue')['h']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
   const inject: typeof import('vue')['inject']
-  const interval: typeof import('./src/composables/loginLoop')['interval']
-  const isDanmakuProps: typeof import('./src/composables/components')['isDanmakuProps']
-  const isDark: typeof import('./src/composables/dark')['isDark']
+  const interval: typeof import('./composables/loginLoop')['interval']
+  const isDanmakuProps: typeof import('./composables/components')['isDanmakuProps']
+  const isDark: typeof import('./composables/dark')['isDark']
   const isDefined: typeof import('@vueuse/core')['isDefined']
-  const isGiftProps: typeof import('./src/composables/components')['isGiftProps']
+  const isGiftProps: typeof import('./composables/components')['isGiftProps']
   const isProxy: typeof import('vue')['isProxy']
   const isReactive: typeof import('vue')['isReactive']
   const isReadonly: typeof import('vue')['isReadonly']
   const isRef: typeof import('vue')['isRef']
-  const linked: typeof import('./src/composables/server')['linked']
+  const linked: typeof import('./composables/server')['linked']
   const logicAnd: typeof import('@vueuse/core')['logicAnd']
   const logicNot: typeof import('@vueuse/core')['logicNot']
   const logicOr: typeof import('@vueuse/core')['logicOr']
@@ -83,13 +85,13 @@ declare global {
   const onStartTyping: typeof import('@vueuse/core')['onStartTyping']
   const onUnmounted: typeof import('vue')['onUnmounted']
   const onUpdated: typeof import('vue')['onUpdated']
-  const parseFanNumbers: typeof import('./src/composables/parseFanNumbers')['default']
+  const parseFanNumbers: typeof import('./composables/parseFanNumbers')['default']
   const pausableWatch: typeof import('@vueuse/core')['pausableWatch']
-  const population: typeof import('./src/composables/server')['population']
-  const preferredDark: typeof import('./src/composables/dark')['preferredDark']
+  const population: typeof import('./composables/server')['population']
+  const preferredDark: typeof import('./composables/dark')['preferredDark']
   const provide: typeof import('vue')['provide']
-  const qrcodeGet: typeof import('./src/composables/api')['qrcodeGet']
-  const qrcodeLogin: typeof import('./src/composables/api')['qrcodeLogin']
+  const qrcodeGet: typeof import('./composables/api')['qrcodeGet']
+  const qrcodeLogin: typeof import('./composables/api')['qrcodeLogin']
   const reactify: typeof import('@vueuse/core')['reactify']
   const reactifyObject: typeof import('@vueuse/core')['reactifyObject']
   const reactive: typeof import('vue')['reactive']
@@ -106,11 +108,11 @@ declare global {
   const resolveComponent: typeof import('vue')['resolveComponent']
   const resolveRef: typeof import('@vueuse/core')['resolveRef']
   const resolveUnref: typeof import('@vueuse/core')['resolveUnref']
-  const roomInfo: typeof import('./src/composables/api')['roomInfo']
+  const roomInfo: typeof import('./composables/api')['roomInfo']
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
-  const spaceInfo: typeof import('./src/composables/api')['spaceInfo']
+  const spaceInfo: typeof import('./composables/api')['spaceInfo']
   const syncRef: typeof import('@vueuse/core')['syncRef']
   const syncRefs: typeof import('@vueuse/core')['syncRefs']
   const templateRef: typeof import('@vueuse/core')['templateRef']
@@ -120,7 +122,7 @@ declare global {
   const toReactive: typeof import('@vueuse/core')['toReactive']
   const toRef: typeof import('vue')['toRef']
   const toRefs: typeof import('vue')['toRefs']
-  const toggleDark: typeof import('./src/composables/dark')['toggleDark']
+  const toggleDark: typeof import('./composables/dark')['toggleDark']
   const triggerRef: typeof import('vue')['triggerRef']
   const tryOnBeforeMount: typeof import('@vueuse/core')['tryOnBeforeMount']
   const tryOnBeforeUnmount: typeof import('@vueuse/core')['tryOnBeforeUnmount']
@@ -235,6 +237,7 @@ declare global {
   const useStepper: typeof import('@vueuse/core')['useStepper']
   const useStorage: typeof import('@vueuse/core')['useStorage']
   const useStorageAsync: typeof import('@vueuse/core')['useStorageAsync']
+  const useStore: typeof import('./stores/store')['useStore']
   const useStyleTag: typeof import('@vueuse/core')['useStyleTag']
   const useSwipe: typeof import('@vueuse/core')['useSwipe']
   const useTemplateRefsList: typeof import('@vueuse/core')['useTemplateRefsList']
@@ -294,55 +297,57 @@ declare module '@vue/runtime-core' {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
-    readonly clearLoop: UnwrapRef<typeof import('./src/composables/loginLoop')['clearLoop']>
+    readonly cardInfo: UnwrapRef<typeof import('./composables/api')['cardInfo']>
+    readonly clearLoop: UnwrapRef<typeof import('./composables/loginLoop')['clearLoop']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
     readonly computedEager: UnwrapRef<typeof import('@vueuse/core')['computedEager']>
     readonly computedInject: UnwrapRef<typeof import('@vueuse/core')['computedInject']>
     readonly computedWithControl: UnwrapRef<typeof import('@vueuse/core')['computedWithControl']>
-    readonly connectRoom: UnwrapRef<typeof import('./src/composables/server')['connectRoom']>
+    readonly connectRoom: UnwrapRef<typeof import('./composables/server')['connectRoom']>
     readonly controlledComputed: UnwrapRef<typeof import('@vueuse/core')['controlledComputed']>
     readonly controlledRef: UnwrapRef<typeof import('@vueuse/core')['controlledRef']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
     readonly createEventHook: UnwrapRef<typeof import('@vueuse/core')['createEventHook']>
     readonly createGlobalState: UnwrapRef<typeof import('@vueuse/core')['createGlobalState']>
     readonly createInjectionState: UnwrapRef<typeof import('@vueuse/core')['createInjectionState']>
-    readonly createLoginLoop: UnwrapRef<typeof import('./src/composables/loginLoop')['createLoginLoop']>
+    readonly createLoginLoop: UnwrapRef<typeof import('./composables/loginLoop')['createLoginLoop']>
     readonly createReactiveFn: UnwrapRef<typeof import('@vueuse/core')['createReactiveFn']>
     readonly createSharedComposable: UnwrapRef<typeof import('@vueuse/core')['createSharedComposable']>
     readonly createUnrefFn: UnwrapRef<typeof import('@vueuse/core')['createUnrefFn']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
-    readonly danmakuPool: UnwrapRef<typeof import('./src/composables/server')['danmakuPool']>
+    readonly danmakuPool: UnwrapRef<typeof import('./composables/server')['danmakuPool']>
     readonly debouncedRef: UnwrapRef<typeof import('@vueuse/core')['debouncedRef']>
     readonly debouncedWatch: UnwrapRef<typeof import('@vueuse/core')['debouncedWatch']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
-    readonly disconnectRoom: UnwrapRef<typeof import('./src/composables/server')['disconnectRoom']>
+    readonly disconnectRoom: UnwrapRef<typeof import('./composables/server')['disconnectRoom']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
-    readonly fans: UnwrapRef<typeof import('./src/composables/server')['fans']>
-    readonly getAvatar: UnwrapRef<typeof import('./src/composables/getAvatar')['default']>
+    readonly fans: UnwrapRef<typeof import('./composables/server')['fans']>
+    readonly getAvatar: UnwrapRef<typeof import('./composables/getAvatar')['default']>
+    readonly getCardInfo: UnwrapRef<typeof import('./composables/getInfoFromUid')['getCardInfo']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
-    readonly getInfoFromUid: UnwrapRef<typeof import('./src/composables/getInfoFromUid')['default']>
-    readonly getLastMatchedGift: UnwrapRef<typeof import('./src/composables/getLastMatchedGift')['default']>
-    readonly getLiverInfo: UnwrapRef<typeof import('./src/composables/getLiverInfo')['default']>
-    readonly giftInfo: UnwrapRef<typeof import('./src/composables/api')['giftInfo']>
-    readonly guardType: UnwrapRef<typeof import('./src/composables/data')['guardType']>
+    readonly getLastMatchedGift: UnwrapRef<typeof import('./composables/getLastMatchedGift')['default']>
+    readonly getLiverInfo: UnwrapRef<typeof import('./composables/getLiverInfo')['default']>
+    readonly getSpaceInfo: UnwrapRef<typeof import('./composables/getInfoFromUid')['getSpaceInfo']>
+    readonly giftInfo: UnwrapRef<typeof import('./composables/api')['giftInfo']>
+    readonly guardType: UnwrapRef<typeof import('./composables/data')['guardType']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
-    readonly interval: UnwrapRef<typeof import('./src/composables/loginLoop')['interval']>
-    readonly isDanmakuProps: UnwrapRef<typeof import('./src/composables/components')['isDanmakuProps']>
-    readonly isDark: UnwrapRef<typeof import('./src/composables/dark')['isDark']>
+    readonly interval: UnwrapRef<typeof import('./composables/loginLoop')['interval']>
+    readonly isDanmakuProps: UnwrapRef<typeof import('./composables/components')['isDanmakuProps']>
+    readonly isDark: UnwrapRef<typeof import('./composables/dark')['isDark']>
     readonly isDefined: UnwrapRef<typeof import('@vueuse/core')['isDefined']>
-    readonly isGiftProps: UnwrapRef<typeof import('./src/composables/components')['isGiftProps']>
+    readonly isGiftProps: UnwrapRef<typeof import('./composables/components')['isGiftProps']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
-    readonly linked: UnwrapRef<typeof import('./src/composables/server')['linked']>
+    readonly linked: UnwrapRef<typeof import('./composables/server')['linked']>
     readonly logicAnd: UnwrapRef<typeof import('@vueuse/core')['logicAnd']>
     readonly logicNot: UnwrapRef<typeof import('@vueuse/core')['logicNot']>
     readonly logicOr: UnwrapRef<typeof import('@vueuse/core')['logicOr']>
@@ -366,13 +371,13 @@ declare module '@vue/runtime-core' {
     readonly onStartTyping: UnwrapRef<typeof import('@vueuse/core')['onStartTyping']>
     readonly onUnmounted: UnwrapRef<typeof import('vue')['onUnmounted']>
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
-    readonly parseFanNumbers: UnwrapRef<typeof import('./src/composables/parseFanNumbers')['default']>
+    readonly parseFanNumbers: UnwrapRef<typeof import('./composables/parseFanNumbers')['default']>
     readonly pausableWatch: UnwrapRef<typeof import('@vueuse/core')['pausableWatch']>
-    readonly population: UnwrapRef<typeof import('./src/composables/server')['population']>
-    readonly preferredDark: UnwrapRef<typeof import('./src/composables/dark')['preferredDark']>
+    readonly population: UnwrapRef<typeof import('./composables/server')['population']>
+    readonly preferredDark: UnwrapRef<typeof import('./composables/dark')['preferredDark']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
-    readonly qrcodeGet: UnwrapRef<typeof import('./src/composables/api')['qrcodeGet']>
-    readonly qrcodeLogin: UnwrapRef<typeof import('./src/composables/api')['qrcodeLogin']>
+    readonly qrcodeGet: UnwrapRef<typeof import('./composables/api')['qrcodeGet']>
+    readonly qrcodeLogin: UnwrapRef<typeof import('./composables/api')['qrcodeLogin']>
     readonly reactify: UnwrapRef<typeof import('@vueuse/core')['reactify']>
     readonly reactifyObject: UnwrapRef<typeof import('@vueuse/core')['reactifyObject']>
     readonly reactive: UnwrapRef<typeof import('vue')['reactive']>
@@ -389,11 +394,11 @@ declare module '@vue/runtime-core' {
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly resolveRef: UnwrapRef<typeof import('@vueuse/core')['resolveRef']>
     readonly resolveUnref: UnwrapRef<typeof import('@vueuse/core')['resolveUnref']>
-    readonly roomInfo: UnwrapRef<typeof import('./src/composables/api')['roomInfo']>
+    readonly roomInfo: UnwrapRef<typeof import('./composables/api')['roomInfo']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
-    readonly spaceInfo: UnwrapRef<typeof import('./src/composables/api')['spaceInfo']>
+    readonly spaceInfo: UnwrapRef<typeof import('./composables/api')['spaceInfo']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>
     readonly templateRef: UnwrapRef<typeof import('@vueuse/core')['templateRef']>
@@ -403,7 +408,7 @@ declare module '@vue/runtime-core' {
     readonly toReactive: UnwrapRef<typeof import('@vueuse/core')['toReactive']>
     readonly toRef: UnwrapRef<typeof import('vue')['toRef']>
     readonly toRefs: UnwrapRef<typeof import('vue')['toRefs']>
-    readonly toggleDark: UnwrapRef<typeof import('./src/composables/dark')['toggleDark']>
+    readonly toggleDark: UnwrapRef<typeof import('./composables/dark')['toggleDark']>
     readonly triggerRef: UnwrapRef<typeof import('vue')['triggerRef']>
     readonly tryOnBeforeMount: UnwrapRef<typeof import('@vueuse/core')['tryOnBeforeMount']>
     readonly tryOnBeforeUnmount: UnwrapRef<typeof import('@vueuse/core')['tryOnBeforeUnmount']>
@@ -518,6 +523,7 @@ declare module '@vue/runtime-core' {
     readonly useStepper: UnwrapRef<typeof import('@vueuse/core')['useStepper']>
     readonly useStorage: UnwrapRef<typeof import('@vueuse/core')['useStorage']>
     readonly useStorageAsync: UnwrapRef<typeof import('@vueuse/core')['useStorageAsync']>
+    readonly useStore: UnwrapRef<typeof import('./stores/store')['useStore']>
     readonly useStyleTag: UnwrapRef<typeof import('@vueuse/core')['useStyleTag']>
     readonly useSwipe: UnwrapRef<typeof import('@vueuse/core')['useSwipe']>
     readonly useTemplateRefsList: UnwrapRef<typeof import('@vueuse/core')['useTemplateRefsList']>

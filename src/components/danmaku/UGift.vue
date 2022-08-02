@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useStore } from '~/stores/store'
 import Avatar from '~/components/Avatar.vue'
 import MyImg from '~/components/img/MyImg.vue'
 defineProps<{

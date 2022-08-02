@@ -26,16 +26,19 @@ export default defineConfig({
         'vue-router',
         '@vueuse/core',
       ],
-      dts: true,
+      dts: 'src/auto-imports.d.ts',
       dirs: [
-        './src/composables',
+        'src/composables',
+        'src/stores',
       ],
       vueTemplate: true,
     }),
 
     // https://github.com/antfu/vite-plugin-components
     Components({
-      dts: true,
+      extensions: ['vue'],
+      include: [/\.vue$/, /\.vue\?vue/],
+      dts: 'src/components.d.ts',
     }),
 
     Pages(),

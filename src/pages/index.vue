@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import USwitch from '~/components/ui/USwitch.vue'
-import UCheckBox from '~/components/ui/UCheckBox.vue'
-
 const isChecked = ref(true)
 </script>
 

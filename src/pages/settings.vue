@@ -1,14 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { WebviewWindow } from '@tauri-apps/api/window'
-import Login from '~/components/settings/Login.vue'
-import { useStore } from '~/stores/store'
-import UCheckBox from '~/components/ui/UCheckBox.vue'
-import UGuardTag from '~/components/ui/UGuardTag.vue'
-import UMessageProvider from '~/components/ui/UMessageProvider.vue'
-import UColorPicker from '~/components/ui/UColorPicker.vue'
-import USlider from '~/components/ui/USlider.vue'
-import USettingsBox from '~/components/ui/USettingsBox.vue'
 
 const msgRef = ref()
 const store = useStore()

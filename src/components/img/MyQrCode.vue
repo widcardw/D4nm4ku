@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { nextTick, onMounted, ref, watch } from 'vue'
 import QRCode from 'qrcode'
 
 const props = defineProps<{

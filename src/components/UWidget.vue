@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { onBeforeUnmount } from 'vue'
 import { listen } from '@tauri-apps/api/event'
 import { connectRoom, danmakuPool, disconnectRoom, fans, population } from '~/composables/server'
 import { isGiftProps } from '~/composables/components'
 import UWatch from '~/components/danmaku/UWatch.vue'
 import URenderer from '~/components/danmaku/URenderer.vue'
-import { useStore } from '~/stores/store'
 
 const store = useStore()
 const unlistens: Function[] = []

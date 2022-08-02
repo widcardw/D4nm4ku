@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import UWidget from '../components/UWidget.vue'
+import UWidget from '~/components/UWidget.vue'
 </script>
 
 <template>
