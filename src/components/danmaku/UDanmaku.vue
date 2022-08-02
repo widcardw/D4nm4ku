@@ -25,10 +25,12 @@ const props = withDefaults(defineProps<{
 
 const faceUrl = ref('')
 
+if (props.showAvatar) {
 // 异步获取头像的链接，默认为 noface，当加载出来后替换为真实头像
-getAvatar(props.uid).then((url: string | undefined) => {
-  faceUrl.value = url ?? ''
-})
+  getAvatar(props.uid).then((url: string | undefined) => {
+    faceUrl.value = url ?? ''
+  })
+}
 </script>
 
 <template>

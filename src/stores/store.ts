@@ -44,6 +44,7 @@ export const useStore = defineStore('stores', {
       bgOpacity: '255',
       blur: false,
     } as ConfigProps,
+    requestBlockedTimes: 0,
   }),
   getters: {
     getUserInfo(): UserInfo {
