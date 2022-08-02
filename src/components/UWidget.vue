@@ -48,9 +48,9 @@ unlistens.push(await listen('blur', (event) => {
 
 connectRoom()
 
-onBeforeUnmount(() => {
-  disconnectRoom()
+tryOnBeforeUnmount(() => {
   unlistens.map(fn => fn())
+  disconnectRoom()
 })
 
 const hex2rgb = (hex: string, opacity: string) => {
