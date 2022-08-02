@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useVModel } from '@vueuse/core'
 const props = withDefaults(defineProps<{
   modelValue?: string
   disabled?: boolean

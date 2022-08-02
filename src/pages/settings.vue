@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { WebviewWindow } from '@tauri-apps/api/window'
 
-// const msgRef = ref()
 const msgRef = inject('msgRef') as any
 const store = useStore()
 const saveSettings = useThrottleFn(() => {

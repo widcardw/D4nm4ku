@@ -1,14 +1,8 @@
-import { useStorage } from '@vueuse/core'
 import { KeepLiveWS } from 'bilibili-live-ws'
 import { fetch } from '@tauri-apps/api/http'
-import { ref } from 'vue'
-import { giftInfo } from './api'
 import type { DanmakuMessage, GiftInfo, SendGiftMessage } from './types'
-import parseFanNumbers from './parseFanNumbers'
-import getLiverInfo from './getLiverInfo'
 import type { DanmakuProps, GiftProps } from './components'
-import getLastMatchedGift from './getLastMatchedGift'
-import { useStore } from '~/stores/store'
+
 const roomId = useStorage('roomId', '')
 const linked = ref(true)
 const store = useStore()

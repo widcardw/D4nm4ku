@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { guardType } from '~/composables/data'
 import UGuardTag from '~/components/ui/UGuardTag.vue'
-import getAvatar from '~/composables/getAvatar'
 import Avatar from '~/components/Avatar.vue'
 
 const props = withDefaults(defineProps<{

@@ -6,10 +6,10 @@ const fruit = ref('banana')
 <template>
   <div>
     <USwitch v-model="isChecked" :disabled="false">
-      啊啊啊
+      复选框
     </USwitch>
     <UCheckBox v-model="isChecked">
-      必必剥剥
+      Switch
     </UCheckBox>
     <div>
       <URadio v-model="fruit" value="apple" name="fruit">

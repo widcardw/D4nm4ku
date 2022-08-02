@@ -1,9 +1,3 @@
-import { useStore } from '../stores/store'
-import {
-  getCardInfo,
-  getSpaceInfo,
-} from './getInfoFromUid'
-
 const store = useStore()
 
 interface SpaceApiResponse {
@@ -29,8 +23,8 @@ const MAX_REQUEST_BLOCK_TIMES = 10
 export default async function (uid: number) {
   const preload = store.avatarMap.find(x => x.uid === uid)
   if (preload) {
-    // eslint-disable-next-line no-console
-    console.log('Load avatar from cache')
+    // // eslint-disable-next-line no-console
+    // console.log('Load avatar from cache')
     return preload.url
   }
 
