@@ -21,7 +21,7 @@ const store = useStore()
 
 <template>
   <div flex w-full space-x-2 bg-blue-800 text-white p-2 rounded my-2>
-    <Avatar :src="face" />
+    <Avatar w-3rem h-3rem :src="face" />
     <div flex-1>
       <div flex justify-between text-sm font-bold wsn>
         {{ uname }}

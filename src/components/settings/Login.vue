@@ -43,7 +43,7 @@ const logout = async () => {
 
 <template>
   <div flex space-x-2 items-center>
-    <Avatar :src="store.getUserInfo.avatarUrl || ''" />
+    <Avatar w-3rem h-3rem :src="store.getUserInfo.avatarUrl || ''" />
     <div flex-1>
       <div v-if="!store.getUserInfo.mid" flex>
         <div space-x-2>

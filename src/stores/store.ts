@@ -24,6 +24,7 @@ interface ConfigProps {
   bgColor: string
   bgOpacity: string
   blur: boolean
+  layout: 'loose' | 'tight'
 }
 
 export const useStore = defineStore('stores', {
@@ -43,6 +44,7 @@ export const useStore = defineStore('stores', {
       bgColor: '#ffffff',
       bgOpacity: '255',
       blur: false,
+      layout: 'loose',
     } as ConfigProps,
     requestBlockedTimes: 0,
   }),

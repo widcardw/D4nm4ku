@@ -15,10 +15,12 @@ const props = withDefaults(defineProps<{
   showAvatar?: boolean
   showGuardTag?: boolean
   showTime?: boolean
+  layout?: 'loose' | 'tight'
 }>(), {
   showAvatar: true,
   showGuardTag: true,
   showTime: true,
+  layout: 'loose',
 })
 
 const faceUrl = ref('')
@@ -38,9 +40,9 @@ if (props.showAvatar) {
 </script>
 
 <template>
-  <div flex space-x-2 w-full p-2 my-2>
+  <div v-if="layout === 'loose'" flex space-x-2 w-full p-2 my-2>
     <!-- 头像 -->
-    <Avatar v-if="showAvatar" :src="faceUrl" />
+    <Avatar v-if="showAvatar" w-3rem h-3rem :src="faceUrl" />
     <div flex-1>
       <div flex justify-between text-sm>
         <div flex space-x-2>
@@ -65,6 +67,23 @@ if (props.showAvatar) {
         <img v-if="content.startsWith('http://')" class="h-2rem" :src="content" loading="/loading.gif">
         <span v-else>{{ content }}</span>
       </div>
+    </div>
+  </div>
+  <div v-else flex space-x-2 w-full p-2>
+    <Avatar v-if="showAvatar" :src="faceUrl" class="w-1.5rem h-1.5rem" />
+    <span v-if="showTime" wsn ml-2 text-sm op-50>
+      {{ new Date(ts).toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+      }) }}
+    </span>
+    <span leading-normal font-bold wsn op-70 text-sm :style="{ color }">
+      {{ uname }}
+    </span>
+    <img v-if="perhapsGuard !== 0 && level >= 20" self-center w-1rem h-1rem :src="guardType[perhapsGuard].badge" class="w-1.25rem h-1.25rem" mx-1 rounded-full>
+    <div>
+      <img v-if="content.startsWith('http://')" class="h-1.5rem" :src="content" loading="/loading.gif">
+      <span v-else>{{ content }}</span>
     </div>
   </div>
 </template>

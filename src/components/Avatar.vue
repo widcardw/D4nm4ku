@@ -6,6 +6,6 @@ defineProps<{
 </script>
 
 <template>
-  <MyImg :src="src" rounded-full w-3rem h-3rem shadow-md err-src="/noface.gif" />
+  <MyImg :src="src" rounded-full shadow-md err-src="/noface.gif" />
 </template>
 

@@ -45,6 +45,9 @@ unlistens.push(await listen('show-population', (event) => {
 unlistens.push(await listen('blur', (event) => {
   store.config.blur = parseBoolean(event.payload as string)
 }))
+unlistens.push(await listen('layout', (event) => {
+  store.config.layout = event.payload as 'loose' | 'tight'
+}))
 
 connectRoom()
 

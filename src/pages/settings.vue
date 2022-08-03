@@ -34,6 +34,22 @@ const pinWidget = () => {
         保存设置
       </button>
     </div>
+    <USettingsBox title="界面布局">
+      <URadio
+        v-model="store.config.layout"
+        value="loose" name="layout"
+        @update:model-value="settingChanged('layout', store.config.layout)"
+      >
+        松散
+      </URadio>
+      <URadio
+        v-model="store.config.layout"
+        value="tight" name="layout"
+        @update:model-value="settingChanged('layout', store.config.layout)"
+      >
+        紧凑
+      </URadio>
+    </USettingsBox>
     <USettingsBox title="常规">
       <UCheckBox
         v-model="store.config.showAvatar"
@@ -50,6 +66,7 @@ const pinWidget = () => {
       <div flex space-x-2>
         <UCheckBox
           v-model="store.config.showGuardTag"
+          :disabled="store.config.layout === 'tight'"
           @update:model-value="settingChanged('show-guard-tag', store.config.showGuardTag)"
         >
           显示标签和等级
@@ -114,7 +131,7 @@ const pinWidget = () => {
         :disabled="!store.getUserInfo.mid"
         @update:model-value="settingChanged('can-send-message', store.getConfig.canSendMessage)"
       >
-        用户可直接发送弹幕
+        通过弹幕窗格窗口发送弹幕
       </UCheckBox>
     </USettingsBox>
   </div>

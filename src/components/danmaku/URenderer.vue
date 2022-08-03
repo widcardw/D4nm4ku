@@ -26,6 +26,7 @@ const store = useStore()
     :show-avatar="store.getConfig.showAvatar"
     :show-guard-tag="store.getConfig.showGuardTag"
     :show-time="store.getConfig.showTime"
+    :layout="store.getConfig.layout"
   />
   <!-- 类型断言为礼物 -->
   <UGift
