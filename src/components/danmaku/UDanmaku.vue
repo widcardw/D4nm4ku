@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { guardType } from '~/composables/data'
-import UGuardTag from '~/components/ui/UGuardTag.vue'
-import Avatar from '~/components/Avatar.vue'
+import UGuardTag from '~/components/danmaku/UGuardTag.vue'
+import Avatar from '~/components/img/Avatar.vue'
 
 const props = withDefaults(defineProps<{
   content: string
@@ -71,18 +71,18 @@ if (props.showAvatar) {
   </div>
   <div v-else flex space-x-2 w-full p-2>
     <Avatar v-if="showAvatar" :src="faceUrl" class="w-1.5rem h-1.5rem" />
-    <span v-if="showTime" wsn ml-2 text-sm op-50>
-      {{ new Date(ts).toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-      }) }}
-    </span>
-    <span leading-normal font-bold wsn op-70 text-sm :style="{ color }">
-      {{ uname }}
-    </span>
-    <img v-if="perhapsGuard !== 0 && level >= 20" self-center w-1rem h-1rem :src="guardType[perhapsGuard].badge" class="w-1.25rem h-1.25rem" mx-1 rounded-full>
-    <div>
-      <img v-if="content.startsWith('http://')" class="h-1.5rem" :src="content" loading="/loading.gif">
+    <div space-x-1>
+      <span v-if="showTime" wsn text-sm op-50>
+        {{ new Date(ts).toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+        }) }}
+      </span>
+      <span leading-normal font-bold wsn text-sm op-70 :style="{ color }">
+        {{ uname }}
+      </span>
+      <img v-if="perhapsGuard !== 0 && level >= 20" inline-flex w-1rem h-1rem :src="guardType[perhapsGuard].badge" class="w-1.25rem h-1.25rem" rounded-full>
+      <img v-if="content.startsWith('http://')" class="h-1.5rem" :src="content" loading="/loading.gif" inline-flex>
       <span v-else>{{ content }}</span>
     </div>
   </div>

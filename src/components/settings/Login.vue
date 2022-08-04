@@ -2,7 +2,7 @@
 import { fetch } from '@tauri-apps/api/http'
 import { confirm } from '@tauri-apps/api/dialog'
 import MyQrCode from '~/components/img/MyQrCode.vue'
-import Avatar from '~/components/Avatar.vue'
+import Avatar from '~/components/img/Avatar.vue'
 import { clearLoop, createLoginLoop, interval } from '~/composables/loginLoop'
 
 const store = useStore()

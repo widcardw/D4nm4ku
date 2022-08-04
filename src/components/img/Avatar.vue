@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import MyImg from './img/MyImg.vue'
+import MyImg from './MyImg.vue'
 defineProps<{
   src: string
 }>()
