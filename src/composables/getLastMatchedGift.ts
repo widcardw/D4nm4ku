@@ -1,7 +1,7 @@
-import type { DanmakuProps, GiftProps } from '~/composables/components'
+import type { GiftProps } from '~/composables/components'
 
 const getLastMatchedGift = (
-  danmakuPool: Array<DanmakuProps | GiftProps>,
+  danmakuPool: Array<any>,
   uname: string,
   giftId: number,
   ts: number,

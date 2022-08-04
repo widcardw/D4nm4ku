@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import UDanmaku from './UDanmaku.vue'
-import UGift from './UGift.vue'
-import type { DanmakuProps, GiftProps } from '~/composables/components'
-import { isDanmakuProps, isGiftProps } from '~/composables/components'
+import UGuardDanmaku from '../guard/UGuardDanmaku.vue'
+import UDanmaku from '~/components/danmaku/UDanmaku.vue'
+import UGift from '~/components/danmaku/UGift.vue'
+import UScDanmaku from '~/components/superchat/UScDanmaku.vue'
+import type { DanmakuProps, GiftProps, GuardBuyProps, SuperChatProps } from '~/composables/components'
+import { isDanmakuProps, isGiftProps, isGuardBuyProps, isSuperChatProps } from '~/composables/components'
 
 defineProps<{
-  obj?: DanmakuProps | GiftProps
+  obj?: DanmakuProps | GiftProps | SuperChatProps | GuardBuyProps
 }>()
 
 const store = useStore()
@@ -40,5 +42,27 @@ const store = useStore()
     :gift-name="obj.giftName"
     :price="obj.price"
     :ts="obj.ts"
+  />
+  <UScDanmaku
+    v-else-if="isSuperChatProps(obj)"
+    :uname="obj.uname"
+    :uid="obj.uid"
+    :ts="obj.ts"
+    :second="obj.second"
+    :face="obj.face"
+    :bg-bottom-color="obj.bgBottomColor"
+    :bg-color="obj.bgColor"
+    :content="obj.content"
+    :price="obj.price"
+  />
+  <UGuardDanmaku
+    v-else-if="isGuardBuyProps(obj)"
+    :uname="obj.uname"
+    :uid="obj.uid"
+    :ts="obj.ts"
+    :guard-level="obj.guardLevel"
+    :face="obj.face"
+    :price="obj.price"
+    :num="obj.num"
   />
 </template>

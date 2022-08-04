@@ -100,13 +100,14 @@ interface GuardBuyMessage extends MessageType {
     num: number
     price: number
     guard_level: number
+    ts: number
   }
 }
 
 interface SuperChatMessage extends MessageType {
   cmd: 'SUPER_CHAT_MESSAGE_JPN'
   data: {
-    uid: number
+    uid: string
     user_info: {
       uname: string
       face: string
@@ -114,6 +115,10 @@ interface SuperChatMessage extends MessageType {
     price: number
     message_jpn: string
     message: string
+    background_bottom_color: string
+    background_color: string
+    ts: number
+    time: number
   }
 }
 

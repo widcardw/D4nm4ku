@@ -1,20 +1,43 @@
 import { KeepLiveWS } from 'bilibili-live-ws'
 import { fetch } from '@tauri-apps/api/http'
-import type { DanmakuMessage, GiftInfo, SendGiftMessage } from './types'
-import type { DanmakuProps, GiftProps } from './components'
+import type {
+  DanmakuMessage,
+  GiftInfo,
+  GuardBuyMessage,
+  SendGiftMessage,
+  SuperChatMessage,
+} from './types'
+import type {
+  DanmakuProps,
+  GiftProps,
+  GuardBuyProps,
+  SuperChatProps,
+} from './components'
 
 const roomId = useStorage('roomId', '')
 const linked = ref(true)
 const store = useStore()
 const fans = ref('')
 const population = ref('')
-const danmakuPool = ref<Array<DanmakuProps | GiftProps>>([])
+const danmakuPool = ref<Array<DanmakuProps | GiftProps | SuperChatProps | GuardBuyProps>>([])
+const selectedSc = ref<SuperChatProps | null>(null)
+const chatPool = ref<Array<SuperChatProps>>([])
+
 let live: KeepLiveWS | null = null
 
-const pushObject = (obj: DanmakuProps | GiftProps) => {
+const pushObject = (obj: DanmakuProps | GiftProps | SuperChatProps | GuardBuyProps) => {
   danmakuPool.value.push(obj)
   if (danmakuPool.value.length > 100)
     danmakuPool.value.shift()
+}
+
+const pushChat = (chat: SuperChatProps) => {
+  chatPool.value.push(chat)
+  setTimeout(() => {
+    chatPool.value = chatPool.value.filter(x => x.ts !== chat.ts)
+    if (selectedSc.value?.ts === chat.ts)
+      selectedSc.value = null
+  }, chat.second * 1000)
 }
 
 const connectRoom = () => {
@@ -110,6 +133,54 @@ const connectRoom = () => {
 
       pushObject(danmaku)
     })
+
+    live.on('SUPER_CHAT_MESSAGE_JPN', (data: SuperChatMessage) => {
+      // eslint-disable-next-line no-console
+      console.log(data)
+      const { data: { uid, user_info: { uname, face }, price, message_jpn, message, ts, time, background_color, background_bottom_color } } = data
+      const chat: SuperChatProps = {
+        type: 'superchat',
+        uid: Number.parseInt(uid),
+        uname,
+        face,
+        price,
+        content: message_jpn === '' ? message : message_jpn,
+        ts: ts * 1000,
+        second: time,
+        bgColor: background_color,
+        bgBottomColor: background_bottom_color,
+      }
+
+      // eslint-disable-next-line no-console
+      console.log(chat)
+
+      pushObject(chat)
+      pushChat(chat)
+    })
+
+    // live.on('SUPER_CHAT_MESSAGE', (data) => {
+    //   // eslint-disable-next-line no-console
+    //   console.log(data)
+    // })
+
+    live.on('GUARD_BUY', (data: GuardBuyMessage) => {
+      // eslint-disable-next-line no-console
+      console.log(data)
+
+      const { data: { uid, username, num, price, guard_level, ts } } = data
+      const guard: GuardBuyProps = {
+        type: 'guard_buy',
+        uname: username,
+        face: '',
+        uid,
+        guardLevel: guard_level,
+        num,
+        price,
+        ts: ts * 1000,
+      }
+
+      pushObject(guard)
+    })
   }
   catch (e) {
     // eslint-disable-next-line no-console
@@ -132,4 +203,7 @@ export {
   fans,
   danmakuPool,
   linked,
+  chatPool,
+  selectedSc,
+  pushChat,
 }

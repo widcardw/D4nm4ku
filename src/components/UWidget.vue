@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import { listen } from '@tauri-apps/api/event'
-import { connectRoom, danmakuPool, disconnectRoom, fans, population } from '~/composables/server'
+import USuperChatPool from '~/components/superchat/USuperChatPool.vue'
+import {
+  chatPool,
+  connectRoom,
+  danmakuPool,
+  disconnectRoom,
+  fans,
+  population,
+  selectedSc,
+} from '~/composables/server'
 import { isGiftProps } from '~/composables/components'
 import UWatch from '~/components/danmaku/UWatch.vue'
 import URenderer from '~/components/danmaku/URenderer.vue'
@@ -77,6 +86,12 @@ const hex2rgb = (hex: string, opacity: string) => {
       v-if="store.getConfig.showPopulation"
       data-tauri-drag-region shadow
       :population="population" :fans="fans"
+    />
+    <USuperChatPool
+      v-show="chatPool.length > 0"
+      v-model="selectedSc"
+      data-tauri-drag-region
+      :chat-pool="chatPool" z-999 shadow
     />
     <div
       class="scroller"
