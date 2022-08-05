@@ -4,12 +4,14 @@ import type { GiftInfo } from '../composables/types'
 interface UserInfo {
   oauthKey: string
   mid: number
+  midmd5: string
   mname: string
   expires: number
   bili_jct: string
   sessdata: string
   avatarUrl: string
   lastLogin: number
+  sid: string
 }
 
 interface ConfigProps {
@@ -29,6 +31,7 @@ interface ConfigProps {
 
 export const useStore = defineStore('stores', {
   state: () => ({
+    roomId: '',
     giftInfoList: [] as GiftInfo[],
     avatarMap: [] as { uid: number; url: string }[],
     userInfo: {} as UserInfo,
@@ -67,6 +70,10 @@ export const useStore = defineStore('stores', {
       this.config = JSON.parse(localStorage.getItem('config') || '{}')
       return this.config
     },
+    getRoomId(): string {
+      this.roomId = localStorage.getItem('roomId') || ''
+      return this.roomId
+    },
   },
   actions: {
     storeUserInfo() {
@@ -78,6 +85,9 @@ export const useStore = defineStore('stores', {
     },
     storeConfig() {
       localStorage.setItem('config', JSON.stringify(this.config))
+    },
+    setRoomId(id: string) {
+      localStorage.setItem('roomId', id)
     },
   },
 })
