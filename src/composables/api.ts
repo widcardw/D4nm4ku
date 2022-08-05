@@ -4,6 +4,8 @@ const giftInfo = 'https://api.live.bilibili.com/xlive/web-room/v1/giftPanel/gift
 const roomInfo = 'https://api.live.bilibili.com/room/v1/Room/get_info?id='
 const qrcodeGet = 'http://passport.bilibili.com/qrcode/getLoginUrl'
 const qrcodeLogin = 'http://passport.bilibili.com/qrcode/getLoginInfo'
+const danmakuSend = 'https://api.live.bilibili.com/msg/send'
+const logOutApi = 'http://passport.bilibili.com/login/exit/v2'
 
 export {
   spaceInfo,
@@ -12,4 +14,6 @@ export {
   qrcodeGet,
   qrcodeLogin,
   cardInfo,
+  danmakuSend,
+  logOutApi,
 }

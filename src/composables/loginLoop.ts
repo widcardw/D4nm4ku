@@ -12,6 +12,7 @@ const getUrlParams = (url: string) => {
     SESSDATA: params.get('SESSDATA') || '',
     bili_jct: params.get('bili_jct') || '',
     Expires: Number.parseInt(params.get('Expires') || ''),
+    sid: params.get('sid') || '',
   }
 }
 
@@ -26,18 +27,24 @@ const clearLoop = () => {
 
 function createLoginLoop(oauthKey: string) {
   interval.value = setInterval(async () => {
-    const { data: loginResponse }: {
-      data: {
-        data: -1 | -2 | -4 | -5 | { url: string }
-        message: string
-      }
-    } = await fetch(qrcodeLogin, {
+    const response = await fetch(qrcodeLogin, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: Body.form({ oauthKey }),
     })
+
+    const { data: loginResponse, rawHeaders }: {
+      data: {
+        data: -1 | -2 | -4 | -5 | { url: string }
+        message: string
+      }
+      headers: any
+      rawHeaders: {
+        'set-cookie': string[]
+      }
+    } = response as any
 
     if (typeof loginResponse.data === 'object') {
       clearLoop()
@@ -46,14 +53,17 @@ function createLoginLoop(oauthKey: string) {
       store.userInfo = {
         oauthKey,
         mid: params.DedeUserID,
+        midmd5: params.DedeUserID__ckMd5,
         bili_jct: params.bili_jct,
         expires: params.Expires,
         sessdata: params.SESSDATA,
+        sid: params.sid === '' ? rawHeaders['set-cookie'][0].split(';')[0].split('=')[1] : params.sid,
         mname: fullUserInfo.data.card.name,
         avatarUrl: fullUserInfo.data.card.face,
         lastLogin: new Date().getTime(),
       }
       store.storeUserInfo()
+      // console.log(headers, rawHeaders)
     }
 
     // eslint-disable-next-line no-console
