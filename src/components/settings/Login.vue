@@ -4,8 +4,10 @@ import { confirm } from '@tauri-apps/api/dialog'
 import MyQrCode from '~/components/img/MyQrCode.vue'
 import Avatar from '~/components/img/Avatar.vue'
 import { clearLoop, createLoginLoop, interval } from '~/composables/loginLoop'
+import logoutAccount from '~/composables/logout'
 
 const store = useStore()
+const msgRef = inject('msgRef') as any
 
 interface QrProps {
   url: string
@@ -36,8 +38,16 @@ const cancelLogin = () => {
 
 const logout = async () => {
   const confirmed = await confirm('确定要退出登录吗？', { title: '退出登录', type: 'warning' })
-  if (confirmed)
-    store.removeUserInfo()
+  if (confirmed) {
+    const resData = await logoutAccount() as any
+    if (resData.code === 0) {
+      store.removeUserInfo()
+      msgRef.value.pushMsg({ type: 'success', content: '退出成功' })
+    }
+    else {
+      msgRef.value.pushMsg({ type: 'error', content: '退出失败' })
+    }
+  }
 }
 </script>
 
@@ -50,12 +60,9 @@ const logout = async () => {
           <button btn :disabled="!getQrcodeEnabled" @click="login">
             {{ interval ? '刷新' : '登录' }}
           </button>
-          <button v-if="interval" btn @click="cancelLogin">
-            关闭二维码
-          </button>
         </div>
-        <div v-if="interval" absolute class="left-1/2 translate--1/2 top-1/2">
-          <MyQrCode ma :url="qrurl" />
+        <div v-if="interval" absolute z-998 class="left-1/2 translate--1/2 top-1/2">
+          <MyQrCode ma :url="qrurl" @close="cancelLogin" />
         </div>
       </div>
       <div v-else>
