@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { WebviewWindow } from '@tauri-apps/api/window'
+import { sendMsg } from '~/composables/msgSend'
 const roomId = useStorage('roomId', '')
 
 let webview: WebviewWindow | null = null
@@ -21,10 +22,13 @@ const createWebview = () => {
 </script>
 
 <template>
-  <div space-x-2 flex justify-center items-center h-100vh>
+  <div space-x-2 flex justify-center items-center>
     <input v-model="roomId" m-input w-10rem placeholder="输入房间号">
     <button btn @click="createWebview">
       连接
     </button>
   </div>
+  <button btn @click="sendMsg('哈哈哈')">
+    测试
+  </button>
 </template>
