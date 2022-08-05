@@ -17,7 +17,9 @@
         "scope":[
           "http://**",
           "https://**"
-        ]
+        ],
+        "all": true,
+        "request": true
       }
     },
     "macOSPrivateApi": true,
