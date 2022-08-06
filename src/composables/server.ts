@@ -10,7 +10,6 @@ import type {
 import type {
   DanmakuProps,
   GiftProps,
-  GuardBuyProps,
   SuperChatProps,
 } from './components'
 
@@ -19,13 +18,13 @@ const linked = ref(true)
 const store = useStore()
 const fans = ref('')
 const population = ref('')
-const danmakuPool = ref<Array<DanmakuProps | GiftProps | SuperChatProps | GuardBuyProps>>([])
+const danmakuPool = ref<Array<DanmakuProps | GiftProps | SuperChatProps>>([])
 const selectedSc = ref<SuperChatProps | null>(null)
 const chatPool = ref<Array<SuperChatProps>>([])
 
 let live: KeepLiveWS | null = null
 
-const pushObject = (obj: DanmakuProps | GiftProps | SuperChatProps | GuardBuyProps) => {
+const pushObject = (obj: DanmakuProps | GiftProps | SuperChatProps) => {
   danmakuPool.value.push(obj)
   if (danmakuPool.value.length > 100)
     danmakuPool.value.shift()
