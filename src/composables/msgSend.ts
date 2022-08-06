@@ -6,13 +6,25 @@ const roomId = store.getRoomId
 
 const cookie = getCookies()
 
-async function sendMsg(msg: string) {
-  emit('send_msg', {
+async function sendSingleMsg(msg: string) {
+  const payload = {
     msg,
     cookie,
     roomid: roomId,
     csrf: store.getUserInfo.bili_jct,
-  })
+  }
+  // console.log(payload, cookie)
+  emit('send_msg', payload)
+}
+
+async function sendMsg(msg: string) {
+  for (let i = 0; i * 20 < msg.length; i++) {
+    const partial = msg.substring(i * 20, i * 20 + 20)
+    setTimeout(() => {
+      sendSingleMsg(partial)
+      // console.log(partial)
+    }, i * 1200)
+  }
 }
 
 export {

@@ -28,7 +28,7 @@ const createWebview = () => {
       连接
     </button>
   </div>
-  <button btn @click="sendMsg('哈哈哈')">
+  <button btn @click="sendMsg('abc')">
     测试
   </button>
 </template>

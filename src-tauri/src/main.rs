@@ -43,15 +43,15 @@ async fn send_msg(msg: String, cookie: String, csrf: String, roomid: String) -> 
       .send()
       .await?;
 
-    // println!("{:?}", response);
-    
+    println!("{:?}", response);
+
     Ok(())
 }
 
 fn main() {
   tauri::Builder::default()
     .setup(move |app| {
-      let listen_to_send_msg = app.listen_global("send_msg", |event| {
+      let _listen_to_send_msg = app.listen_global("send_msg", |event| {
         let payload: Payload = serde_json::from_str(event.payload().unwrap()).unwrap();
         tokio::spawn(async move {
           send_msg(
