@@ -23,6 +23,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+*.sublime-workspace
 
 # auto import
 src/auto-imports.d.ts
