@@ -30,8 +30,8 @@ const msgRef = inject('msgRef') as any
 if (props.showAvatar) {
 // 异步获取头像的链接，默认为 noface，当加载出来后替换为真实头像
   getAvatar(props.uid)
-    .then((url: string | undefined) => {
-      faceUrl.value = url ?? ''
+    .then((url) => {
+      faceUrl.value = url
     })
     .catch(() => {
       msgRef.value.pushMsg({ content: '头像获取失败', type: 'error' })

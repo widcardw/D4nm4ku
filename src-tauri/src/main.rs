@@ -17,7 +17,6 @@ static API: &str = "https://api.live.bilibili.com/msg/send";
 
 async fn send_msg(msg: String, cookie: String, csrf: String, roomid: String) -> Result<(), Box<dyn std::error::Error>> {
 
-  // println!("do!");
   let client = reqwest::Client::new();
   let csrf2 = csrf.clone();
 
@@ -36,14 +35,14 @@ async fn send_msg(msg: String, cookie: String, csrf: String, roomid: String) -> 
       .as_secs().to_string());
 
 
-    let response = client
+    let _response = client
       .post(API)
       .header("cookie", cookie)
       .multipart(form)
       .send()
       .await?;
 
-    println!("{:?}", response);
+    // println!("{:?}", response);
 
     Ok(())
 }

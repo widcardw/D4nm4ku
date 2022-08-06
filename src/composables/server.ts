@@ -168,18 +168,21 @@ const connectRoom = () => {
       console.log(data)
 
       const { data: { uid, username, num, price, guard_level, ts } } = data
-      const guard: GuardBuyProps = {
-        type: 'guard_buy',
+      const guard: SuperChatProps = {
+        type: 'superchat',
         uname: username,
         face: '',
         uid,
-        guardLevel: guard_level,
-        num,
-        price,
+        price: price * num,
+        content: '欢迎加入大航海',
+        second: guardType[guard_level].second,
         ts: ts * 1000,
+        bgColor: guardType[guard_level].bgColor,
+        bgBottomColor: guardType[guard_level].bgBottomColor,
       }
 
       pushObject(guard)
+      pushChat(guard)
     })
   }
   catch (e) {

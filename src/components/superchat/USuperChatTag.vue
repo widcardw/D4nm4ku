@@ -7,6 +7,7 @@ const props = defineProps<{
   price: number
   color: string
   second: number
+  uid: number
   ts: number
 }>()
 
@@ -21,6 +22,19 @@ watchEffect(() => {
   if (timestamp.value - props.ts > props.second * 1000)
     pause()
 })
+
+const faceUrl = ref(props.face)
+const msgRef = inject('msgRef') as any
+
+if (props.face === '') {
+  getAvatar(props.uid)
+    .then((url) => {
+      faceUrl.value = url
+    })
+    .catch(() => {
+      msgRef.value.pushMsg({ content: '头像获取失败', type: 'error' })
+    })
+}
 </script>
 
 <template>
@@ -33,7 +47,7 @@ watchEffect(() => {
     }"
     p-1 pr-2 text-white
   >
-    <Avatar :src="face" class="w-1.5rem h-1.5rem" />
+    <Avatar :src="faceUrl" class="w-1.5rem h-1.5rem" />
     <div>
       ￥{{ price }}
     </div>

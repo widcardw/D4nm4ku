@@ -30,6 +30,7 @@ const clickSuperChat = (currentSc: SuperChatProps) => {
       <USuperChatTag
         v-for="it in chatPool" :key="it.ts"
         :face="it.face"
+        :uid="it.uid"
         :price="it.price"
         :color="it.bgBottomColor"
         :second="it.second"

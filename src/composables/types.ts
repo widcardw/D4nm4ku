@@ -99,7 +99,7 @@ interface GuardBuyMessage extends MessageType {
     gift_name: string
     num: number
     price: number
-    guard_level: number
+    guard_level: 1 | 2 | 3
     ts: number
   }
 }

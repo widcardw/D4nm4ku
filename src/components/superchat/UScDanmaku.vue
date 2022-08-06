@@ -3,7 +3,7 @@ import Avatar from '~/components/img/Avatar.vue'
 
 import { getLightnessFromHex } from '~/composables/randomColor'
 
-defineProps<{
+const props = defineProps<{
   uname: string
   content: string
   face: string
@@ -14,6 +14,19 @@ defineProps<{
   bgColor: string
   second: number
 }>()
+
+const faceUrl = ref(props.face)
+const msgRef = inject('msgRef') as any
+
+if (props.face === '') {
+  getAvatar(props.uid)
+    .then((url) => {
+      faceUrl.value = url
+    })
+    .catch(() => {
+      msgRef.value.pushMsg({ content: '头像获取失败', type: 'error' })
+    })
+}
 </script>
 
 <template>
@@ -25,7 +38,7 @@ defineProps<{
       }"
       flex space-x-2 p-2 rounded-t
     >
-      <Avatar w-3rem h-3rem :src="face" />
+      <Avatar w-3rem h-3rem :src="faceUrl" />
       <div flex-1>
         <div font-bold text-lg>
           {{ uname }}
