@@ -42,7 +42,7 @@ async fn send_msg(msg: String, cookie: String, csrf: String, roomid: String) -> 
       .send()
       .await?;
 
-    // println!("{:?}", response);
+    // println!("{:?}", _response);
 
     Ok(())
 }

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { listen } from '@tauri-apps/api/event'
+import UMessageSender from './send/UMessageSender.vue'
 import USuperChatPool from '~/components/superchat/USuperChatPool.vue'
 import {
   chatPool,
@@ -104,6 +105,7 @@ const hex2rgb = (hex: string, opacity: string) => {
         :obj="it"
       />
     </div>
+    <UMessageSender v-if="store.getConfig.canSendMessage" :no-border="true" />
   </div>
 </template>
 

@@ -22,8 +22,7 @@ async function sendMsg(msg: string) {
     const partial = msg.substring(i * 20, i * 20 + 20)
     setTimeout(() => {
       sendSingleMsg(partial)
-      // console.log(partial)
-    }, i * 1200)
+    }, i * 1500)
   }
 }
 

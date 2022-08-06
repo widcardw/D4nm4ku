@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { WebviewWindow } from '@tauri-apps/api/window'
-import { sendMsg } from '~/composables/msgSend'
+import UInputBtn from '~/components/ui/UInputBtn.vue'
 const roomId = useStorage('roomId', '')
 
 let webview: WebviewWindow | null = null
@@ -22,13 +22,9 @@ const createWebview = () => {
 </script>
 
 <template>
-  <div space-x-2 flex justify-center items-center>
-    <input v-model="roomId" m-input w-10rem placeholder="输入房间号">
-    <button btn @click="createWebview">
+  <div>
+    <UInputBtn v-model="roomId" @click-btn="createWebview">
       连接
-    </button>
+    </UInputBtn>
   </div>
-  <button btn @click="sendMsg('abc')">
-    测试
-  </button>
 </template>
