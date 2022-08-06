@@ -57,7 +57,7 @@ const logout = async () => {
     <div flex-1>
       <div v-if="!store.getUserInfo.mid" flex>
         <div space-x-2>
-          <button btn :disabled="!getQrcodeEnabled" @click="login">
+          <button btn rounded :disabled="!getQrcodeEnabled" @click="login">
             {{ interval ? '刷新' : '登录' }}
           </button>
         </div>
@@ -72,7 +72,7 @@ const logout = async () => {
         <div>已登录</div>
       </div>
     </div>
-    <button v-if="store.getUserInfo.mid" btn @click="logout">
+    <button v-if="store.getUserInfo.mid" btn rounded @click="logout">
       退出登录
     </button>
   </div>

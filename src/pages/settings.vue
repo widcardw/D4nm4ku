@@ -30,7 +30,7 @@ const pinWidget = () => {
       <div font-bold text-xl>
         设置项
       </div>
-      <button btn @click="saveSettings">
+      <button btn rounded @click="saveSettings">
         保存设置
       </button>
     </div>

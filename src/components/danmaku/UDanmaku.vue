@@ -40,7 +40,7 @@ if (props.showAvatar) {
 </script>
 
 <template>
-  <div v-if="layout === 'loose'" flex space-x-2 w-full p-2 my-2>
+  <div v-if="layout === 'loose'" flex space-x-2 w-full p="x-2 y-1" my-2>
     <!-- 头像 -->
     <Avatar v-if="showAvatar" w-3rem h-3rem :src="faceUrl" />
     <div flex-1>
@@ -69,9 +69,9 @@ if (props.showAvatar) {
       </div>
     </div>
   </div>
-  <div v-else flex space-x-2 w-full p-2>
+  <div v-else flex space-x-2 w-full p="x-2 y-1">
     <Avatar v-if="showAvatar" :src="faceUrl" class="w-1.5rem h-1.5rem" />
-    <div space-x-1>
+    <div space-x-1 overflow-ellipsis>
       <span v-if="showTime" wsn text-sm op-50>
         {{ new Date(ts).toLocaleTimeString('en-US', {
           hour: '2-digit',
