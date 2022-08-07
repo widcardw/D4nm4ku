@@ -131,8 +131,16 @@ const pinWidget = () => {
         :disabled="!store.getUserInfo.mid"
         @update:model-value="settingChanged('can-send-message', store.getConfig.canSendMessage)"
       >
-        通过弹幕窗格窗口发送弹幕
+        通过弹幕窗格发送弹幕
+      </UCheckBox>
+      <UCheckBox
+        v-model="store.getConfig.autoReply"
+        :disabled="!store.getUserInfo.mid"
+        @update:model-value="settingChanged('auto-reply', store.getConfig.autoReply)"
+      >
+        自动回复
       </UCheckBox>
     </USettingsBox>
+    <UMultiList v-if="store.config.autoReply" ml-2 />
   </div>
 </template>

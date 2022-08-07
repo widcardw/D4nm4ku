@@ -58,6 +58,9 @@ unlistens.push(await listen('blur', (event) => {
 unlistens.push(await listen('layout', (event) => {
   store.config.layout = event.payload as 'loose' | 'tight'
 }))
+unlistens.push(await listen('auto-reply', (event) => {
+  store.config.autoReply = parseBoolean(event.payload as string)
+}))
 
 connectRoom()
 

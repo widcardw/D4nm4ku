@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import type { GiftInfo } from '../composables/types'
+import type { Answer } from '~/composables/autoSendMsg'
 
 interface UserInfo {
   oauthKey: string
@@ -27,7 +28,24 @@ interface ConfigProps {
   bgOpacity: string
   blur: boolean
   layout: 'loose' | 'tight'
+  autoReply: boolean
 }
+
+const defaultConfig = {
+  showGuardTag: true,
+  showAvatar: true,
+  showTime: true,
+  showSilverGift: false,
+  showPopulation: true,
+  showGoldGift: true,
+  canSendMessage: false,
+  textColor: '#000000',
+  bgColor: '#ffffff',
+  bgOpacity: '128',
+  blur: false,
+  layout: 'loose',
+  autoReply: false,
+} as ConfigProps
 
 export const useStore = defineStore('stores', {
   state: () => ({
@@ -35,21 +53,9 @@ export const useStore = defineStore('stores', {
     giftInfoList: [] as GiftInfo[],
     avatarMap: [] as { uid: number; url: string }[],
     userInfo: {} as UserInfo,
-    config: {
-      showGuardTag: true,
-      showAvatar: true,
-      showTime: true,
-      showSilverGift: false,
-      showPopulation: true,
-      showGoldGift: true,
-      canSendMessage: false,
-      textColor: '#000000',
-      bgColor: '#ffffff',
-      bgOpacity: '255',
-      blur: false,
-      layout: 'loose',
-    } as ConfigProps,
+    config: { ...defaultConfig },
     requestBlockedTimes: 0,
+    faqs: [] as Answer[],
   }),
   getters: {
     getUserInfo(): UserInfo {
@@ -67,12 +73,19 @@ export const useStore = defineStore('stores', {
       return this.userInfo
     },
     getConfig(): ConfigProps {
-      this.config = JSON.parse(localStorage.getItem('config') || '{}')
+      this.config = JSON.parse(localStorage.getItem('config') || 'null')
+      if (!this.config)
+        this.config = { ...defaultConfig }
+
       return this.config
     },
     getRoomId(): string {
       this.roomId = localStorage.getItem('roomId') || ''
       return this.roomId
+    },
+    getFaqs(): Answer[] {
+      this.faqs = JSON.parse(localStorage.getItem('faqs') || '[]')
+      return this.faqs
     },
   },
   actions: {
@@ -85,6 +98,9 @@ export const useStore = defineStore('stores', {
     },
     storeConfig() {
       localStorage.setItem('config', JSON.stringify(this.config))
+      // trim faqs
+      this.faqs = this.faqs.filter(it => it.answer.trim() !== '' && it.keywords.length !== 0)
+      localStorage.setItem('faqs', JSON.stringify(this.faqs))
     },
     setRoomId(id: string) {
       localStorage.setItem('roomId', id)
