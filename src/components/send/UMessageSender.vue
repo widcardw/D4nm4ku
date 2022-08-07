@@ -12,7 +12,7 @@ const msg = ref('')
 const btnDisabled = ref(false)
 const msgRef = inject('msgRef') as any
 
-const sendMessage = () => {
+const sendMessage = async () => {
   if (msg.value.trim() === '') {
     msgRef.value.pushMsg({
       type: 'warning',
@@ -20,13 +20,18 @@ const sendMessage = () => {
     })
     return
   }
-
-  btnDisabled.value = true
-  sendMsg(msg.value)
-  setTimeout(() => {
+  try {
+    btnDisabled.value = true
+    await sendMsg(msg.value)
     btnDisabled.value = false
-  })
-  msg.value = ''
+    msg.value = ''
+  }
+  catch (e) {
+    msgRef.value.pushMsg({
+      type: 'error',
+      content: '消息发送失败！请重新登录！',
+    })
+  }
 }
 </script>
 
