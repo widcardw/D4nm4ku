@@ -4,7 +4,15 @@ import UInputBtn from '~/components/ui/UInputBtn.vue'
 const roomId = useStorage('roomId', '')
 
 let webview: WebviewWindow | null = null
+const msgRef = inject('msgRef') as any
 const createWebview = () => {
+  if (roomId.value.trim() === '') {
+    msgRef.value.pushMsg({
+      type: 'warning',
+      content: '房间号不能为空！',
+    })
+    return
+  }
   if (webview) {
     webview.close()
     webview = null
