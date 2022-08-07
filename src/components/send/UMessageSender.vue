@@ -12,7 +12,7 @@ const msg = ref('')
 const btnDisabled = ref(false)
 const msgRef = inject('msgRef') as any
 
-const sendMessage = async () => {
+const sendMessage = () => {
   if (msg.value.trim() === '') {
     msgRef.value.pushMsg({
       type: 'warning',
@@ -22,7 +22,7 @@ const sendMessage = async () => {
   }
   try {
     btnDisabled.value = true
-    await sendMsg(msg.value)
+    sendMsg(msg.value)
     btnDisabled.value = false
     msg.value = ''
   }
