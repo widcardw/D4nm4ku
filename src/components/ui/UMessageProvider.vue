@@ -35,10 +35,10 @@ defineExpose({ pushMsg })
       p="x-4 y-2" my-2 shadow-lg rounded
       animate-bounce-in ma transition-all
       bg="white dark:zinc-900"
-      flex items-center space-x-1
+      flex items-center space-x-2
       class="use-dark-msg"
     >
-      <div icon-btn :class="iconsDict[it.type]" /> <span>{{ it.content }}</span>
+      <div icon-btn :class="iconsDict[it.type]" /><span>{{ it.content }}</span>
     </div>
   </div>
 </template>
