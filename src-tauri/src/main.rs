@@ -3,8 +3,6 @@
   windows_subsystem = "windows"
 )]
 
-use tauri::Manager;
-
 #[derive(Clone, serde::Serialize, serde::Deserialize, Debug)]
 struct Payload {
   msg: String,
@@ -15,7 +13,8 @@ struct Payload {
 
 static API: &str = "https://api.live.bilibili.com/msg/send";
 
-async fn send_msg(msg: String, cookie: String, csrf: String, roomid: String) -> Result<(), Box<dyn std::error::Error>> {
+#[tauri::command]
+async fn send_msg(msg: String, cookie: String, csrf: String, roomid: String) -> Result<(), String> {
 
   let client = reqwest::Client::new();
   let csrf2 = csrf.clone();
@@ -35,34 +34,24 @@ async fn send_msg(msg: String, cookie: String, csrf: String, roomid: String) -> 
       .as_secs().to_string());
 
 
-    let _response = client
+    let response = client
       .post(API)
       .header("cookie", cookie)
       .multipart(form)
       .send()
-      .await?;
+      .await
+      .unwrap();
 
-    // println!("{:?}", _response);
+    if response.status().is_success() {
+      return Ok(());
+    }
 
-    Ok(())
+    Err(response.status().to_string().into())
 }
 
 fn main() {
   tauri::Builder::default()
-    .setup(move |app| {
-      let _listen_to_send_msg = app.listen_global("send_msg", |event| {
-        let payload: Payload = serde_json::from_str(event.payload().unwrap()).unwrap();
-        tokio::spawn(async move {
-          send_msg(
-            payload.msg.clone(), 
-            payload.cookie.clone(),
-            payload.csrf.clone(), 
-            payload.roomid.clone()).await.unwrap();
-        });
-      });
-
-      Ok(())
-    })
+    .invoke_handler(tauri::generate_handler![send_msg])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 }
