@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import generatedRoutes from 'virtual:generated-pages'
 import { setupLayouts } from 'virtual:generated-layouts'
 import { Buffer } from 'buffer/'
+import { WebviewWindow } from '@tauri-apps/api/window'
 import App from './App.vue'
 import { pinia } from '~/stores'
 
@@ -24,3 +25,14 @@ const router = createRouter({
 app.use(pinia)
 app.use(router)
 app.mount('#app')
+
+const mainWindow = WebviewWindow.getByLabel('main')
+const unlisten = await mainWindow?.onCloseRequested((_event) => {
+  const danmakuWindow = WebviewWindow.getByLabel('danmakuWidget')
+  if (danmakuWindow)
+    danmakuWindow.close()
+})
+
+tryOnUnmounted(() => {
+  unlisten?.()
+})
