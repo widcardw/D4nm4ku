@@ -5,6 +5,7 @@ const roomId = useStorage('roomId', '')
 
 let webview: WebviewWindow | null = null
 const msgRef = inject('msgRef') as any
+const btnLabel = ref('连接')
 const createWebview = () => {
   if (roomId.value.trim() === '') {
     msgRef.value.pushMsg({
@@ -16,23 +17,25 @@ const createWebview = () => {
   if (webview) {
     webview.close()
     webview = null
+    btnLabel.value = '连接'
   }
   webview = new WebviewWindow('danmakuWidget', {
     url: '/show',
-    decorations: true,
+    decorations: false,
     width: 400,
     height: 600,
     transparent: true,
     alwaysOnTop: true,
     title: 'D4nm4ku',
   })
+  btnLabel.value = '断开'
 }
 </script>
 
 <template>
   <div>
     <UInputBtn v-model="roomId" @click-btn="createWebview">
-      连接
+      {{ btnLabel }}
     </UInputBtn>
   </div>
 </template>
