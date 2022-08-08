@@ -2,6 +2,7 @@
 import { confirm } from '@tauri-apps/api/dialog'
 import type { Answer } from '../../composables/autoSendMsg'
 
+const emits = defineEmits(['settingsChanged'])
 const store = useStore()
 const msgRef = inject('msgRef') as any
 
@@ -11,6 +12,7 @@ function pushFaq() {
     keywords: [],
     answer: '',
   })
+  emits('settingsChanged')
 }
 
 function pushKeyWord(event: Event, faq: Answer) {
@@ -25,14 +27,21 @@ function pushKeyWord(event: Event, faq: Answer) {
 
   faq.keywords.push(val);
   (event.target as HTMLInputElement).value = ''
+  emits('settingsChanged')
 }
 
 async function deleteFaq(index: number) {
   const confirmed = await confirm('确定要删除这个问题吗？', {
     title: '提示', type: 'warning',
   })
-  if (confirmed)
+  if (confirmed) {
     store.faqs.splice(index, 1)
+    emits('settingsChanged')
+  }
+}
+
+function answerChanged(event: Event) {
+  emits('settingsChanged')
 }
 </script>
 
@@ -82,8 +91,14 @@ async function deleteFaq(index: number) {
       </div>
       <div flex space-x-2 items-center>
         <div>自动回复</div>
-        <input v-model="it.answer" m-input rounded flex-1 text-sm>
-        <span text="sm zinc" absolute right-6>{{ it.answer.length <= 20 ? `${it.answer.length}/20` : '过长的消息将会分条发送' }}</span>
+        <input
+          v-model.lazy="it.answer"
+          m-input rounded flex-1 text-sm
+          @input="answerChanged"
+        >
+        <span text="sm zinc" absolute right-6>
+          {{ it.answer.length <= 20 ? `${it.answer.length}/20` : '过长的消息将会分条发送' }}
+        </span>
       </div>
     </div>
     <button

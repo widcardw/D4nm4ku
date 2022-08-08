@@ -56,6 +56,7 @@ export const useStore = defineStore('stores', {
     config: { ...defaultConfig },
     requestBlockedTimes: 0,
     faqs: [] as Answer[],
+    settingsSaved: true,
   }),
   getters: {
     getUserInfo(): UserInfo {

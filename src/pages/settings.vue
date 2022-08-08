@@ -3,12 +3,15 @@ import { WebviewWindow } from '@tauri-apps/api/window'
 
 const msgRef = inject('msgRef') as any
 const store = useStore()
+
 const saveSettings = useThrottleFn(() => {
+  store.settingsSaved = true
   store.storeConfig()
   msgRef.value.pushMsg({ content: '保存成功', type: 'success' })
 }, 1000)
 
 const settingChanged = (event: string, payload: any) => {
+  store.settingsSaved = false
   const showWindow = WebviewWindow.getByLabel('danmakuWidget')
   if (showWindow)
     showWindow.emit(event, payload)
@@ -30,7 +33,11 @@ const pinWidget = () => {
       <div font-bold text-xl>
         设置项
       </div>
-      <button btn rounded @click="saveSettings">
+      <button
+        btn rounded
+        :disabled="store.settingsSaved"
+        @click="saveSettings"
+      >
         保存设置
       </button>
     </div>
@@ -141,6 +148,10 @@ const pinWidget = () => {
         自动回复
       </UCheckBox>
     </USettingsBox>
-    <UMultiList v-if="store.config.autoReply" ml-2 />
+    <UMultiList
+      v-if="store.config.autoReply"
+      ml-2
+      @settings-changed="store.settingsSaved = false"
+    />
   </div>
 </template>
