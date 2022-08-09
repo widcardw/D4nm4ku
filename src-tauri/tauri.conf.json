@@ -69,7 +69,9 @@
         "resizable": true,
         "title": "D4nm4ku",
         "width": 800,
-        "label": "main"
+        "label": "main",
+        "minWidth": 800,
+        "minHeight": 600
       }
     ]
   }
