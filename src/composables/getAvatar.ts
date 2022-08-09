@@ -53,7 +53,7 @@ export default async function (uid: number) {
   // eslint-disable-next-line no-console
   console.log(store.requestBlockedTimes)
   if (store.requestBlockedTimes === MAX_REQUEST_BLOCK_TIMES)
-    throw new Error('Failed to fetch avatar!')
+    throw new Error('头像获取失败！')
 
   return ''
 }

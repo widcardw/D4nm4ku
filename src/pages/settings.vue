@@ -73,7 +73,6 @@ const pinWidget = () => {
       <div flex space-x-2>
         <UCheckBox
           v-model="store.config.showGuardTag"
-          :disabled="store.config.layout === 'tight'"
           @update:model-value="settingChanged('show-guard-tag', store.config.showGuardTag)"
         >
           显示标签和等级

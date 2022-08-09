@@ -33,8 +33,8 @@ if (props.showAvatar) {
     .then((url) => {
       faceUrl.value = url
     })
-    .catch(() => {
-      msgRef.value.pushMsg({ content: '头像获取失败', type: 'error' })
+    .catch((err: Error) => {
+      msgRef.value.pushMsg({ content: err.message, type: 'error' })
     })
 }
 </script>
@@ -81,8 +81,9 @@ if (props.showAvatar) {
       <span leading-normal font-bold wsn text-sm op-70 :style="{ color }">
         {{ uname }}
       </span>
-      <img v-if="perhapsGuard !== 0 && level >= 20" inline-flex w-1rem h-1rem :src="guardType[perhapsGuard].badge" class="w-1.25rem h-1.25rem" rounded-full>
-      <img v-if="content.startsWith('http://')" class="h-1.5rem" :src="content" loading="/loading.gif" inline-flex>
+      <UGuardTag v-if="level && showGuardTag" inline-flex leading-normal :level="level" :label="label" :perhaps-guard="perhapsGuard" />
+      <img v-if="perhapsGuard !== 0 && level >= 20" inline-flex w-1rem h-1rem :src="guardType[perhapsGuard].badge" rounded-full>
+      <img v-if="content.startsWith('http://')" class="h-2rem" :src="content" loading="/loading.gif" inline-flex>
       <span v-else>{{ content }}</span>
     </div>
   </div>
