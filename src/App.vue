@@ -7,8 +7,6 @@ provide('msgRef', msgRef)
 </script>
 
 <template>
-  <div>
-    <RouterView />
-    <UMessageProvider ref="msgRef" />
-  </div>
+  <RouterView />
+  <UMessageProvider ref="msgRef" />
 </template>
