@@ -6,6 +6,10 @@ const qrcodeGet = 'http://passport.bilibili.com/qrcode/getLoginUrl'
 const qrcodeLogin = 'http://passport.bilibili.com/qrcode/getLoginInfo'
 const danmakuSend = 'https://api.live.bilibili.com/msg/send'
 const logOutApi = 'http://passport.bilibili.com/login/exit/v2'
+const liveAreaInfoListApi = 'http://api.live.bilibili.com/room/v1/Area/getList'
+const startLiveApi = 'http://api.live.bilibili.com/room/v1/Room/startLive'
+const stopLiveApi = 'http://api.live.bilibili.com/room/v1/Room/stopLive'
+const updateLiveTitleApi = 'http://api.live.bilibili.com/room/v1/Room/update'
 
 export {
   spaceInfo,
@@ -16,4 +20,8 @@ export {
   cardInfo,
   danmakuSend,
   logOutApi,
+  liveAreaInfoListApi,
+  stopLiveApi,
+  startLiveApi,
+  updateLiveTitleApi,
 }
