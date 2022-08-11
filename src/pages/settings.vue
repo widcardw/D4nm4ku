@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { WebviewWindow } from '@tauri-apps/api/window'
+import USettingsBox from '~/components/ui/USettingsBox.vue'
+import UCheckBox from '~/components/ui/UCheckBox.vue'
 
 const msgRef = inject('msgRef') as any
 const store = useStore()
