@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { GiftInfo } from '../composables/types'
+import type { GiftInfo, LiveAreaInfo } from '../composables/types'
 import type { Answer } from '~/composables/autoSendMsg'
 
 interface UserInfo {
@@ -29,6 +29,8 @@ interface ConfigProps {
   blur: boolean
   layout: 'loose' | 'tight'
   autoReply: boolean
+  readSc: boolean
+  readGift: boolean
 }
 
 const defaultConfig = {
@@ -45,7 +47,17 @@ const defaultConfig = {
   blur: false,
   layout: 'loose',
   autoReply: false,
+  readSc: false,
+  readGift: false,
 } as ConfigProps
+
+interface liveConfig {
+  isLive: boolean
+  liveAreaList: LiveAreaInfo[]
+  liveTitle: string
+  addr: string
+  code: string
+}
 
 export const useStore = defineStore('stores', {
   state: () => ({
@@ -58,6 +70,13 @@ export const useStore = defineStore('stores', {
     faqs: [] as Answer[],
     settingsSaved: true,
     linked: false,
+    liveConfig: {
+      isLive: false,
+      liveAreaList: [],
+      liveTitle: '',
+      addr: '',
+      code: '',
+    } as liveConfig,
   }),
   getters: {
     getUserInfo(): UserInfo {
