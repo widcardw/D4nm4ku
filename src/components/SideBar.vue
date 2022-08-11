@@ -23,8 +23,12 @@ const routerSwitch = (target: string, page: number) => {
     <div
       m-2 icon-btn i-ri-live-line
       :class="{ 'text-#646cff': curPage === 3 }"
-      @click="routerSwitch('/engine', 3)"
+      @click="routerSwitch('/live', 3)"
     />
-    <DarkMode m-2 absolute bottom-0 />
+    <div flex-1 />
+    <a href="https://github.com/widcardw/D4nm4ku" target="_blank" m-2 icon-btn>
+      <div i-ri-github-fill />
+    </a>
+    <DarkMode m-2 />
   </div>
 </template>
