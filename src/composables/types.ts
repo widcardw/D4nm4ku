@@ -182,6 +182,28 @@ interface GiftInfo {
   webp: string
 }
 
+interface LiveAreaInfo {
+  id: number
+  name: string
+  list: Array<{
+    id: string
+    name: string
+  }>
+}
+
+interface StartLiveResponse {
+  code: number
+  msg: string
+  data: {
+    change: 0 | 1
+    status: string
+    rtmp: {
+      addr: string
+      code: string
+    }
+  }
+}
+
 export type {
   MsgCommand,
   DanmakuMessage,
@@ -195,5 +217,7 @@ export type {
   ComboSendMessage,
   GiftInfo,
   SendMessageProps,
+  LiveAreaInfo,
+  StartLiveResponse,
 }
 
