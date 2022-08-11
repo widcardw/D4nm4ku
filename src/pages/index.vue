@@ -35,7 +35,6 @@ const createWebview = () => {
   })
   store.linked = true
 }
-const msg = ref('')
 </script>
 
 <template>
