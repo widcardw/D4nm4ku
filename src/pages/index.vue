@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { WebviewWindow } from '@tauri-apps/api/window'
-import UInputBtn from '~/components/ui/UInputBtn.vue'
+import UMdInput from '~/components/ui/UMdInput.vue'
 const roomId = useStorage('roomId', '')
 
 let webview: WebviewWindow | null = null
@@ -44,14 +44,27 @@ const createWebview = () => {
         D4nm4ku
       </div>
     </div>
-    <UInputBtn
-      v-model="roomId"
-      self-center
-      :btn-disabled="roomId.trim() === ''"
-      @click-btn="createWebview"
-    >
-      {{ store.linked ? '断开' : '连接' }}
-    </UInputBtn>
+    <div flex items-center>
+      <div flex-1 />
+      <UMdInput v-model="roomId" title="直播间号" />
+      <div flex-1>
+        <button
+          p-2 m-2
+          bg="#646cff"
+          rounded-full
+          shadow hover:shadow-lg
+          op="90 hover:100"
+          text-white
+          cursor-pointer
+          class="disabled:bg-zinc disabled:dark:bg-zinc-600 disabled:dark:text-zinc-800 disabled:cursor-not-allowed"
+          :disabled="roomId.trim() === ''"
+          @click="createWebview"
+        >
+          <div v-if="!store.linked" i-ri-arrow-right-line />
+          <div v-else i-ri-stop-fill />
+        </button>
+      </div>
+    </div>
     <div flex-1 />
   </div>
 </template>

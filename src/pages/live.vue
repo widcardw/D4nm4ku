@@ -125,8 +125,8 @@ function copy2(source: string) {
       <div flex items-center>
         <div flex-1 />
         <UMdInput v-model="liveTitle" title="直播标题" />
-        <div text-left flex-1>
-          <div i-ri-save-line icon-btn @click="updateLiveTitle2" />
+        <div text-left flex-1 flex items-center>
+          <button i-ri-save-line icon-btn :disabled="liveTitle.trim() === ''" @click="updateLiveTitle2" />
         </div>
       </div>
       <div>

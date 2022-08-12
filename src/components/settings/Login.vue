@@ -50,6 +50,15 @@ const logout = async () => {
     }
   }
 }
+
+const refreshLogin = (event: Event) => {
+  // eslint-disable-next-line no-unused-expressions
+  store.getUserInfo;
+  (event.target as HTMLElement).classList.toggle('animate-spin')
+  setTimeout(() => {
+    (event.target as HTMLElement).classList.toggle('animate-spin')
+  }, 1000)
+}
 </script>
 
 <template>
@@ -57,10 +66,11 @@ const logout = async () => {
     <Avatar w-3rem h-3rem :src="store.getUserInfo.avatarUrl || ''" />
     <div flex-1>
       <div v-if="!store.getUserInfo.mid" flex>
-        <div space-x-2>
+        <div space-x-2 flex items-center>
           <button btn rounded :disabled="!getQrcodeEnabled" @click="login">
             {{ interval ? '刷新' : '登录' }}
           </button>
+          <div i-ri-refresh-line icon-btn @click="refreshLogin" />
         </div>
         <div v-if="interval" absolute z-998 class="left-1/2 translate--1/2 top-1/2">
           <MyQrCode ma :url="qrurl" @close="cancelLogin" />

@@ -24,7 +24,7 @@ const shouldFloat = computed(() => focused.value || value.value !== '')
       class="bg-transparent !outline-none leading-loose"
       border="2px rounded zinc-300 dark:zinc-700 focus:#646cff"
       p="x-2 y-1"
-      w-15rem
+      w-15rem transition-all
       :disabled="disabled"
     >
     <div
