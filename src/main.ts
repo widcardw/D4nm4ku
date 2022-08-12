@@ -23,16 +23,20 @@ const router = createRouter({
 })
 
 app.use(pinia)
+
 app.use(router)
 app.mount('#app')
 
-const mainWindow = WebviewWindow.getByLabel('main')
-const unlisten = await mainWindow?.onCloseRequested((_event) => {
-  const danmakuWindow = WebviewWindow.getByLabel('danmakuWidget')
-  if (danmakuWindow)
-    danmakuWindow.close()
-})
+const mainWindow = WebviewWindow.getByLabel('main');
+(async () => {
+  const unlisten = await mainWindow?.onCloseRequested((_event) => {
+    const danmakuWindow = WebviewWindow.getByLabel('danmakuWidget')
+    if (danmakuWindow)
+      danmakuWindow.close()
+  })
 
-tryOnUnmounted(() => {
-  unlisten?.()
-})
+  tryOnUnmounted(() => {
+    unlisten?.()
+  })
+})()
+
