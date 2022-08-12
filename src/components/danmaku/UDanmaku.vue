@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import MyImg from '../img/MyImg.vue'
 import { guardType } from '~/composables/data'
 import UGuardTag from '~/components/danmaku/UGuardTag.vue'
 import Avatar from '~/components/img/Avatar.vue'
@@ -52,7 +53,7 @@ if (props.showAvatar) {
           </div>
           <!-- 等级标签 -->
           <UGuardTag v-if="level && showGuardTag" :level="level" :label="label" :perhaps-guard="perhapsGuard" />
-          <img v-if="perhapsGuard !== 0 && level >= 20" self-center :src="guardType[perhapsGuard].badge" class="w-1.25rem h-1.25rem" mx-1 rounded-full>
+          <MyImg v-if="perhapsGuard !== 0 && level >= 20" self-center :src="guardType[perhapsGuard].badge" class="w-1.25rem h-1.25rem" mx-1 rounded-full />
         </div>
         <!-- 弹幕发送时间 -->
         <div v-if="showTime" wsn ml-2>
@@ -64,7 +65,7 @@ if (props.showAvatar) {
       </div>
       <!-- 弹幕内容，初步断定为以 http 开头的是链接，采用 img 渲染 -->
       <div text-lg>
-        <img v-if="content.startsWith('http://')" class="h-2rem" :src="content" loading="/loading.gif">
+        <MyImg v-if="content.startsWith('http://')" class="h-2rem" :src="content" />
         <span v-else>{{ content }}</span>
       </div>
     </div>
@@ -82,8 +83,8 @@ if (props.showAvatar) {
         {{ uname }}
       </span>
       <UGuardTag v-if="level && showGuardTag" inline-flex leading-normal :level="level" :label="label" :perhaps-guard="perhapsGuard" />
-      <img v-if="perhapsGuard !== 0 && level >= 20" inline-flex w-1rem h-1rem :src="guardType[perhapsGuard].badge" rounded-full>
-      <img v-if="content.startsWith('http://')" class="h-2rem" :src="content" loading="/loading.gif" inline-flex>
+      <MyImg v-if="perhapsGuard !== 0 && level >= 20" inline-flex w-1rem h-1rem :src="guardType[perhapsGuard].badge" rounded-full />
+      <MyImg v-if="content.startsWith('http://')" class="h-2rem" :src="content" inline-flex />
       <span v-else>{{ content }}</span>
     </div>
   </div>

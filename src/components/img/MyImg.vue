@@ -6,11 +6,13 @@ const props = withDefaults(defineProps<{
   errSrc: '/noface.gif',
 })
 
-const onError = (e: Event) => {
-  (e.target as HTMLImageElement).src = props.errSrc
+const realSrc = ref(props.src)
+
+const onError = () => {
+  realSrc.value = props.errSrc
 }
 </script>
 
 <template>
-  <img :loading="errSrc" :src="src" @error="onError">
+  <img :loading="errSrc" :src="realSrc" @error="onError">
 </template>
