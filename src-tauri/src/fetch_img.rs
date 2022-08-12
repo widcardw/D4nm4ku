@@ -7,7 +7,7 @@ pub async fn fetch_image(img_url: String, file_path: String) -> Result<String, S
   // println!("{}", file_path);
 
   if std::path::Path::new(file_path.as_str()).metadata().is_ok() {
-    println!("File exists!");
+    // println!("File exists!");
     return Ok(file_path);
   }
 

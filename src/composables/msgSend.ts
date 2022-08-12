@@ -13,7 +13,7 @@ function sendSingleMsg(msg: string) {
     roomid: roomId,
     csrf: store.getUserInfo.bili_jct,
   }
-  invoke('send_msg', payload)
+  invoke('send_message', payload)
     .then(() => {
       // eslint-disable-next-line no-console
       console.log('发送成功')
