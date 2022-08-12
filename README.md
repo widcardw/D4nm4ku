@@ -70,3 +70,6 @@
 
 ![auto-reply](./imgs/auto-reply.png)
 
+### 开启直播
+
+![start-live](./imgs/start-live.png)
