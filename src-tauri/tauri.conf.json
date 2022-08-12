@@ -20,6 +20,11 @@
         ],
         "all": true,
         "request": true
+      },
+      "fs": {
+        "all": true,
+        "readFile": true,
+        "scope": ["$APP/imgs/*"]
       }
     },
     "macOSPrivateApi": true,

@@ -91,6 +91,8 @@ export const useStore = defineStore('stores', {
       addr: '',
       code: '',
     } as liveConfig,
+    existMedia: new Set<string>(),
+    urlToBlobMap: [] as { url: string; blob: string }[],
   }),
   getters: {
     getUserInfo(): UserInfo {
