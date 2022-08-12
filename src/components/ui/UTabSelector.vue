@@ -1,14 +1,12 @@
 <script setup lang="ts">
 const props = defineProps<{
-  modelValue: {
-    id: number
-    info: string
-  }
+  id: number
+  info: string
 }>()
 
-const emits = defineEmits(['update:modelValue', 'close'])
+const emits = defineEmits(['update:id', 'update:info', 'close'])
 
-const selected = useVModel(props, 'modelValue', emits)
+const { id, info } = useVModels(props, emits)
 
 const store = useStore()
 
@@ -20,11 +18,9 @@ function tabChanged(i: number) {
   currentPage.value = 0
 }
 
-function select(id: string, area2: string) {
-  selected.value = {
-    id: parseInt(id),
-    info: `${store.liveConfig.liveAreaList[currentTab.value].name} · ${area2}`,
-  }
+function select(id2: string, area2: string) {
+  id.value = parseInt(id2)
+  info.value = `${store.liveConfig.liveAreaList[currentTab.value].name} · ${area2}`
 }
 </script>
 

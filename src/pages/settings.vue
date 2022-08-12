@@ -133,18 +133,18 @@ const pinWidget = () => {
         毛玻璃效果（不稳定）
       </UCheckBox>
     </USettingsBox>
-    <USettingsBox title="弹幕扩展（需要登录）">
+    <USettingsBox title="弹幕扩展">
       <UCheckBox
-        v-model="store.getConfig.canSendMessage"
+        v-model="store.config.canSendMessage"
         :disabled="!store.getUserInfo.mid"
-        @update:model-value="settingChanged('can-send-message', store.getConfig.canSendMessage)"
+        @update:model-value="settingChanged('can-send-message', store.config.canSendMessage)"
       >
         通过弹幕窗格发送弹幕
       </UCheckBox>
       <UCheckBox
-        v-model="store.getConfig.autoReply"
+        v-model="store.config.autoReply"
         :disabled="!store.getUserInfo.mid"
-        @update:model-value="settingChanged('auto-reply', store.getConfig.autoReply)"
+        @update:model-value="settingChanged('auto-reply', store.config.autoReply)"
       >
         自动回复
       </UCheckBox>

@@ -3,7 +3,8 @@ import { startLive, stopLive, updateLiveTitle } from '~/composables/openLive'
 
 const store = useStore()
 const roomId = useStorage('roomId', '')
-const selectedArea = useStorage('selectedArea', { id: 0, info: '' })
+const selectedAreaId = useStorage('selectedAreaId', 0)
+const selectedAreaInfo = useStorage('selectedAreaInfo', '')
 const liveTitle = useStorage('liveTitle', '')
 const msgRef = inject('msgRef') as any
 const isShowAreaSelection = ref(false)
@@ -14,6 +15,12 @@ const btnShowAreaEnabled = ref(true)
 
 const { copy } = useClipboard()
 
+if (!store.getUserInfo.mid) {
+  msgRef.value.pushMsg({
+    content: '需要登录才能开启直播哦',
+    type: 'info',
+  })
+}
 function updateLiveTitle2() {
   btnUpdateTitleEnabled.value = false
   updateLiveTitle(roomId.value, liveTitle.value)
@@ -52,7 +59,7 @@ function showAreaSelection() {
 
 function startLive2() {
   btnEnabled.value = false
-  startLive(roomId.value, selectedArea.value.id, 'pc')
+  startLive(roomId.value, selectedAreaId.value, 'pc')
     .then((rtmp) => {
       store.liveConfig.addr = rtmp.addr
       store.liveConfig.code = rtmp.code
@@ -124,8 +131,10 @@ function copy2(source: string) {
       </div>
       <div>
         <UMdInput
-          v-model="selectedArea.info" title="选择分区"
+          v-model="selectedAreaInfo" title="选择分区"
+          :disabled="!btnShowAreaEnabled"
           cursor-pointer
+          class="disabled:cursor-wait"
           @click="showAreaSelection"
         />
       </div>
@@ -145,9 +154,9 @@ function copy2(source: string) {
       </div>
       <div m-2 space-x-2>
         <button
-          v-if="store.liveConfig.isLive"
+          v-if="!store.liveConfig.isLive"
           btn rounded
-          :disabled="!btnEnabled || !store.getUserInfo.mid || !selectedArea.id || liveTitle.trim() === ''"
+          :disabled="!btnEnabled || !store.getUserInfo.mid || !selectedAreaId || liveTitle.trim() === ''"
           @click="startLive2"
         >
           开启直播
@@ -166,8 +175,9 @@ function copy2(source: string) {
   </div>
   <UTabSelector
     v-if="isShowAreaSelection"
-    v-model="selectedArea"
-    @update:model-value="showAreaSelection"
+    v-model:id="selectedAreaId"
+    v-model:info="selectedAreaInfo"
+    @update:id="showAreaSelection"
     @close="showAreaSelection"
   />
 </template>

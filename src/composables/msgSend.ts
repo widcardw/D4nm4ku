@@ -24,6 +24,9 @@ function sendSingleMsg(msg: string) {
 }
 
 function sendMsg(msg: string) {
+  if (cookie === '')
+    throw new Error('尚未登录')
+
   for (let i = 0; i * 20 < msg.length; i++) {
     const partial = msg.substring(i * 20, i * 20 + 20)
     setTimeout(() => {

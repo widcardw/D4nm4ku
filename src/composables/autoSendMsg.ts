@@ -34,9 +34,14 @@ function autoSendByIndex(index: number) {
 
   enqueueAnswerTs(store.getFaqs[index].ts)
 
-  sendMsg(store.getFaqs[index].answer)
-  // eslint-disable-next-line no-console
-  console.log(store.getFaqs[index].answer)
+  try {
+    sendMsg(store.getFaqs[index].answer)
+    // eslint-disable-next-line no-console
+    console.log(store.getFaqs[index].answer)
+  }
+  catch (e: any) {
+    throw new Error(e.toString())
+  }
 }
 
 function autoSendByWord(word: string) {

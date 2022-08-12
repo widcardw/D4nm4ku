@@ -4,7 +4,7 @@ import type { LiveAreaInfo, StartLiveResponse } from './types'
 import { useStore } from '~/stores/store'
 
 const store = useStore()
-const seletcedArea = useStorage('seletcedArea', '')
+const selectedArea = useStorage('selectedArea', '')
 const cookie = getCookies()
 
 async function getAreaInfoList() {
@@ -16,6 +16,9 @@ async function getAreaInfoList() {
 }
 
 async function updateLiveTitle(roomId: string, title: string) {
+  if (cookie === '')
+    throw new Error('尚未登录')
+
   const { data } = await fetch(updateLiveTitleApi, {
     method: 'POST',
     headers: {
@@ -88,7 +91,7 @@ async function stopLive(roomId: string) {
 export {
   getAreaInfoList,
   updateLiveTitle,
-  seletcedArea,
+  selectedArea,
   startLive,
   stopLive,
 }

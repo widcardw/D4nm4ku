@@ -11,6 +11,8 @@ const form = Body.form({
 })
 
 export default async function logout() {
+  if (cookies === '')
+    throw new Error('尚未登录')
   const response = await fetch(logOutApi, {
     method: 'POST',
     headers: {

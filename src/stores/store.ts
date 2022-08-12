@@ -34,15 +34,15 @@ interface ConfigProps {
 }
 
 const defaultConfig = {
-  showGuardTag: true,
+  showGuardTag: false,
   showAvatar: true,
-  showTime: true,
+  showTime: false,
   showSilverGift: false,
   showPopulation: true,
   showGoldGift: true,
   canSendMessage: false,
-  textColor: '#000000',
-  bgColor: '#ffffff',
+  textColor: '#ffffff',
+  bgColor: '#000000',
   bgOpacity: '128',
   blur: false,
   layout: 'loose',
@@ -50,6 +50,20 @@ const defaultConfig = {
   readSc: false,
   readGift: false,
 } as ConfigProps
+
+const defaultUserInfo: UserInfo = {
+  oauthKey: '',
+  mid: 0,
+  midmd5: '',
+  mname: '',
+  expires: 0,
+  bili_jct: '',
+  sessdata: '',
+  avatarUrl: '',
+  lastLogin: 0,
+  sid: '',
+
+}
 
 interface liveConfig {
   isLive: boolean
@@ -80,6 +94,10 @@ export const useStore = defineStore('stores', {
   }),
   getters: {
     getUserInfo(): UserInfo {
+      if (!localStorage.getItem('userInfo')) {
+        localStorage.setItem('userInfo', JSON.stringify(defaultUserInfo))
+        return defaultUserInfo
+      }
       // 登录过期
       if (this.userInfo.lastLogin + this.userInfo.expires * 1000 < new Date().getTime()) {
         localStorage.removeItem('userInfo')
@@ -94,9 +112,15 @@ export const useStore = defineStore('stores', {
       return this.userInfo
     },
     getConfig(): ConfigProps {
+      if (!localStorage.getItem('config')) {
+        localStorage.setItem('config', JSON.stringify(defaultConfig))
+        return defaultConfig
+      }
       this.config = JSON.parse(localStorage.getItem('config') || 'null')
-      if (!this.config)
+      if (!this.config) {
         this.config = { ...defaultConfig }
+        localStorage.setItem('config', JSON.stringify(this.config))
+      }
 
       return this.config
     },
@@ -115,7 +139,7 @@ export const useStore = defineStore('stores', {
     },
     removeUserInfo() {
       localStorage.removeItem('userInfo')
-      this.userInfo = {} as UserInfo
+      this.userInfo = { ...defaultUserInfo }
     },
     storeConfig() {
       localStorage.setItem('config', JSON.stringify(this.config))

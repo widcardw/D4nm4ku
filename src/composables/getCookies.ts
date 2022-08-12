@@ -2,7 +2,7 @@ const store = useStore()
 
 export default function getCookies() {
   if (!store.getUserInfo.mid)
-    throw new Error('尚未登录！')
+    return ''
   let cookies = ''
   cookies += `sid=${store.getUserInfo.sid}; `
   cookies += `DedeUserID=${store.getUserInfo.mid}; `
