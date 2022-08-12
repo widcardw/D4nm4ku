@@ -36,8 +36,8 @@ function autoSendByIndex(index: number) {
 
   try {
     sendMsg(store.getFaqs[index].answer)
-    // eslint-disable-next-line no-console
-    console.log(store.getFaqs[index].answer)
+    // // eslint-disable-next-line no-console
+    // console.log(store.getFaqs[index].answer)
   }
   catch (e: any) {
     throw new Error(e.toString())

@@ -140,8 +140,8 @@ const connectRoom = () => {
     })
 
     live.on('SUPER_CHAT_MESSAGE_JPN', (data: SuperChatMessage) => {
-      // eslint-disable-next-line no-console
-      console.log(data)
+      // // eslint-disable-next-line no-console
+      // console.log(data)
       const { data: { uid, user_info: { uname, face }, price, message_jpn, message, ts, time, background_color, background_bottom_color } } = data
       const chat: SuperChatProps = {
         type: 'superchat',
@@ -156,8 +156,8 @@ const connectRoom = () => {
         bgBottomColor: background_bottom_color,
       }
 
-      // eslint-disable-next-line no-console
-      console.log(chat)
+      // // eslint-disable-next-line no-console
+      // console.log(chat)
 
       pushObject(chat)
       pushChat(chat)
@@ -169,8 +169,8 @@ const connectRoom = () => {
     // })
 
     live.on('GUARD_BUY', (data: GuardBuyMessage) => {
-      // eslint-disable-next-line no-console
-      console.log(data)
+      // // eslint-disable-next-line no-console
+      // console.log(data)
 
       const { data: { uid, username, num, price, guard_level, ts } } = data
       const guard: SuperChatProps = {
