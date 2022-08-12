@@ -30,6 +30,7 @@ const login = async () => {
   store.userInfo.oauthKey = data.oauthKey
 
   createLoginLoop(data.oauthKey)
+  msgRef.value.pushMsg({ type: 'info', content: '登录后可能需要刷新生效' })
 }
 
 const cancelLogin = () => {
