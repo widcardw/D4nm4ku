@@ -1,6 +1,6 @@
 import { appDir, join } from '@tauri-apps/api/path'
-import { convertFileSrc, invoke } from '@tauri-apps/api/tauri'
-// import { readBinaryFile } from '@tauri-apps/api/fs'
+import { invoke } from '@tauri-apps/api/tauri'
+import { readBinaryFile } from '@tauri-apps/api/fs'
 
 const store = useStore()
 
@@ -43,11 +43,11 @@ async function processImgUrl2(imgUrl: string, uid?: number) {
   // 调用后端，获取头像绝对路径
   const absolutePath = await getAbsolutePathFromUrl(imgUrl, fileName)
 
-  // // 读取头像并转为 blob 链接
-  // const imgContent = await readBinaryFile(absolutePath)
-  // const blob = URL.createObjectURL(new Blob([imgContent]))
+  // 读取头像并转为 blob 链接
+  const imgContent = await readBinaryFile(absolutePath)
+  const blob = URL.createObjectURL(new Blob([imgContent.buffer]))
 
-  const blob = convertFileSrc(absolutePath)
+  // const blob = convertFileSrc(absolutePath)
 
   // 存入 cache
   if (!store.mediaList.find(it => it.fileName === fileName))
