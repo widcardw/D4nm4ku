@@ -43,6 +43,12 @@ unlistens.push(await listen('can-send-message', (event) => {
 unlistens.push(await listen('text-color-changed', (event) => {
   store.config.textColor = event.payload as string
 }))
+unlistens.push(await listen('text-shadow-color-changed', (event) => {
+  store.config.textShadowColor = event.payload as string
+}))
+unlistens.push(await listen('enable-text-shadow', (event) => {
+  store.config.enableTextShadow = parseBoolean(event.payload as string)
+}))
 unlistens.push(await listen('bg-color-changed', (event) => {
   store.config.bgColor = event.payload as string
 }))
@@ -84,6 +90,7 @@ const hex2rgb = (hex: string, opacity: string) => {
     :style="{
       background: hex2rgb(store.getConfig.bgColor, store.getConfig.bgOpacity),
       color: store.getConfig.textColor,
+      textShadow: store.getConfig.enableTextShadow ? `1px 1px 1px ${store.getConfig.textShadowColor}` : 'none',
     }"
   >
     <UWatch
@@ -91,6 +98,7 @@ const hex2rgb = (hex: string, opacity: string) => {
       data-tauri-drag-region shadow
       :population="population" :fans="fans"
     />
+    {{ store.getConfig.enableTextShadow }}
     <USuperChatPool
       v-show="chatPool.length > 0"
       v-model="selectedSc"

@@ -134,6 +134,19 @@ function openAppDir() {
       >
         文字颜色
       </UColorPicker>
+      <UCheckBox
+        v-model="store.config.enableTextShadow"
+        @update:model-value="settingChanged('enable-text-shadow', store.config.enableTextShadow)"
+      >
+        启用文字阴影
+      </UCheckBox>
+      <UColorPicker
+        v-model="store.config.textShadowColor"
+        :disabled="!store.config.enableTextShadow"
+        @update:model-value="settingChanged('text-shadow-color-changed', store.config.textShadowColor)"
+      >
+        阴影颜色
+      </UColorPicker>
       <UColorPicker
         v-model="store.config.bgColor"
         @update:model-value="settingChanged('bg-color-changed', store.config.bgColor)"

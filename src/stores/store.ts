@@ -24,6 +24,8 @@ interface ConfigProps {
   showPopulation: boolean
   canSendMessage: boolean
   textColor: string
+  enableTextShadow: boolean
+  textShadowColor: string
   bgColor: string
   bgOpacity: string
   blur: boolean
@@ -42,6 +44,8 @@ const defaultConfig = {
   showGoldGift: true,
   canSendMessage: false,
   textColor: '#ffffff',
+  enableTextShadow: false,
+  textShadowColor: '#000000',
   bgColor: '#000000',
   bgOpacity: '128',
   blur: false,
@@ -118,7 +122,7 @@ export const useStore = defineStore('stores', {
       }
       this.config = JSON.parse(localStorage.getItem('config') || 'null')
       if (!this.config) {
-        this.config = { ...defaultConfig }
+        this.config = Object.assign({ ...defaultConfig }, this.config)
         localStorage.setItem('config', JSON.stringify(this.config))
       }
 
