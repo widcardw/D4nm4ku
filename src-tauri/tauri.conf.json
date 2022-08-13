@@ -25,6 +25,11 @@
         "all": true,
         "readFile": true,
         "scope": ["$APP/imgs/*"]
+      },
+      "protocol": {
+        "all": false,
+        "asset": true,
+        "assetScope": ["$APP/imgs/*"]
       }
     },
     "macOSPrivateApi": true,
@@ -62,7 +67,7 @@
       }
     },
     "security": {
-      "csp": null
+      "csp": "default-src 'self'; img-src 'self' asset: https://asset.localhost"
     },
     "updater": {
       "active": false

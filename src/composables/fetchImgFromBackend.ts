@@ -1,6 +1,6 @@
 import { appDir, join } from '@tauri-apps/api/path'
-import { invoke } from '@tauri-apps/api/tauri'
-import { readBinaryFile } from '@tauri-apps/api/fs'
+import { convertFileSrc, invoke } from '@tauri-apps/api/tauri'
+// import { readBinaryFile } from '@tauri-apps/api/fs'
 
 const store = useStore()
 
@@ -33,26 +33,29 @@ async function processImgUrl2(imgUrl: string, uid?: number) {
   // 找到了直接返回 blob 链接
   if (found) {
     // // eslint-disable-next-line no-console
-    // console.log('load image from store')
+    // console.log('load image from store', fileName)
     return { name: fileName, blob: found.blob }
   }
 
   // // eslint-disable-next-line no-console
-  // console.log('fetch through backend')
+  // console.log('fetch through backend', fileName)
 
   // 调用后端，获取头像绝对路径
   const absolutePath = await getAbsolutePathFromUrl(imgUrl, fileName)
 
-  // 读取头像并转为 blob 链接
-  const imgContent = await readBinaryFile(absolutePath)
-  const blob = URL.createObjectURL(new Blob([imgContent]))
+  // // 读取头像并转为 blob 链接
+  // const imgContent = await readBinaryFile(absolutePath)
+  // const blob = URL.createObjectURL(new Blob([imgContent]))
+
+  const blob = convertFileSrc(absolutePath)
 
   // 存入 cache
-  store.mediaList.push({ fileName, blob })
+  if (!store.mediaList.find(it => it.fileName === fileName))
+    store.mediaList.push({ fileName, blob })
+
   return { name: fileName, blob }
 }
 
 export {
-  processImgUrl,
   processImgUrl2,
 }
