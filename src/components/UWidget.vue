@@ -98,7 +98,6 @@ const hex2rgb = (hex: string, opacity: string) => {
       data-tauri-drag-region shadow
       :population="population" :fans="fans"
     />
-    {{ store.getConfig.enableTextShadow }}
     <USuperChatPool
       v-show="chatPool.length > 0"
       v-model="selectedSc"
