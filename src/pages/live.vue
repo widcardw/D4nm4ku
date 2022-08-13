@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { startLive, stopLive, updateLiveTitle } from '~/composables/openLive'
+import { getLiveRoomInfoFromUid } from '~/composables/getLiverInfo'
 
 const store = useStore()
-const roomId = useStorage('roomId', '')
+const roomId2 = useStorage('roomId2', '')
 const selectedAreaId = useStorage('selectedAreaId', 0)
 const selectedAreaInfo = useStorage('selectedAreaInfo', '')
 const liveTitle = useStorage('liveTitle', '')
@@ -21,9 +22,23 @@ if (!store.getUserInfo.mid) {
     type: 'info',
   })
 }
+
+function updateLiveRoomInfo() {
+  if (roomId2.value.trim() === '' || liveTitle.value.trim() === '') {
+    getLiveRoomInfoFromUid(store.getUserInfo.mid)
+      .then(({ roomid, title }) => {
+        roomId2.value = roomid.toString()
+        liveTitle.value = title
+      })
+  }
+}
+
+if (store.getUserInfo.mid)
+  updateLiveRoomInfo()
+
 function updateLiveTitle2() {
   btnUpdateTitleEnabled.value = false
-  updateLiveTitle(roomId.value, liveTitle.value)
+  updateLiveTitle(roomId2.value, liveTitle.value)
     .then(() => {
       msgRef.value.pushMsg({
         content: '标题修改成功',
@@ -59,7 +74,7 @@ function showAreaSelection() {
 
 function startLive2() {
   btnEnabled.value = false
-  startLive(roomId.value, selectedAreaId.value, 'pc')
+  startLive(roomId2.value, selectedAreaId.value, 'pc')
     .then((rtmp) => {
       store.liveConfig.addr = rtmp.addr
       store.liveConfig.code = rtmp.code
@@ -82,7 +97,7 @@ function startLive2() {
 
 function stopLive2() {
   btnEnabled.value = false
-  stopLive(roomId.value)
+  stopLive(roomId2.value)
     .then(() => {
       msgRef.value.pushMsg({
         content: '直播关闭成功',
@@ -120,7 +135,7 @@ function copy2(source: string) {
     </div>
     <div text-center>
       <div>
-        <UMdInput v-model="roomId" title="房间号" />
+        <UMdInput v-model="roomId2" title="房间号" />
       </div>
       <div flex items-center>
         <div flex-1 />

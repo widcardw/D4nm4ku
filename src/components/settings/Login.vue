@@ -44,6 +44,8 @@ const logout = async () => {
     if (resData.code === 0) {
       store.removeUserInfo()
       msgRef.value.pushMsg({ type: 'success', content: '退出成功' })
+      store.config.autoReply = false
+      store.config.canSendMessage = false
     }
     else {
       msgRef.value.pushMsg({ type: 'error', content: '退出失败' })
@@ -63,7 +65,7 @@ const refreshLogin = (event: Event) => {
 
 <template>
   <div flex space-x-2 items-center>
-    <Avatar w-3rem h-3rem :src="store.getUserInfo.avatarUrl || ''" />
+    <Avatar w-3rem h-3rem :src="store.getUserInfo.avatarUrl || ''" :uid="store.getUserInfo.mid" />
     <div flex-1>
       <div v-if="!store.getUserInfo.mid" flex>
         <div space-x-2 flex items-center>

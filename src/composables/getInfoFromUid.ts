@@ -1,4 +1,5 @@
 import { fetch } from '@tauri-apps/api/http'
+import type { CardInfoResponse, SpaceApiResponse } from './types'
 
 async function getSpaceInfo(uid: number) {
   const response = await fetch(`${spaceInfo}${uid}`, {
@@ -6,7 +7,7 @@ async function getSpaceInfo(uid: number) {
     timeout: 5000,
   })
 
-  return response.data
+  return response.data as SpaceApiResponse
 }
 
 async function getCardInfo(uid: number) {
@@ -15,7 +16,7 @@ async function getCardInfo(uid: number) {
     timeout: 5000,
   })
 
-  return response.data
+  return response.data as CardInfoResponse
 }
 
 export {

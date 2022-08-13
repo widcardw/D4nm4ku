@@ -11,6 +11,7 @@ withDefaults(defineProps<{
 const msg = ref('')
 const btnDisabled = ref(false)
 const msgRef = inject('msgRef') as any
+const store = useStore()
 
 const sendMessage = () => {
   if (msg.value.trim() === '') {
@@ -39,7 +40,7 @@ const sendMessage = () => {
   <UInputBtn
     v-model="msg"
     placeholder="Ctrl + Enter 发送"
-    :btn-disabled="btnDisabled || msg.trim() === ''"
+    :btn-disabled="btnDisabled || !store.getUserInfo.mid || msg.trim() === ''"
     :no-border="noBorder"
     @click-btn="sendMessage"
   >
