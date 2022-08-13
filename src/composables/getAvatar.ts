@@ -10,11 +10,17 @@ const MAX_REQUEST_BLOCK_TIMES = 10
 async function getAvatar2(uid: number): Promise<string> {
   const found = store.mediaList.find(it => it.fileName === `avatar_${uid}`)
 
-  if (found)
+  if (found) {
+    // // eslint-disable-next-line no-console
+    // console.log('load avatar from `getAvatar`', uid)
     return found.blob
+  }
 
   if (store.requestBlockedTimes >= MAX_REQUEST_BLOCK_TIMES)
     return ''
+
+  // // eslint-disable-next-line no-console
+  // console.log('fetch avatar url', uid)
 
   const responseData = await getCardInfo(uid) as CardInfoResponse
   if (responseData.code === 0) {
