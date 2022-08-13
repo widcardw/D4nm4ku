@@ -28,12 +28,14 @@ const props = withDefaults(defineProps<{
 const faceUrl = ref('')
 
 const msgRef = inject('msgRef') as any
+const urlIsBlob = ref(false)
 
 if (props.showAvatar) {
 // 异步获取头像的链接，默认为 noface，当加载出来后替换为真实头像
   getAvatar2(props.uid)
-    .then((url) => {
+    .then(({ url, isBlob }) => {
       faceUrl.value = url
+      urlIsBlob.value = isBlob
     })
     .catch((err: Error) => {
       msgRef.value.pushMsg({ content: err.message, type: 'error' })
@@ -44,7 +46,7 @@ if (props.showAvatar) {
 <template>
   <div v-if="layout === 'loose'" flex space-x-2 w-full p="x-2 y-1" my-2>
     <!-- 头像 -->
-    <Avatar v-if="showAvatar" w-3rem h-3rem :src="faceUrl" :uid="uid" />
+    <Avatar v-if="showAvatar" w-3rem h-3rem :is-blob="urlIsBlob" :src="faceUrl" :uid="uid" />
     <div flex-1>
       <div flex justify-between text-sm>
         <div flex space-x-2>
@@ -72,7 +74,7 @@ if (props.showAvatar) {
     </div>
   </div>
   <div v-else flex space-x-2 w-full p="x-2 y-1">
-    <Avatar v-if="showAvatar" :src="faceUrl" :uid="uid" class="w-1.5rem h-1.5rem" />
+    <Avatar v-if="showAvatar" :src="faceUrl" :uid="uid" :is-blob="urlIsBlob" class="w-1.5rem h-1.5rem" />
     <div space-x-1 overflow-ellipsis>
       <span v-if="showTime" wsn text-sm op-50>
         {{ new Date(ts).toLocaleTimeString('en-US', {

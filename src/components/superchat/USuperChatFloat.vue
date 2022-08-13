@@ -15,11 +15,13 @@ const props = defineProps<{
 
 const faceUrl = ref(props.face)
 const msgRef = inject('msgRef') as any
+const urlIsBlob = ref(false)
 
 if (props.face === '') {
   getAvatar2(props.uid)
-    .then((url) => {
+    .then(({ url, isBlob }) => {
       faceUrl.value = url
+      urlIsBlob.value = isBlob
     })
     .catch(() => {
       msgRef.value.pushMsg({ content: '头像获取失败', type: 'error' })

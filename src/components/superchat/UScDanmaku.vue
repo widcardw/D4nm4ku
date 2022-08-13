@@ -17,11 +17,13 @@ const props = defineProps<{
 
 const faceUrl = ref(props.face)
 const msgRef = inject('msgRef') as any
+const urlIsBlob = ref(false)
 
 if (props.face === '') {
   getAvatar2(props.uid)
-    .then((url) => {
+    .then(({ url, isBlob }) => {
       faceUrl.value = url
+      urlIsBlob.value = isBlob
     })
     .catch(() => {
       msgRef.value.pushMsg({ content: '头像获取失败', type: 'error' })
@@ -38,7 +40,7 @@ if (props.face === '') {
       }"
       flex space-x-2 p-2 rounded-t
     >
-      <Avatar w-3rem h-3rem :src="faceUrl" :uid="uid" />
+      <Avatar w-3rem h-3rem :src="faceUrl" :uid="uid" :is-blob="urlIsBlob" />
       <div flex-1>
         <div font-bold text-lg>
           {{ uname }}

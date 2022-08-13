@@ -6,8 +6,10 @@ const props = withDefaults(defineProps<{
   src: string
   errSrc?: string
   uid?: number
+  isBlob?: boolean
 }>(), {
   errSrc: '/noface.gif',
+  isBlob: false,
 })
 
 const realSrc = ref(props.errSrc)
@@ -15,6 +17,10 @@ const realSrc = ref(props.errSrc)
 function loadImage() {
   if (props.src.trim() === '')
     return
+  if (props.isBlob) {
+    realSrc.value = props.src
+    return
+  }
   processImgUrl2(props.src, props.uid)
     .then(({ blob }) => {
       realSrc.value = blob

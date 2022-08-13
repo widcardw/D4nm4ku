@@ -33,7 +33,7 @@ async function processImgUrl2(imgUrl: string, uid?: number) {
   // 找到了直接返回 blob 链接
   if (found) {
     // // eslint-disable-next-line no-console
-    // console.log('load image from store', fileName)
+    // console.log('load image from `fetch`', fileName)
     return { name: fileName, blob: found.blob }
   }
 
