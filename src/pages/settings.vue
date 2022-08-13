@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { WebviewWindow } from '@tauri-apps/api/window'
+import { invoke } from '@tauri-apps/api/tauri'
+import { appDir } from '@tauri-apps/api/path'
 import USettingsBox from '~/components/ui/USettingsBox.vue'
 import UCheckBox from '~/components/ui/UCheckBox.vue'
 
@@ -25,6 +27,16 @@ const pinWidget = () => {
   const danmakuWidget = WebviewWindow.getByLabel('danmakuWidget')
   if (danmakuWidget)
     danmakuWidget.setAlwaysOnTop(pinned.value)
+}
+
+function openAppDir() {
+  appDir()
+    .then(async (dir) => {
+      return await invoke('open_app_img_dir', { dir })
+    })
+    .catch((err) => {
+      msgRef.value.pushMsg({ content: err.message, type: 'error' })
+    })
 }
 </script>
 
@@ -105,6 +117,15 @@ const pinWidget = () => {
       >
         窗口置顶
       </UCheckBox>
+      <div
+        inline-flex items-center leading-relaxed select-none space-x-1 cursor-pointer
+        @click="openAppDir"
+      >
+        <div text-lg flex items-center>
+          <div icon-btn i-ri-folder-open-fill ml-1 />
+        </div>
+        <span>打开图片缓存目录</span>
+      </div>
     </USettingsBox>
     <USettingsBox title="样式">
       <UColorPicker
