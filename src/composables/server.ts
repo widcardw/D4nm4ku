@@ -12,6 +12,7 @@ import type {
   GiftProps,
   SuperChatProps,
 } from './components'
+import { getLiverInfo } from './getLiverInfo'
 
 const roomId = useStorage('roomId', '')
 const linked = ref(true)
