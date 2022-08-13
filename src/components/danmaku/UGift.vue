@@ -43,7 +43,9 @@ const store = useStore()
     </div>
     <div grid grid-rows-2 />
     <MyImg
-      :src="(store.giftInfoList.find(x => x.id === giftId) || { webp: '' }).webp" class="w-3rem h-3rem"
+      :src="(store.giftInfoList.find(x => x.id === giftId) || { webp: '' }).webp"
+      err-src="/loading.gif"
+      class="w-3rem h-3rem"
     />
   </div>
 </template>
