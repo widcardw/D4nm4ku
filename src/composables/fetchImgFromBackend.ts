@@ -4,45 +4,6 @@ import { readBinaryFile } from '@tauri-apps/api/fs'
 
 const store = useStore()
 
-async function getAppDir() {
-  return await appDir()
-}
-
-/**
- * @deprecated
- */
-async function processImgUrl(imgUrl: string, uid?: number) {
-  let fileName: string
-
-  // 如果是头像，那么就将头像作为文件名存储下来
-  if (uid) {
-    fileName = `avatar_${uid}`
-  }
-  // 从 url 截取图片名和路径
-  else {
-    const splits = imgUrl.split('/')
-    fileName = splits.at(splits.length - 1) || `${Date.now()}.jpg`
-  }
-
-  const dir = await getAppDir()
-  const filePath = await join(dir, 'imgs', fileName)
-
-  // 检查 store 中是否存在该图片，如果存在则直接返回
-  if (store.existMedia.has(fileName))
-    return filePath
-
-  // 如果不存在，则调用后端，下载图片
-  const realPath = await invoke('fetch_image', {
-    imgUrl,
-    filePath,
-  }) as string
-
-  // 将图片信息添加到 store 中
-  store.existMedia.add(fileName)
-
-  return realPath
-}
-
 async function getAbsolutePathFromUrl(url: string, fileName: string) {
   const dir = await appDir()
   const absolutePath = await join(dir, 'imgs', fileName)
