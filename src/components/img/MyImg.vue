@@ -1,33 +1,43 @@
 <script setup lang="ts">
-import { readBinaryFile } from '@tauri-apps/api/fs'
-import { processImgUrl } from '~/composables/fetchImgFromBackend'
+// import { readBinaryFile } from '@tauri-apps/api/fs'
+import { processImgUrl2 } from '~/composables/fetchImgFromBackend'
 
 const props = withDefaults(defineProps<{
   src: string
   errSrc?: string
+  uid?: number
 }>(), {
   errSrc: '/noface.gif',
 })
 
 const realSrc = ref(props.errSrc)
-const store = useStore()
+// const store = useStore()
+
+// function loadImage() {
+//   if (props.src.trim() === '')
+//     return
+//   processImgUrl(props.src, props.uid)
+//     .then(async (path) => {
+//       const found = store.urlToBlobMap.find(it => it.url === path)
+//       if (found) {
+//         realSrc.value = found.blob
+//       }
+//       else {
+//         const content = await readBinaryFile(path) as Uint8Array
+//         realSrc.value = URL.createObjectURL(new Blob([content.buffer]))
+//         store.urlToBlobMap.push({
+//           url: path, blob: realSrc.value,
+//         })
+//       }
+//     })
+// }
 
 function loadImage() {
   if (props.src.trim() === '')
     return
-  processImgUrl(props.src)
-    .then(async (path) => {
-      const found = store.urlToBlobMap.find(it => it.url === path)
-      if (found) {
-        realSrc.value = found.blob
-      }
-      else {
-        const content = await readBinaryFile(path) as Uint8Array
-        realSrc.value = URL.createObjectURL(new Blob([content.buffer]))
-        store.urlToBlobMap.push({
-          url: path, blob: realSrc.value,
-        })
-      }
+  processImgUrl2(props.src, props.uid)
+    .then(({ blob }) => {
+      realSrc.value = blob
     })
 }
 

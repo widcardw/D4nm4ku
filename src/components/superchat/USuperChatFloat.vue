@@ -17,7 +17,7 @@ const faceUrl = ref(props.face)
 const msgRef = inject('msgRef') as any
 
 if (props.face === '') {
-  getAvatar(props.uid)
+  getAvatar2(props.uid)
     .then((url) => {
       faceUrl.value = url
     })
@@ -37,7 +37,7 @@ if (props.face === '') {
         color: getLightnessFromHex(bgColor) > 100 ? '#000' : '#fff',
       }"
     >
-      <Avatar :src="faceUrl" class="w-1.5rem h-1.5rem" />
+      <Avatar :src="faceUrl" :uid="uid" class="w-1.5rem h-1.5rem" />
       <div flex-1>
         {{ uname }}
       </div>

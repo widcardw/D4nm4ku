@@ -4,6 +4,9 @@ const store = useStore()
 
 const MAX_REQUEST_BLOCK_TIMES = 10
 
+/**
+ * @deprecated
+ */
 export default async function (uid: number) {
   const preload = store.avatarMap.find(x => x.uid === uid)
   if (preload) {

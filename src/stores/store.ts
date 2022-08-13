@@ -77,6 +77,7 @@ export const useStore = defineStore('stores', {
   state: () => ({
     roomId: '',
     giftInfoList: [] as GiftInfo[],
+    // @deprecated
     avatarMap: [] as { uid: number; url: string }[],
     userInfo: {} as UserInfo,
     config: { ...defaultConfig },
@@ -91,8 +92,11 @@ export const useStore = defineStore('stores', {
       addr: '',
       code: '',
     } as liveConfig,
+    // @deprecated
     existMedia: new Set<string>(),
+    // @deprecated
     urlToBlobMap: [] as { url: string; blob: string }[],
+    mediaList: [] as { fileName: string; blob: string }[],
   }),
   getters: {
     getUserInfo(): UserInfo {

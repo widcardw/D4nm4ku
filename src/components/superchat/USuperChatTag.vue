@@ -27,7 +27,7 @@ const faceUrl = ref(props.face)
 const msgRef = inject('msgRef') as any
 
 if (props.face === '') {
-  getAvatar(props.uid)
+  getAvatar2(props.uid)
     .then((url) => {
       faceUrl.value = url
     })
@@ -47,7 +47,7 @@ if (props.face === '') {
     }"
     p-1 pr-2 text-white
   >
-    <Avatar :src="faceUrl" class="w-1.5rem h-1.5rem" />
+    <Avatar :src="faceUrl" :uid="uid" class="w-1.5rem h-1.5rem" />
     <div>
       ￥{{ price }}
     </div>
