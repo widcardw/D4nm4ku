@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "D4nm4ku",
-    "version": "0.1.0"
+    "version": "0.1.1"
   },
   "tauri": {
     "allowlist": {
@@ -27,7 +27,7 @@
         "scope": ["$APP/imgs/*"]
       },
       "protocol": {
-        "all": false,
+        "all": true,
         "asset": true,
         "assetScope": ["$APP/imgs/*"]
       }
