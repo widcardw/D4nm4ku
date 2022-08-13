@@ -204,6 +204,28 @@ interface StartLiveResponse {
   }
 }
 
+interface SpaceApiResponse {
+  code: number
+  data: {
+    info: {
+      face: string
+      live: {
+        roomid: number
+        title: string
+      }
+    }
+  }
+}
+
+interface CardInfoResponse {
+  code: number
+  data: {
+    card: {
+      face: string
+    }
+  }
+}
+
 export type {
   MsgCommand,
   DanmakuMessage,
@@ -219,5 +241,7 @@ export type {
   SendMessageProps,
   LiveAreaInfo,
   StartLiveResponse,
+  SpaceApiResponse,
+  CardInfoResponse,
 }
 
