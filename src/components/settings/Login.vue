@@ -54,8 +54,7 @@ const logout = async () => {
 }
 
 const refreshLogin = (event: Event) => {
-  // eslint-disable-next-line no-unused-expressions
-  store.getUserInfo;
+  location.reload();
   (event.target as HTMLElement).classList.toggle('animate-spin')
   setTimeout(() => {
     (event.target as HTMLElement).classList.toggle('animate-spin')
