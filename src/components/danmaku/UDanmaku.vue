@@ -31,13 +31,6 @@ const msgRef = inject('msgRef') as any
 
 if (props.showAvatar) {
 // 异步获取头像的链接，默认为 noface，当加载出来后替换为真实头像
-  // getAvatar(props.uid)
-  //   .then((url) => {
-  //     faceUrl.value = url
-  //   })
-  //   .catch((err: Error) => {
-  //     msgRef.value.pushMsg({ content: err.message, type: 'error' })
-  //   })
   getAvatar2(props.uid)
     .then((url) => {
       faceUrl.value = url

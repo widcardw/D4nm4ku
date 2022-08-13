@@ -11,26 +11,6 @@ const props = withDefaults(defineProps<{
 })
 
 const realSrc = ref(props.errSrc)
-// const store = useStore()
-
-// function loadImage() {
-//   if (props.src.trim() === '')
-//     return
-//   processImgUrl(props.src, props.uid)
-//     .then(async (path) => {
-//       const found = store.urlToBlobMap.find(it => it.url === path)
-//       if (found) {
-//         realSrc.value = found.blob
-//       }
-//       else {
-//         const content = await readBinaryFile(path) as Uint8Array
-//         realSrc.value = URL.createObjectURL(new Blob([content.buffer]))
-//         store.urlToBlobMap.push({
-//           url: path, blob: realSrc.value,
-//         })
-//       }
-//     })
-// }
 
 function loadImage() {
   if (props.src.trim() === '')
