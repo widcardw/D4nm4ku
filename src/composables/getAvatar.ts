@@ -8,6 +8,11 @@ const MAX_REQUEST_BLOCK_TIMES = 10
 // https://api.bilibili.com/x/space/acc/info?mid=${uid}
 
 async function getAvatar2(uid: number): Promise<string> {
+  const found = store.mediaList.find(it => it.fileName === `avatar_${uid}`)
+
+  if (found)
+    return found.blob
+
   if (store.requestBlockedTimes >= MAX_REQUEST_BLOCK_TIMES)
     return ''
 
