@@ -15,6 +15,12 @@ async function getAbsolutePathFromUrl(url: string, fileName: string) {
   return realPath
 }
 
+async function abPath2Blob(path: string) {
+  const imgContent = await readBinaryFile(path)
+  const blob = URL.createObjectURL(new Blob([imgContent.buffer]))
+  return blob
+}
+
 async function processImgUrl2(imgUrl: string, uid?: number) {
   let fileName: string
   // 如果是头像
@@ -34,19 +40,18 @@ async function processImgUrl2(imgUrl: string, uid?: number) {
   // 找到了直接返回 blob 链接
   if (found) {
     // // eslint-disable-next-line no-console
-    // console.log('load image from `fetch`', fileName)
+    // console.log('fetch: store', fileName)
     return { name: fileName, blob: found.blob }
   }
 
   // // eslint-disable-next-line no-console
-  // console.log('fetch through backend', fileName)
+  // console.log('fetch: through backend', fileName)
 
   // 调用后端，获取头像绝对路径
   const absolutePath = await getAbsolutePathFromUrl(imgUrl, fileName)
 
   // 读取头像并转为 blob 链接
-  const imgContent = await readBinaryFile(absolutePath)
-  const blob = URL.createObjectURL(new Blob([imgContent.buffer]))
+  const blob = await abPath2Blob(absolutePath)
 
   // const blob = convertFileSrc(absolutePath)
 
@@ -59,4 +64,5 @@ async function processImgUrl2(imgUrl: string, uid?: number) {
 
 export {
   processImgUrl2,
+  abPath2Blob,
 }
