@@ -2,6 +2,7 @@
 import { confirm } from '@tauri-apps/api/dialog'
 import { inject } from 'vue'
 import type { Answer } from '../../composables/autoSendMsg'
+import UTag from './UTag.vue'
 import { useStore } from '~/stores/store'
 
 const emits = defineEmits(['settingsChanged'])
@@ -42,7 +43,7 @@ async function deleteFaq(index: number) {
   }
 }
 
-function answerChanged(event: Event) {
+function answerChanged() {
   emits('settingsChanged')
 }
 </script>

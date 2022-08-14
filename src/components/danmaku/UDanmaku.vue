@@ -70,7 +70,7 @@ if (props.showAvatar) {
       <!-- 弹幕内容，初步断定为以 http 开头的是链接，采用 img 渲染 -->
       <div text-lg>
         <MyImg v-if="content.startsWith('http://')" class="h-2rem" :src="content" />
-        <span v-else>{{ content }}</span>
+        <span v-else break-all>{{ content }}</span>
       </div>
     </div>
   </div>
@@ -89,7 +89,7 @@ if (props.showAvatar) {
       <UGuardTag v-if="level && showGuardTag" inline-flex leading-normal :level="level" :label="label" :perhaps-guard="perhapsGuard" />
       <MyImg v-if="perhapsGuard !== 0 && level >= 20" inline-flex w-1rem h-1rem :src="guardType[perhapsGuard].badge" rounded-full />
       <MyImg v-if="content.startsWith('http://')" class="h-2rem" :src="content" inline-flex />
-      <span v-else>{{ content }}</span>
+      <span v-else break-all>{{ content }}</span>
     </div>
   </div>
 </template>
