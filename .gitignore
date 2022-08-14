@@ -26,5 +26,5 @@ dist-ssr
 *.sublime-workspace
 
 # auto import
-# src/auto-imports.d.ts
-# src/components.d.ts
+src/auto-imports.d.ts
+src/components.d.ts
