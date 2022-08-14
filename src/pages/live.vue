@@ -4,6 +4,8 @@ import { inject, ref } from 'vue'
 import { getAreaInfoList, startLive, stopLive, updateLiveTitle } from '~/composables/openLive'
 import { getLiveRoomInfoFromUid } from '~/composables/getLiverInfo'
 import { useStore } from '~/stores/store'
+import UMdInput from '~/components/ui/UMdInput.vue'
+import UTabSelector from '~/components/ui/UTabSelector.vue'
 
 const store = useStore()
 const roomId2 = useStorage('roomId2', '')

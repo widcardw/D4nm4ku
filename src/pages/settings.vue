@@ -8,6 +8,10 @@ import USettingsBox from '~/components/ui/USettingsBox.vue'
 import UCheckBox from '~/components/ui/UCheckBox.vue'
 import UColorPicker from '~/components/ui/UColorPicker.vue'
 import { useStore } from '~/stores/store'
+import Login from '~/components/settings/Login.vue'
+import URadio from '~/components/ui/URadio.vue'
+import USlider from '~/components/ui/USlider.vue'
+import UMultiList from '~/components/ui/UMultiList.vue'
 
 const msgRef = inject('msgRef') as any
 const store = useStore()
