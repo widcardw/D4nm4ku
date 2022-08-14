@@ -4,6 +4,7 @@ import generatedRoutes from 'virtual:generated-pages'
 import { setupLayouts } from 'virtual:generated-layouts'
 import { Buffer } from 'buffer/'
 import { WebviewWindow } from '@tauri-apps/api/window'
+import { tryOnUnmounted } from '@vueuse/core'
 import App from './App.vue'
 import { pinia } from '~/stores'
 

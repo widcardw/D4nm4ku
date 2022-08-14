@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Avatar from '~/components/img/Avatar.vue'
 import MyImg from '~/components/img/MyImg.vue'
+import { useStore } from '~/stores/store'
 defineProps<{
   uname: string
   action: string

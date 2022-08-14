@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { inject, ref } from 'vue'
 import Avatar from '~/components/img/Avatar.vue'
+import { getAvatar2 } from '~/composables/getAvatar'
 import { getLightnessFromHex } from '~/composables/randomColor'
 
 const props = defineProps<{

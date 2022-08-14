@@ -1,6 +1,7 @@
 import { appDir, join } from '@tauri-apps/api/path'
 import { invoke } from '@tauri-apps/api/tauri'
 import { readBinaryFile } from '@tauri-apps/api/fs'
+import { useStore } from '~/stores/store'
 
 const store = useStore()
 

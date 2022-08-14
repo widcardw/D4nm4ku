@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { useVModel } from '@vueuse/core'
 import USuperChat from './USuperChatFloat.vue'
 import USuperChatTag from './USuperChatTag.vue'
 import type { SuperChatProps } from '~/composables/components'
+import { chatPool } from '~/composables/server'
 
 const props = defineProps<{
   chatPool: Array<SuperChatProps>

@@ -1,6 +1,8 @@
 import { Body, fetch } from '@tauri-apps/api/http'
+import { useStorage } from '@vueuse/core'
 import { liveAreaInfoListApi, startLiveApi, stopLiveApi, updateLiveTitleApi } from './api'
 import type { LiveAreaInfo, StartLiveResponse } from './types'
+import getCookies from './getCookies'
 import { useStore } from '~/stores/store'
 
 const store = useStore()

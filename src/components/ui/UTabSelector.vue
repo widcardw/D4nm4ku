@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { useVModels } from '@vueuse/core'
+import { ref } from 'vue'
+import { useStore } from '~/stores/store'
+
 const props = defineProps<{
   id: number
   info: string

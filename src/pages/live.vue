@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import { startLive, stopLive, updateLiveTitle } from '~/composables/openLive'
+import { useClipboard, useStorage } from '@vueuse/core'
+import { inject, ref } from 'vue'
+import { getAreaInfoList, startLive, stopLive, updateLiveTitle } from '~/composables/openLive'
 import { getLiveRoomInfoFromUid } from '~/composables/getLiverInfo'
+import { useStore } from '~/stores/store'
 
 const store = useStore()
 const roomId2 = useStorage('roomId2', '')

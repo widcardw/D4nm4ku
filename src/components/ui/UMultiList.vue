@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { confirm } from '@tauri-apps/api/dialog'
+import { inject } from 'vue'
 import type { Answer } from '../../composables/autoSendMsg'
+import { useStore } from '~/stores/store'
 
 const emits = defineEmits(['settingsChanged'])
 const store = useStore()

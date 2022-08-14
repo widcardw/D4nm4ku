@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { listen } from '@tauri-apps/api/event'
+import { tryOnBeforeUnmount } from '@vueuse/core'
 import UMessageSender from './send/UMessageSender.vue'
 import USuperChatPool from '~/components/superchat/USuperChatPool.vue'
 import {
@@ -14,6 +15,7 @@ import {
 import { isGiftProps } from '~/composables/components'
 import UWatch from '~/components/danmaku/UWatch.vue'
 import URenderer from '~/components/danmaku/URenderer.vue'
+import { useStore } from '~/stores/store'
 
 const store = useStore()
 const unlistens: Function[] = []

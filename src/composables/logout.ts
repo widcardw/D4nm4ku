@@ -1,6 +1,7 @@
 import { Body, fetch } from '@tauri-apps/api/http'
 import getCookies from './getCookies'
 import { logOutApi } from './api'
+import { useStore } from '~/stores/store'
 
 const store = useStore()
 

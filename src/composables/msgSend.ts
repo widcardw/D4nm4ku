@@ -1,5 +1,6 @@
 import { invoke } from '@tauri-apps/api/tauri'
 import getCookies from './getCookies'
+import { useStore } from '~/stores/store'
 
 const store = useStore()
 const roomId = store.getRoomId

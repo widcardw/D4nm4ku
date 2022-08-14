@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { WebviewWindow } from '@tauri-apps/api/window'
+import { useStorage } from '@vueuse/core'
+import { inject } from 'vue'
 import UMdInput from '~/components/ui/UMdInput.vue'
+import { useStore } from '~/stores/store'
 const roomId = useStorage('roomId', '')
 
 let webview: WebviewWindow | null = null

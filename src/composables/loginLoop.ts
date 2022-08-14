@@ -1,4 +1,8 @@
 import { Body, fetch } from '@tauri-apps/api/http'
+import { ref } from 'vue'
+import { qrcodeLogin } from './api'
+import { getCardInfo } from './getInfoFromUid'
+import { useStore } from '~/stores/store'
 
 const store = useStore()
 

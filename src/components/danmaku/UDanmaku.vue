@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { inject, ref } from 'vue'
 import MyImg from '../img/MyImg.vue'
 import { guardType } from '~/composables/data'
 import UGuardTag from '~/components/danmaku/UGuardTag.vue'

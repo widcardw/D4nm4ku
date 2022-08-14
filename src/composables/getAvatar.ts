@@ -1,4 +1,6 @@
+import { getCardInfo, getSpaceInfo } from './getInfoFromUid'
 import type { CardInfoResponse, SpaceApiResponse } from './types'
+import { useStore } from '~/stores/store'
 
 const store = useStore()
 

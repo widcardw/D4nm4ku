@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { inject, ref } from 'vue'
 import { sendMsg } from '~/composables/msgSend'
 import UInputBtn from '~/components/ui/UInputBtn.vue'
+import { useStore } from '~/stores/store'
 
 withDefaults(defineProps<{
   noBorder?: boolean

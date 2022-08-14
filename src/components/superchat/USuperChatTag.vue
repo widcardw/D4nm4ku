@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { useIntervalFn } from '@vueuse/core'
+import { inject, ref, watchEffect } from 'vue'
 import Avatar from '~/components/img/Avatar.vue'
+import { getAvatar2 } from '~/composables/getAvatar'
 import { getLightnessFromHex } from '~/composables/randomColor'
 
 const props = defineProps<{

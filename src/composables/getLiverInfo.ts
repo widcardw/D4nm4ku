@@ -1,4 +1,6 @@
 import { fetch } from '@tauri-apps/api/http'
+import { roomInfo } from './api'
+import { getCardInfo, getSpaceInfo } from './getInfoFromUid'
 
 async function getLiverInfo(roomId: number) {
   const data = (await fetch(`${roomInfo}${roomId}`, {

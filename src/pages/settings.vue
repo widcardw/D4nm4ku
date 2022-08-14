@@ -2,8 +2,12 @@
 import { WebviewWindow } from '@tauri-apps/api/window'
 import { invoke } from '@tauri-apps/api/tauri'
 import { appDir } from '@tauri-apps/api/path'
+import { useThrottleFn } from '@vueuse/core'
+import { inject, ref } from 'vue'
 import USettingsBox from '~/components/ui/USettingsBox.vue'
 import UCheckBox from '~/components/ui/UCheckBox.vue'
+import UColorPicker from '~/components/ui/UColorPicker.vue'
+import { useStore } from '~/stores/store'
 
 const msgRef = inject('msgRef') as any
 const store = useStore()

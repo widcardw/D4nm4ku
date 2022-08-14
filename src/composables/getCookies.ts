@@ -1,3 +1,5 @@
+import { useStore } from '~/stores/store'
+
 const store = useStore()
 
 export default function getCookies() {

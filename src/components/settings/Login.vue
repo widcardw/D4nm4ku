@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { fetch } from '@tauri-apps/api/http'
 import { confirm } from '@tauri-apps/api/dialog'
+import { inject, ref } from 'vue'
 import MyQrCode from '~/components/img/MyQrCode.vue'
 import Avatar from '~/components/img/Avatar.vue'
 import { clearLoop, createLoginLoop, interval } from '~/composables/loginLoop'
 import logoutAccount from '~/composables/logout'
+import { qrcodeGet } from '~/composables/api'
+import { useStore } from '~/stores/store'
 
 const store = useStore()
 const msgRef = inject('msgRef') as any

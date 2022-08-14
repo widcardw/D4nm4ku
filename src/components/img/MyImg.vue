@@ -1,5 +1,6 @@
 <script setup lang="ts">
 // import { readBinaryFile } from '@tauri-apps/api/fs'
+import { ref, watch } from 'vue'
 import { processImgUrl2 } from '~/composables/fetchImgFromBackend'
 
 const props = withDefaults(defineProps<{

@@ -4,6 +4,7 @@ import UGift from '~/components/danmaku/UGift.vue'
 import UScDanmaku from '~/components/superchat/UScDanmaku.vue'
 import type { DanmakuProps, GiftProps, SuperChatProps } from '~/composables/components'
 import { isDanmakuProps, isGiftProps, isSuperChatProps } from '~/composables/components'
+import { useStore } from '~/stores/store'
 
 defineProps<{
   obj?: DanmakuProps | GiftProps | SuperChatProps

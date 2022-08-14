@@ -1,4 +1,5 @@
 import { fetch } from '@tauri-apps/api/http'
+import { cardInfo, spaceInfo } from './api'
 import type { CardInfoResponse, SpaceApiResponse } from './types'
 
 async function getSpaceInfo(uid: number) {

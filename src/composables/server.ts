@@ -1,5 +1,13 @@
 import { KeepLiveWS } from 'bilibili-live-ws'
 import { fetch } from '@tauri-apps/api/http'
+import { useStorage } from '@vueuse/core'
+import { ref } from 'vue'
+import type {
+  DanmakuProps,
+  GiftProps,
+  SuperChatProps,
+} from './components'
+import { getLiverInfo } from './getLiverInfo'
 import type {
   DanmakuMessage,
   GiftInfo,
@@ -7,12 +15,12 @@ import type {
   SendGiftMessage,
   SuperChatMessage,
 } from './types'
-import type {
-  DanmakuProps,
-  GiftProps,
-  SuperChatProps,
-} from './components'
-import { getLiverInfo } from './getLiverInfo'
+import { giftInfo } from './api'
+import { autoSendByWord } from './autoSendMsg'
+import { guardType } from './data'
+import getLastMatchedGift from './getLastMatchedGift'
+import parseFanNumbers from './parseFanNumbers'
+import { useStore } from '~/stores/store'
 
 const roomId = useStorage('roomId', '')
 const linked = ref(true)
