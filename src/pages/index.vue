@@ -17,6 +17,7 @@ const createWebview = () => {
     })
     return
   }
+  webview = WebviewWindow.getByLabel('danmakuWidget')
   if (webview) {
     webview.close()
     webview = null

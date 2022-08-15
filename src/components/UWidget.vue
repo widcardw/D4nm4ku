@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { listen } from '@tauri-apps/api/event'
-import { ref } from 'vue'
 import { tryOnBeforeUnmount } from '@vueuse/core'
 import UMessageSender from './send/UMessageSender.vue'
 import USuperChatPool from '~/components/superchat/USuperChatPool.vue'
