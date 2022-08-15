@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import DarkMode from './DarkMode.vue'
 
 const router = useRouter()
 
