@@ -42,6 +42,7 @@ const store = useStore()
     :gift-name="obj.giftName"
     :price="obj.price"
     :ts="obj.ts"
+    :uid="obj.uid"
   />
   <UScDanmaku
     v-else-if="isSuperChatProps(obj)"

@@ -25,6 +25,7 @@ interface GiftProps {
   giftName: string
   price: number
   ts: number
+  uid: number
 }
 
 function isGiftProps(obj: any): obj is GiftProps {

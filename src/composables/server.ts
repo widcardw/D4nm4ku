@@ -90,7 +90,7 @@ const connectRoom = () => {
     })
 
     live.on('SEND_GIFT', (data: SendGiftMessage) => {
-      const { data: { face, timestamp, coin_type, uname, giftName, num, giftId, action, total_coin } } = data
+      const { data: { face, timestamp, coin_type, uname, giftName, num, giftId, action, total_coin, uid } } = data
       if (danmakuPool.value.length > 0) {
         if (getLastMatchedGift(danmakuPool.value, uname, giftId, timestamp, num))
           return
@@ -112,6 +112,7 @@ const connectRoom = () => {
         giftName,
         price: total_coin,
         ts: timestamp,
+        uid,
       }
       pushObject(gift)
     })
