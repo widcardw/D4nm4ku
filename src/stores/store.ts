@@ -66,7 +66,6 @@ const defaultUserInfo: UserInfo = {
   avatarUrl: '',
   lastLogin: 0,
   sid: '',
-
 }
 
 interface liveConfig {

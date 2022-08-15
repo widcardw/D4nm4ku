@@ -15,9 +15,9 @@ const props = withDefaults(defineProps<{
 
 const emits = defineEmits(['update:modelValue', 'clickBtn'])
 
-const emitEvent = (event: Event) => {
-  emits('clickBtn');
-  (event.target as HTMLInputElement).blur()
+const emitEvent = () => {
+  emits('clickBtn')
+  // (event.target as HTMLInputElement).blur()
 }
 
 const value = useVModel(props, 'modelValue', emits)

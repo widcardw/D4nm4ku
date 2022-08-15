@@ -140,16 +140,24 @@ function copy2(source: string) {
     </div>
     <div text-center>
       <div>
-        <UMdInput v-model="roomId2" title="房间号" />
+        <UMdInput v-model="roomId2" title="房间号" :disabled="store.liveConfig.isLive" />
       </div>
       <div flex items-center>
         <div flex-1 />
         <UMdInput v-model="liveTitle" title="直播标题" />
-        <div text-left flex-1 flex items-center>
-          <button i-ri-save-line icon-btn :disabled="liveTitle.trim() === ''" @click="updateLiveTitle2" />
+        <div flex-1 flex items-center>
+          <div
+            v-if="btnUpdateTitleEnabled"
+            i-ri-save-line
+            icon-btn
+            :disabled="liveTitle.trim() === ''"
+            @click="updateLiveTitle2"
+          />
+          <div v-else i-ri-refresh-line animate-spin icon-btn />
         </div>
       </div>
-      <div>
+      <div flex items-center>
+        <div flex-1 />
         <UMdInput
           v-model="selectedAreaInfo" title="选择分区"
           :disabled="!btnShowAreaEnabled"
@@ -157,18 +165,21 @@ function copy2(source: string) {
           class="disabled:cursor-wait"
           @click="showAreaSelection"
         />
+        <div flex-1 flex items-center>
+          <div v-if="!btnShowAreaEnabled" i-ri-refresh-line icon-btn animate-spin />
+        </div>
       </div>
       <div v-if="store.liveConfig.isLive" flex items-center>
         <div flex-1 />
         <UMdInput v-model="store.liveConfig.addr" title="RTMP 串流地址" />
-        <div text-left flex-1>
+        <div flex-1 flex items-center>
           <div i-ri-file-copy-2-line icon-btn title="点击复制" @click="copy2(store.liveConfig.addr)" />
         </div>
       </div>
       <div v-if="store.liveConfig.isLive" flex items-center>
         <div flex-1 />
         <UMdInput v-model="store.liveConfig.code" title="RTMP 串流密钥" />
-        <div text-left flex-1>
+        <div flex-1 flex items-center>
           <div i-ri-file-copy-2-line icon-btn title="点击复制" @click="copy2(store.liveConfig.code)" />
         </div>
       </div>

@@ -34,9 +34,12 @@ const createWebview = () => {
     alwaysOnTop: true,
     title: 'D4nm4ku',
     minWidth: 320,
-    minHeight: 400,
+    minHeight: 150,
   })
   store.linked = true
+  msgRef.value.pushMsg({
+    content: '窗口已开启',
+  })
 }
 </script>
 
@@ -49,7 +52,7 @@ const createWebview = () => {
     </div>
     <div flex items-center>
       <div flex-1 />
-      <UMdInput v-model="roomId" title="直播间号" />
+      <UMdInput v-model="roomId" title="直播间号" :disabled="store.linked" />
       <div flex-1>
         <button
           p-2 m-2

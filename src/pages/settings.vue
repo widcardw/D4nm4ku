@@ -12,6 +12,7 @@ import Login from '~/components/settings/Login.vue'
 import URadio from '~/components/ui/URadio.vue'
 import USlider from '~/components/ui/USlider.vue'
 import UMultiList from '~/components/ui/UMultiList.vue'
+import UGuardTag from '~/components/danmaku/UGuardTag.vue'
 
 const msgRef = inject('msgRef') as any
 const store = useStore()
@@ -31,7 +32,6 @@ const settingChanged = (event: string, payload: any) => {
 
 const pinned = ref(true)
 const pinWidget = () => {
-  pinned.value = !pinned.value
   const danmakuWidget = WebviewWindow.getByLabel('danmakuWidget')
   if (danmakuWidget)
     danmakuWidget.setAlwaysOnTop(pinned.value)
@@ -46,6 +46,12 @@ function openAppDir() {
       msgRef.value.pushMsg({ content: err.message, type: 'error' })
     })
 }
+
+// function setClickTranparent(val: boolean) {
+//   if (val)
+//     pinned.value = val
+//   settingChanged('click-transparent', val)
+// }
 </script>
 
 <template>
@@ -119,12 +125,20 @@ function openAppDir() {
       >
         显示顶部栏
       </UCheckBox>
+    </USettingsBox>
+    <USettingsBox title="窗口">
       <UCheckBox
         v-model="pinned"
         @update:model-value="pinWidget"
       >
         窗口置顶
       </UCheckBox>
+      <!--       <UCheckBox
+        v-model="store.config.clickTransparent"
+        @update:model-value="setClickTranparent(store.config.clickTransparent)"
+      >
+        点击穿透
+      </UCheckBox> -->
       <div
         inline-flex items-center leading-relaxed select-none space-x-1 cursor-pointer
         @click="openAppDir"

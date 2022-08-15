@@ -16,8 +16,10 @@ const iconsDict = {
 
 const messageQueue = ref<PopMessage[]>([])
 
-const pushMsg = (msg: Extract<PopMessage, { ts: number }>) => {
+const pushMsg = (msg: Partial<Extract<PopMessage, { ts: number }>>) => {
   messageQueue.value.push({
+    type: 'info',
+    content: 'msg',
     ...msg,
     ts: Date.now(),
   })
@@ -31,16 +33,44 @@ defineExpose({ pushMsg })
 </script>
 
 <template>
-  <div v-show="messageQueue.length" fixed left-0 right-0 top-2rem flex flex-col pointer-events-none z-999>
+  <TransitionGroup
+    tag="div"
+    name="msggroup"
+    fixed left-0 right-0
+    top-2rem
+    flex flex-col
+    pointer-events-none
+    z-999
+  >
     <div
       v-for="it in messageQueue" :key="it.ts"
       p="x-4 y-2" my-2 shadow-lg rounded
-      animate-bounce-in ma transition-all
+      ma
       bg="white !dark:zinc-900"
       flex items-center space-x-2
       class="use-dark-msg"
     >
       <div icon-btn :class="iconsDict[it.type]" /><span>{{ it.content }}</span>
     </div>
-  </div>
+  </TransitionGroup>
 </template>
+
+<style scoped>
+.msggroup-move, /* 对移动中的元素应用的过渡 */
+.msggroup-enter-active,
+.msggroup-leave-active {
+  transition: all 0.375s ease;
+}
+
+.msggroup-enter-from,
+.msggroup-leave-to {
+  opacity: 0;
+  transform: translateY(-30px) scale(0.01);
+}
+
+/* 确保将离开的元素从布局流中删除
+  以便能够正确地计算移动的动画。 */
+.msggroup-leave-active {
+  position: absolute;
+}
+</style>
