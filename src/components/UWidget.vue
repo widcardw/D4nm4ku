@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { listen } from '@tauri-apps/api/event'
+import { ref } from 'vue'
 import { tryOnBeforeUnmount } from '@vueuse/core'
 import UMessageSender from './send/UMessageSender.vue'
 import USuperChatPool from '~/components/superchat/USuperChatPool.vue'
@@ -23,6 +24,8 @@ const unlistens: Function[] = []
 function parseBoolean(obj: string) {
   return obj === 'true'
 }
+
+// const ct = ref('')
 
 unlistens.push(await listen('show-avatar', (event) => {
   store.config.showAvatar = parseBoolean(event.payload as string)
@@ -69,6 +72,19 @@ unlistens.push(await listen('layout', (event) => {
 unlistens.push(await listen('auto-reply', (event) => {
   store.config.autoReply = parseBoolean(event.payload as string)
 }))
+// 点击穿透不能用 呜呜
+// unlistens.push(await listen('click-transparent', (event) => {
+//   ct.value = parseBoolean(event.payload as string) ? 'none' : 'auto'
+//   const html = document.querySelector('html')
+//   if (html)
+//     html.style.pointerEvents = ct.value
+//   const body = document.querySelector('body')
+//   if (body)
+//     body.style.pointerEvents = ct.value
+//   const app = document.querySelector('#app') as HTMLDivElement
+//   if (app)
+//     app.style.pointerEvents = ct.value
+// }))
 
 connectRoom()
 
@@ -138,5 +154,8 @@ const hex2rgb = (hex: string, opacity: string) => {
 .scroller > div:last-child {
   scroll-snap-align: end;
 }
+/** {
+  pointer-events: v-bind(ct);
+}*/
 </style>
 
