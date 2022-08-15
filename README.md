@@ -53,12 +53,12 @@
 - [x] 开播
     - [x] 更改直播间标题
     - [x] 开播
-
-### 目前的问题
-
-打包后头像无法加载
-
-- http://i2.xxxxxx 的这个网址直接用浏览器打开是可以的，但是在无服务的情况下好像不能用
+- [ ] 窗口
+    - [x] 置顶
+    - [ ] 点击穿透
+        - tauri 的 [issue](https://github.com/tauri-apps/tao/issues/184#issuecomment-1097109451) 中说要到 v2 时候才会正式公开这个 api
+        - [#184-comment1](https://github.com/tauri-apps/tao/issues/184#issuecomment-1134823892) 给出了 macOS 的解决方案，但一看到 unsafe 就不是很想用
+        - [#184-comment2](https://github.com/tauri-apps/tao/issues/184#issuecomment-1118176176) 给出了 Windows 的解决方案，依然是 unsafe
 
 ## 部分效果呈现
 
