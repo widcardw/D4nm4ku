@@ -26,51 +26,55 @@ function parseBoolean(obj: string) {
 
 // const ct = ref('')
 
-unlistens.push(await listen('show-avatar', (event) => {
-  store.config.showAvatar = parseBoolean(event.payload as string)
-}))
-unlistens.push(await listen('show-guard-tag', (event) => {
-  store.config.showGuardTag = parseBoolean(event.payload as string)
-}))
-unlistens.push(await listen('show-time', (event) => {
-  store.config.showTime = parseBoolean(event.payload as string)
-}))
-unlistens.push(await listen('show-silver-gift', (event) => {
-  store.config.showSilverGift = parseBoolean(event.payload as string)
-}))
-unlistens.push(await listen('show-gold-gift', (event) => {
-  store.config.showGoldGift = parseBoolean(event.payload as string)
-}))
-unlistens.push(await listen('can-send-message', (event) => {
-  store.config.canSendMessage = parseBoolean(event.payload as string)
-}))
-unlistens.push(await listen('text-color-changed', (event) => {
-  store.config.textColor = event.payload as string
-}))
-unlistens.push(await listen('text-shadow-color-changed', (event) => {
-  store.config.textShadowColor = event.payload as string
-}))
-unlistens.push(await listen('enable-text-shadow', (event) => {
-  store.config.enableTextShadow = parseBoolean(event.payload as string)
-}))
-unlistens.push(await listen('bg-color-changed', (event) => {
-  store.config.bgColor = event.payload as string
-}))
-unlistens.push(await listen('bg-opacity-changed', (event) => {
-  store.config.bgOpacity = event.payload as string
-}))
-unlistens.push(await listen('show-population', (event) => {
-  store.config.showPopulation = parseBoolean(event.payload as string)
-}))
-unlistens.push(await listen('blur', (event) => {
-  store.config.blur = parseBoolean(event.payload as string)
-}))
-unlistens.push(await listen('layout', (event) => {
-  store.config.layout = event.payload as 'loose' | 'tight'
-}))
-unlistens.push(await listen('auto-reply', (event) => {
-  store.config.autoReply = parseBoolean(event.payload as string)
-}))
+async function initListens() {
+  unlistens.push(await listen('show-avatar', (event) => {
+    store.config.showAvatar = parseBoolean(event.payload as string)
+  }))
+  unlistens.push(await listen('show-guard-tag', (event) => {
+    store.config.showGuardTag = parseBoolean(event.payload as string)
+  }))
+  unlistens.push(await listen('show-time', (event) => {
+    store.config.showTime = parseBoolean(event.payload as string)
+  }))
+  unlistens.push(await listen('show-silver-gift', (event) => {
+    store.config.showSilverGift = parseBoolean(event.payload as string)
+  }))
+  unlistens.push(await listen('show-gold-gift', (event) => {
+    store.config.showGoldGift = parseBoolean(event.payload as string)
+  }))
+  unlistens.push(await listen('can-send-message', (event) => {
+    store.config.canSendMessage = parseBoolean(event.payload as string)
+  }))
+  unlistens.push(await listen('text-color-changed', (event) => {
+    store.config.textColor = event.payload as string
+  }))
+  unlistens.push(await listen('text-shadow-color-changed', (event) => {
+    store.config.textShadowColor = event.payload as string
+  }))
+  unlistens.push(await listen('enable-text-shadow', (event) => {
+    store.config.enableTextShadow = parseBoolean(event.payload as string)
+  }))
+  unlistens.push(await listen('bg-color-changed', (event) => {
+    store.config.bgColor = event.payload as string
+  }))
+  unlistens.push(await listen('bg-opacity-changed', (event) => {
+    store.config.bgOpacity = event.payload as string
+  }))
+  unlistens.push(await listen('show-population', (event) => {
+    store.config.showPopulation = parseBoolean(event.payload as string)
+  }))
+  unlistens.push(await listen('blur', (event) => {
+    store.config.blur = parseBoolean(event.payload as string)
+  }))
+  unlistens.push(await listen('layout', (event) => {
+    store.config.layout = event.payload as 'loose' | 'tight'
+  }))
+  unlistens.push(await listen('auto-reply', (event) => {
+    store.config.autoReply = parseBoolean(event.payload as string)
+  }))
+}
+
+initListens()
 // 点击穿透不能用 呜呜
 // unlistens.push(await listen('click-transparent', (event) => {
 //   ct.value = parseBoolean(event.payload as string) ? 'none' : 'auto'

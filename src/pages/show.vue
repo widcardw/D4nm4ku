@@ -3,9 +3,7 @@ import UWidget from '~/components/UWidget.vue'
 </script>
 
 <template>
-  <Suspense>
-    <UWidget />
-  </Suspense>
+  <UWidget />
 </template>
 
 <route lang="yaml">
