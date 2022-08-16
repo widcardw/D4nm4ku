@@ -87,8 +87,8 @@ if (props.showAvatar) {
         {{ uname }}
       </span>
       <UGuardTag v-if="level && showGuardTag" inline-flex leading-normal :level="level" :label="label" :perhaps-guard="perhapsGuard" />
-      <MyImg v-if="perhapsGuard !== 0 && level >= 20" inline-flex w-1rem h-1rem :src="guardType[perhapsGuard].badge" rounded-full />
-      <MyImg v-if="content.startsWith('http://')" class="h-2rem" :src="content" inline-flex />
+      <MyImg v-if="perhapsGuard !== 0 && level >= 20" inline-flex w-1rem h-1rem :src="guardType[perhapsGuard].badge" err-src="/loading.gif" rounded-full />
+      <MyImg v-if="content.startsWith('http://')" class="h-2rem" :src="content" inline-flex err-src="/loading.gif" />
       <span v-else break-all>{{ content }}</span>
     </div>
   </div>

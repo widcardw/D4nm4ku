@@ -14,7 +14,6 @@ const store = useStore()
 </script>
 
 <template>
-  <!-- 类型断言为弹幕 -->
   <UDanmaku
     v-if="isDanmakuProps(obj)"
     :content="obj.content"
@@ -30,7 +29,6 @@ const store = useStore()
     :show-time="store.getConfig.showTime"
     :layout="store.getConfig.layout"
   />
-  <!-- 类型断言为礼物 -->
   <UGift
     v-else-if="isGiftProps(obj)"
     :uname="obj.uname"
@@ -43,6 +41,7 @@ const store = useStore()
     :price="obj.price"
     :ts="obj.ts"
     :uid="obj.uid"
+    :blind-gift="obj.blindGift"
   />
   <UScDanmaku
     v-else-if="isSuperChatProps(obj)"
