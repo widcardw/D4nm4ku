@@ -32,8 +32,10 @@ const login = async () => {
   qrurl.value = data.url
   store.userInfo.oauthKey = data.oauthKey
 
-  createLoginLoop(data.oauthKey)
-  msgRef.value.pushMsg({ type: 'info', content: '登录后可能需要刷新生效' })
+  const success = await createLoginLoop(data.oauthKey)
+  if (success)
+    msgRef.value.pushMsg({ type: 'success', content: '登录成功！' })
+  msgRef.value.pushMsg({ type: 'info', content: '若头像信息未更新，可点击按钮刷新' })
 }
 
 const cancelLogin = () => {
