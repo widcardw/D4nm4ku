@@ -88,6 +88,13 @@ interface SendGiftMessage extends MessageType {
     total_coin: number
     giftId: number
     action: string
+    blind_gift: {
+      blind_gift_config_id: number
+      from: number
+      gift_action: string
+      original_gift_id: string
+      original_gift_name: string
+    } | null
   }
 }
 

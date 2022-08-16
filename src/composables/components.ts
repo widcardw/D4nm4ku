@@ -26,6 +26,13 @@ interface GiftProps {
   price: number
   ts: number
   uid: number
+  blindGift: null | {
+    blind_gift_config_id: number
+    from: number
+    gift_action: string
+    original_gift_id: string
+    original_gift_name: string
+  }
 }
 
 function isGiftProps(obj: any): obj is GiftProps {

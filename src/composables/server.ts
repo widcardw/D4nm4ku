@@ -90,16 +90,18 @@ const connectRoom = () => {
     })
 
     live.on('SEND_GIFT', (data: SendGiftMessage) => {
-      const { data: { face, timestamp, coin_type, uname, giftName, num, giftId, action, total_coin, uid } } = data
-      if (danmakuPool.value.length > 0) {
-        if (getLastMatchedGift(danmakuPool.value, uname, giftId, timestamp, num))
-          return
-      }
+      const { data: { face, timestamp, coin_type, uname, giftName, num, giftId, action, total_coin, uid, blind_gift } } = data
+
       if (coin_type === 'silver' && !store.getConfig.showSilverGift)
         return
 
       if (!store.getConfig.showGoldGift)
         return
+
+      if (danmakuPool.value.length > 0) {
+        if (getLastMatchedGift(danmakuPool.value, uname, giftId, timestamp, num))
+          return
+      }
 
       const gift: GiftProps = {
         type: 'gift',
@@ -113,6 +115,7 @@ const connectRoom = () => {
         price: total_coin,
         ts: timestamp,
         uid,
+        blindGift: blind_gift,
       }
       pushObject(gift)
     })

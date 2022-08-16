@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import Avatar from '~/components/img/Avatar.vue'
 import MyImg from '~/components/img/MyImg.vue'
 import { useStore } from '~/stores/store'
@@ -14,6 +13,13 @@ defineProps<{
   price: number
   ts: number
   uid: number
+  blindGift: null | {
+    blind_gift_config_id: number
+    from: number
+    gift_action: string
+    original_gift_id: string
+    original_gift_name: string
+  }
 }>()
 
 const store = useStore()
@@ -35,7 +41,7 @@ const store = useStore()
         </div>
       </div>
       <div font-bold text-lg flex justify-between items-center>
-        <div>{{ action }} <span :class="{ 'text-amber': coinType === 'gold' }">{{ giftName }}</span> × {{ num }}</div>
+        <div>{{ action }} <span :class="{ 'text-amber': coinType === 'gold' }">{{ blindGift?.original_gift_name }}</span> <span>{{ blindGift?.gift_action }}</span> <span :class="{ 'text-amber': coinType === 'gold' }">{{ giftName }}</span> × {{ num }}</div>
       </div>
     </div>
     <div grid grid-rows-2 />
