@@ -30,7 +30,13 @@ html {
 }
 
 
-#app.dark>.use-dark, #app.dark>div>.use-dark-msg {
+.dark>body>#app>div>.use-dark-msg {
+  background: #242424;
+  color: #ddd;
+}
+
+
+.dark:has(.use-dark) {
   background: #242424;
   color: #ddd;
 }
