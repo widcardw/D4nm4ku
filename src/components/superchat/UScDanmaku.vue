@@ -57,7 +57,7 @@ if (props.face === '') {
         backgroundColor: bgBottomColor,
         color: getLightnessFromHex(bgBottomColor) > 100 ? '#000' : '#fff',
       }"
-      p-2 rounded-b
+      p-2 rounded-b break-words
     >
       {{ content }}
     </div>

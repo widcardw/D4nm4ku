@@ -16,6 +16,24 @@ function randomColor() {
   return `rgb(${r}, ${g}, ${b})`
 }
 
+function rgbToHex(r: number, g: number, b: number) {
+  let res = '#'
+  res += (r < 16 ? '0' : '') + r.toString(16)
+  res += (g < 16 ? '0' : '') + g.toString(16)
+  res += (b < 16 ? '0' : '') + b.toString(16)
+  return res
+}
+
+function randomColorPair() {
+  const colorAngle = Math.floor(Math.random() * 360)
+
+  const [r1, g1, b1] = hslToRgb(colorAngle, 60, 90)
+  const topColor = rgbToHex(r1, g1, b1)
+  const [r2, g2, b2] = hslToRgb(colorAngle, 70, 30)
+  const bottomColor = rgbToHex(r2, g2, b2)
+  return [topColor, bottomColor]
+}
+
 function rgbAppendAlpha(color: string) {
   return color.replace(/^(rgb)\((\d+, \d+, \d+)\)$/, (match, p1, p2) => `${p1}a(${p2}, 0.5)`)
 }
@@ -36,4 +54,5 @@ export {
   rgbAppendAlpha,
   getLightnessFromHex,
   getLightnessFromRgb,
+  randomColorPair,
 }

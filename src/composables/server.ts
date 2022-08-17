@@ -20,6 +20,9 @@ import { autoSendByWord } from './autoSendMsg'
 import { guardType } from './data'
 import getLastMatchedGift from './getLastMatchedGift'
 import parseFanNumbers from './parseFanNumbers'
+import { randomColorPair } from './randomColor'
+import { priceToSeconds } from './priceToSeconds'
+import { processTooLongSymbols } from './tooLongSymbols'
 import { useStore } from '~/stores/store'
 
 const roomId = useStorage('roomId', '')
@@ -97,6 +100,7 @@ const connectRoom = () => {
 
       if (!store.getConfig.showGoldGift)
         return
+      const [bgColor, bgBottomColor] = randomColorPair()
 
       if (danmakuPool.value.length > 0) {
         if (getLastMatchedGift(danmakuPool.value, uname, giftId, timestamp, num))
@@ -116,8 +120,25 @@ const connectRoom = () => {
         ts: timestamp,
         uid,
         blindGift: blind_gift,
+        bgColor: bgBottomColor,
       }
       pushObject(gift)
+
+      if (store.getConfig.showHighlight && coin_type === 'gold' && store.getConfig.pushGiftIntoHighlight) {
+        const chat: SuperChatProps = {
+          type: 'superchat',
+          uid,
+          uname,
+          face,
+          price: total_coin / 1000,
+          content: `${action}${giftName}`,
+          ts: timestamp * 1000,
+          second: priceToSeconds(total_coin),
+          bgColor,
+          bgBottomColor,
+        }
+        pushChat(chat)
+      }
     })
 
     live.on('DANMU_MSG', (data: DanmakuMessage) => {
@@ -138,7 +159,7 @@ const connectRoom = () => {
         type: 'text',
         uid,
         uname,
-        content,
+        content: processTooLongSymbols(content),
         color,
         level,
         label,
@@ -162,7 +183,7 @@ const connectRoom = () => {
         uname,
         face,
         price,
-        content: message_jpn === '' ? message : message_jpn,
+        content: message_jpn === '' ? processTooLongSymbols(message) : processTooLongSymbols(message_jpn),
         ts: ts * 1000,
         second: time,
         bgColor: background_color,
@@ -173,7 +194,8 @@ const connectRoom = () => {
       // console.log(chat)
 
       pushObject(chat)
-      pushChat(chat)
+      if (store.getConfig.showHighlight)
+        pushChat(chat)
     })
 
     // live.on('SUPER_CHAT_MESSAGE', (data) => {
@@ -200,7 +222,8 @@ const connectRoom = () => {
       }
 
       pushObject(guard)
-      pushChat(guard)
+      if (store.getConfig.showHighlight)
+        pushChat(guard)
     })
   }
   catch (e) {

@@ -48,7 +48,7 @@ if (props.face === '') {
       <div>￥{{ price }}</div>
     </div>
     <div
-      p-2 rounded-b
+      p-2 rounded-b break-words
       :style="{
         backgroundColor: bgBottomColor,
         color: getLightnessFromHex(bgBottomColor) > 100 ? '#000' : '#fff',
