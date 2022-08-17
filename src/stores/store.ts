@@ -22,6 +22,7 @@ interface ConfigProps {
   showSilverGift: boolean
   showGoldGift: boolean
   showPopulation: boolean
+  showHighlight: boolean
   canSendMessage: boolean
   textColor: string
   enableTextShadow: boolean
@@ -33,15 +34,18 @@ interface ConfigProps {
   autoReply: boolean
   readSc: boolean
   readGift: boolean
+  pushGiftIntoHighlight: boolean
 }
 
-const defaultConfig = {
+const defaultConfig: ConfigProps = {
   showGuardTag: false,
   showAvatar: true,
   showTime: false,
   showSilverGift: false,
   showPopulation: true,
   showGoldGift: true,
+  showHighlight: true,
+  pushGiftIntoHighlight: true,
   canSendMessage: false,
   textColor: '#ffffff',
   enableTextShadow: false,
@@ -53,7 +57,7 @@ const defaultConfig = {
   autoReply: false,
   readSc: false,
   readGift: false,
-} as ConfigProps
+}
 
 const defaultUserInfo: UserInfo = {
   oauthKey: '',

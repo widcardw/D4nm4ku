@@ -70,20 +70,34 @@ function openAppDir() {
       </button>
     </div>
     <USettingsBox title="界面布局">
-      <URadio
-        v-model="store.config.layout"
-        value="loose" name="layout"
-        @update:model-value="settingChanged('layout', store.config.layout)"
+      <div>
+        <URadio
+          v-model="store.config.layout"
+          value="loose" name="layout"
+          @update:model-value="settingChanged('layout', store.config.layout)"
+        >
+          松散
+        </URadio>
+        <URadio
+          v-model="store.config.layout"
+          value="tight" name="layout"
+          @update:model-value="settingChanged('layout', store.config.layout)"
+        >
+          紧凑
+        </URadio>
+      </div>
+      <UCheckBox
+        v-model="store.config.showPopulation"
+        @update:model-value="settingChanged('show-population', store.config.showPopulation)"
       >
-        松散
-      </URadio>
-      <URadio
-        v-model="store.config.layout"
-        value="tight" name="layout"
-        @update:model-value="settingChanged('layout', store.config.layout)"
+        显示顶部栏
+      </UCheckBox>
+      <UCheckBox
+        v-model="store.config.showHighlight"
+        @update:model-value="settingChanged('show-highlight', store.config.showHighlight)"
       >
-        紧凑
-      </URadio>
+        显示高能榜
+      </UCheckBox>
     </USettingsBox>
     <USettingsBox title="常规">
       <UCheckBox
@@ -107,6 +121,8 @@ function openAppDir() {
         </UCheckBox>
         <UGuardTag v-if="store.config.showGuardTag" label="bilibili" :level="25" :perhaps-guard="3" />
       </div>
+    </USettingsBox>
+    <USettingsBox title="礼物">
       <UCheckBox
         v-model="store.config.showSilverGift"
         @update:model-value="settingChanged('show-silver-gift', store.config.showSilverGift)"
@@ -120,10 +136,10 @@ function openAppDir() {
         显示付费礼物
       </UCheckBox>
       <UCheckBox
-        v-model="store.config.showPopulation"
-        @update:model-value="settingChanged('show-population', store.config.showPopulation)"
+        v-model="store.config.pushGiftIntoHighlight"
+        @update:model-value="settingChanged('push-gift-into-highlight', store.config.pushGiftIntoHighlight)"
       >
-        显示顶部栏
+        付费礼物加入高能榜
       </UCheckBox>
     </USettingsBox>
     <USettingsBox title="窗口">
@@ -189,7 +205,7 @@ function openAppDir() {
         毛玻璃效果（不稳定）
       </UCheckBox>
     </USettingsBox>
-    <USettingsBox title="弹幕扩展">
+    <USettingsBox :title="store.getUserInfo.mid ? '弹幕扩展' : '弹幕扩展（需要登录）'">
       <UCheckBox
         v-model="store.config.canSendMessage"
         :disabled="!store.getUserInfo.mid"

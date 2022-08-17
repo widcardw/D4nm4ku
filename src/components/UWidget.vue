@@ -72,6 +72,9 @@ async function initListens() {
   unlistens.push(await listen('auto-reply', (event) => {
     store.config.autoReply = parseBoolean(event.payload as string)
   }))
+  unlistens.push(await listen('show-highlight', (event) => {
+    store.config.showHighlight = parseBoolean(event.payload as string)
+  }))
 }
 
 initListens()
@@ -120,6 +123,7 @@ const hex2rgb = (hex: string, opacity: string) => {
       :population="population" :fans="fans"
     />
     <USuperChatPool
+      v-if="store.getConfig.showHighlight"
       v-show="chatPool.length > 0"
       v-model="selectedSc"
       data-tauri-drag-region
