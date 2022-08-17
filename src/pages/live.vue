@@ -204,11 +204,25 @@ function copy2(source: string) {
     </div>
     <div flex-1 />
   </div>
-  <UTabSelector
-    v-if="isShowAreaSelection"
-    v-model:id="selectedAreaId"
-    v-model:info="selectedAreaInfo"
-    @update:id="showAreaSelection"
-    @close="showAreaSelection"
-  />
+  <Transition name="selector">
+    <UTabSelector
+      v-if="isShowAreaSelection"
+      v-model:id="selectedAreaId"
+      v-model:info="selectedAreaInfo"
+      @update:id="showAreaSelection"
+      @close="showAreaSelection"
+    />
+  </Transition>
 </template>
+
+<style scoped>
+.selector-enter-active,
+.selector-leave-active {
+  transition: all 0.200s ease;
+}
+
+.selector-enter-from,
+.selector-leave-to {
+  opacity: 0;
+}
+</style>
