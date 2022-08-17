@@ -42,6 +42,7 @@ const store = useStore()
     :ts="obj.ts"
     :uid="obj.uid"
     :blind-gift="obj.blindGift"
+    :bg-color="obj.bgColor"
   />
   <UScDanmaku
     v-else-if="isSuperChatProps(obj)"

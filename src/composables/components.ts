@@ -33,6 +33,7 @@ interface GiftProps {
     original_gift_id: string
     original_gift_name: string
   }
+  bgColor: string
 }
 
 function isGiftProps(obj: any): obj is GiftProps {

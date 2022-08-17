@@ -20,6 +20,7 @@ defineProps<{
     original_gift_id: string
     original_gift_name: string
   }
+  bgColor: string
 }>()
 
 const store = useStore()
@@ -29,7 +30,7 @@ const store = useStore()
 </script>
 
 <template>
-  <div flex w-full space-x-2 bg-blue-800 text-white p-2 rounded my-2>
+  <div flex w-full space-x-2 :style="{ backgroundColor: bgColor }" text-white p-2 rounded my-2>
     <Avatar w-3rem h-3rem :src="face" :uid="uid" :is-blob="false" />
     <div flex-1>
       <div flex justify-between text-sm>
@@ -37,7 +38,7 @@ const store = useStore()
           {{ uname }}
         </div>
         <div v-if="coinType === 'gold'" text-amber text-sm>
-          ￥{{ price / 1000 }}
+          ￥{{ price * num / 1000 }}
         </div>
       </div>
       <div font-bold text-lg flex justify-between items-center>
