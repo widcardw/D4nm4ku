@@ -1,2 +1,5 @@
 dist
 public
+src-tauri
+.vscode
+.github
