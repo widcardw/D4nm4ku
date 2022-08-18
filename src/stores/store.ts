@@ -85,7 +85,7 @@ export const useStore = defineStore('stores', {
     roomId: '',
     giftInfoList: [] as GiftInfo[],
     userInfo: {} as UserInfo,
-    config: { ...defaultConfig },
+    config: Object.assign({ ...defaultConfig }, JSON.parse(localStorage.getItem('config') || 'null')),
     requestBlockedTimes: 0,
     faqs: [] as Answer[],
     settingsSaved: true,

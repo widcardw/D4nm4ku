@@ -95,7 +95,7 @@ function answerChanged() {
       <div flex space-x-2 items-center>
         <div>自动回复</div>
         <input
-          v-model.lazy="it.answer"
+          v-model="it.answer"
           m-input rounded flex-1 text-sm
           @input="answerChanged"
         >
