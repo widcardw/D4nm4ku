@@ -3,7 +3,7 @@ import { inject, ref } from 'vue'
 import Avatar from '~/components/img/Avatar.vue'
 import { getAvatar2 } from '~/composables/getAvatar'
 
-import { getLightnessFromHex } from '~/composables/randomColor'
+import { LIGHTNESS_LIMIT, getLightnessFromHex } from '~/composables/randomColor'
 
 const props = defineProps<{
   uname: string
@@ -38,7 +38,7 @@ if (props.face === '') {
     <div
       :style="{
         backgroundColor: bgColor,
-        color: getLightnessFromHex(bgColor) > 100 ? '#000' : '#fff',
+        color: getLightnessFromHex(bgColor) > LIGHTNESS_LIMIT ? '#000' : '#fff',
       }"
       flex space-x-2 p-2 rounded-t
     >
@@ -48,14 +48,14 @@ if (props.face === '') {
           {{ uname }}
         </div>
         <div text-sm>
-          ￥{{ price }}
+          ￥{{ price / 1000 }}
         </div>
       </div>
     </div>
     <div
       :style="{
         backgroundColor: bgBottomColor,
-        color: getLightnessFromHex(bgBottomColor) > 100 ? '#000' : '#fff',
+        color: getLightnessFromHex(bgBottomColor) > LIGHTNESS_LIMIT ? '#000' : '#fff',
       }"
       p-2 rounded-b break-words
     >

@@ -25,7 +25,7 @@ function rgbToHex(r: number, g: number, b: number) {
 }
 
 function randomColorPair() {
-  const colorAngle = Math.floor(Math.random() * 360)
+  const colorAngle = Math.floor(Math.random() * 280 + 80)
 
   const [r1, g1, b1] = hslToRgb(colorAngle, 60, 90)
   const topColor = rgbToHex(r1, g1, b1)
@@ -48,6 +48,8 @@ function getLightnessFromRgb(rgb: string) {
   return (r * 299 + g * 587 + b * 114) / 1000
 }
 
+const LIGHTNESS_LIMIT = 120
+
 export default randomColor
 
 export {
@@ -55,4 +57,5 @@ export {
   getLightnessFromHex,
   getLightnessFromRgb,
   randomColorPair,
+  LIGHTNESS_LIMIT,
 }

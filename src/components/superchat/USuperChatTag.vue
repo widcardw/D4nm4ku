@@ -3,7 +3,7 @@ import { useIntervalFn } from '@vueuse/core'
 import { inject, ref, watchEffect } from 'vue'
 import Avatar from '~/components/img/Avatar.vue'
 import { getAvatar2 } from '~/composables/getAvatar'
-import { getLightnessFromHex } from '~/composables/randomColor'
+import { LIGHTNESS_LIMIT, getLightnessFromHex } from '~/composables/randomColor'
 
 const props = defineProps<{
   face: string
@@ -48,13 +48,13 @@ if (props.face === '') {
     inline-flex flex-shrink-0
     :style="{
       background: `linear-gradient(to right, ${color}, ${color} ${100 - (timestamp - ts) / 10 / second}%, ${color2}  ${100 - (timestamp - ts) / 10 / second + 10}%, ${color2})`,
-      color: getLightnessFromHex(color) > 100 ? '#000' : '#fff',
+      color: getLightnessFromHex(color) > LIGHTNESS_LIMIT ? '#000' : '#fff',
     }"
     p-1 pr-2 text-white
   >
     <Avatar :src="faceUrl" :uid="uid" class="w-1.5rem h-1.5rem" />
     <div>
-      ￥{{ price }}
+      ￥{{ price / 1000 }}
     </div>
   </div>
 </template>
