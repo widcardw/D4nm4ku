@@ -141,7 +141,7 @@ const connectRoom = () => {
         face: `${face}@96w_96h`,
         giftId,
         giftName,
-        price: total_coin,
+        price: total_coin, // 实际价格 * 1000
         ts: timestamp,
         uid,
         blindGift: blind_gift,
@@ -155,7 +155,7 @@ const connectRoom = () => {
           uid,
           uname,
           face,
-          price: total_coin / 1000,
+          price: total_coin, // 实际价格 * 1000
           content: `${action}${giftName}`,
           ts: timestamp * 1000,
           second: priceToSeconds(total_coin),
@@ -207,7 +207,7 @@ const connectRoom = () => {
         uid: Number.parseInt(uid),
         uname,
         face,
-        price,
+        price: price * 1000, // 实际价格 * 1000
         content: message_jpn === '' ? processTooLongSymbols(message) : processTooLongSymbols(message_jpn),
         ts: ts * 1000,
         second: time,
@@ -238,7 +238,7 @@ const connectRoom = () => {
         uname: username,
         face: '',
         uid,
-        price: price * num,
+        price: price * num, // 实际价格 * 1000
         content: '欢迎加入大航海',
         second: guardType[guard_level].second,
         ts: ts * 1000,
