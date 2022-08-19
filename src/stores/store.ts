@@ -23,6 +23,8 @@ interface ConfigProps {
   showGoldGift: boolean
   showPopulation: boolean
   showHighlight: boolean
+  showEnter: boolean
+  showSubscribe: boolean
   canSendMessage: boolean
   textColor: string
   enableTextShadow: boolean
@@ -45,6 +47,8 @@ const defaultConfig: ConfigProps = {
   showPopulation: true,
   showGoldGift: true,
   showHighlight: true,
+  showEnter: false,
+  showSubscribe: true,
   pushGiftIntoHighlight: true,
   canSendMessage: false,
   textColor: '#ffffff',

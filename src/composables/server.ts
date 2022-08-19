@@ -5,6 +5,7 @@ import { ref } from 'vue'
 import type {
   DanmakuProps,
   GiftProps,
+  InteractProps,
   SuperChatProps,
 } from './components'
 import { getLiverInfo } from './getLiverInfo'
@@ -12,6 +13,7 @@ import type {
   DanmakuMessage,
   GiftInfo,
   GuardBuyMessage,
+  InteractiveWordMessage,
   SendGiftMessage,
   SuperChatMessage,
 } from './types'
@@ -30,13 +32,13 @@ const linked = ref(true)
 const store = useStore()
 const fans = ref('')
 const population = ref('')
-const danmakuPool = ref<Array<DanmakuProps | GiftProps | SuperChatProps>>([])
+const danmakuPool = ref<Array<DanmakuProps | GiftProps | SuperChatProps | InteractProps>>([])
 const selectedSc = ref<SuperChatProps | null>(null)
 const chatPool = ref<Array<SuperChatProps>>([])
 
 let live: KeepLiveWS | null = null
 
-const pushObject = (obj: DanmakuProps | GiftProps | SuperChatProps) => {
+const pushObject = (obj: DanmakuProps | GiftProps | SuperChatProps | InteractProps) => {
   danmakuPool.value.push(obj)
   if (danmakuPool.value.length > 100)
     danmakuPool.value.shift()
@@ -82,14 +84,37 @@ const connectRoom = () => {
       console.log('WebSocket Close')
     })
 
-    live.on('WATCHED_CHANGE', (data) => {
-      const { data: { num } } = data
-      population.value = parseFanNumbers(num)
+    live.on('heartbeat', (online: number) => {
+      population.value = parseFanNumbers(online)
     })
 
-    live.on('ROOM_REAL_TIME_MESSAGE_UPDATA', (data) => {
-      const { data: { fans_num } } = data
-      fans.value = parseFanNumbers(fans_num)
+    // 好像这个 api 没用，或许是 bilibili-live-ws 没写进去
+    // 欢迎用户进入直播间的 api 好像也没用
+    // live.on('ROOM_REAL_TIME_MESSAGE_UPDATA', (data) => {
+    //   // eslint-disable-next-line no-console
+    //   console.log(data)
+    //   const { data: { fans_num } } = data
+    //   fans.value = parseFanNumbers(fans_num)
+    // })
+
+    live.on('INTERACT_WORD', (data: InteractiveWordMessage) => {
+      const { data: { msg_type, uname, uid, uname_color, trigger_time } } = data
+      const interact: InteractProps = {
+        type: 'interact',
+        ts: trigger_time / 1000,
+        uid,
+        uname,
+        unameColor: uname_color,
+        action: msg_type,
+      }
+      if (store.getConfig.showEnter && msg_type === 1) {
+        // 用户进入直播间
+        pushObject(interact)
+      }
+      else if (store.getConfig.showSubscribe && msg_type === 2) {
+        // 用户关注主播
+        pushObject(interact)
+      }
     })
 
     live.on('SEND_GIFT', (data: SendGiftMessage) => {

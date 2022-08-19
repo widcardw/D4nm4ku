@@ -1,13 +1,14 @@
 <script setup lang="ts">
+import UInteraction from './UInteraction.vue'
 import UDanmaku from '~/components/danmaku/UDanmaku.vue'
 import UGift from '~/components/danmaku/UGift.vue'
 import UScDanmaku from '~/components/superchat/UScDanmaku.vue'
-import type { DanmakuProps, GiftProps, SuperChatProps } from '~/composables/components'
-import { isDanmakuProps, isGiftProps, isSuperChatProps } from '~/composables/components'
+import type { DanmakuProps, GiftProps, InteractProps, SuperChatProps } from '~/composables/components'
+import { isDanmakuProps, isGiftProps, isInteractProps, isSuperChatProps } from '~/composables/components'
 import { useStore } from '~/stores/store'
 
 defineProps<{
-  obj?: DanmakuProps | GiftProps | SuperChatProps
+  obj?: DanmakuProps | GiftProps | SuperChatProps | InteractProps
 }>()
 
 const store = useStore()
@@ -55,5 +56,14 @@ const store = useStore()
     :bg-color="obj.bgColor"
     :content="obj.content"
     :price="obj.price"
+  />
+  <UInteraction
+    v-else-if="isInteractProps(obj)"
+    :type="obj.type"
+    :action="obj.action"
+    :ts="obj.ts"
+    :uid="obj.uid"
+    :uname="obj.uname"
+    :uname-color="obj.unameColor"
   />
 </template>

@@ -146,11 +146,13 @@ interface InteractiveWordMessage extends MessageType {
     }
     identities: [number]
     is_spread: number
-    msg_type: number
+    msg_type: 1 | 2
     roomid: number
-    uid: string
+    uid: number
     uname: string
     uname_color: string
+    trigger_time: number // 除以 1000 后就可以是一个合法的时间
+    timestamp: number // 时间戳 / 1000
   }
 }
 

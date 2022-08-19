@@ -121,6 +121,18 @@ function openAppDir() {
         </UCheckBox>
         <UGuardTag v-if="store.config.showGuardTag" label="bilibili" :level="25" :perhaps-guard="3" />
       </div>
+      <UCheckBox
+        v-model="store.config.showEnter"
+        @update:model-value="settingChanged('show-enter', store.config.showEnter)"
+      >
+        显示进场信息
+      </UCheckBox>
+      <UCheckBox
+        v-model="store.config.showSubscribe"
+        @update:model-value="settingChanged('show-subscribe', store.config.showSubscribe)"
+      >
+        显示关注信息
+      </UCheckBox>
     </USettingsBox>
     <USettingsBox title="礼物">
       <UCheckBox

@@ -75,6 +75,12 @@ async function initListens() {
   unlistens.push(await listen('show-highlight', (event) => {
     store.config.showHighlight = parseBoolean(event.payload as string)
   }))
+  unlistens.push(await listen('show-enter', (event) => {
+    store.config.showEnter = parseBoolean(event.payload as string)
+  }))
+  unlistens.push(await listen('show-subscribe', (event) => {
+    store.config.showSubscribe = parseBoolean(event.payload as string)
+  }))
 }
 
 initListens()

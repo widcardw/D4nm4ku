@@ -74,12 +74,26 @@ function isGuardBuyProps(obj: any): obj is GuardBuyProps {
   return obj !== undefined && obj.type === 'guard_buy'
 }
 
+interface InteractProps {
+  type: 'interact'
+  uname: string
+  uid: number
+  unameColor: string
+  ts: number
+  action: 1 | 2
+}
+
+function isInteractProps(obj: any): obj is InteractProps {
+  return obj !== undefined && obj.type === 'interact'
+}
+
 export type {
   DanmakuProps,
   GiftProps,
   PropsType,
   GuardBuyProps,
   SuperChatProps,
+  InteractProps,
 }
 
 export {
@@ -87,4 +101,5 @@ export {
   isGiftProps,
   isSuperChatProps,
   isGuardBuyProps,
+  isInteractProps,
 }
