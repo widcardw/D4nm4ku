@@ -37,7 +37,7 @@ if (store.getConfig.showAvatar) {
       <span leading-normal text-sm op-70 font-bold :style="{ color: unameColor }">
         {{ uname }}
       </span>
-      <span leading-normal :style="{ color: action === 1 ? '' : 'gold' }">{{ action === 1 ? '进入了主播间' : '关注了主播' }}</span>
+      <span leading-normal :style="{ color: action === 1 ? '' : 'gold' }">{{ action === 1 ? '进入了直播间' : '关注了主播' }}</span>
     </div>
   </div>
 </template>
