@@ -5,6 +5,7 @@ import { guardType } from '~/composables/data'
 import UGuardTag from '~/components/danmaku/UGuardTag.vue'
 import Avatar from '~/components/img/Avatar.vue'
 import { getAvatar2 } from '~/composables/getAvatar'
+import { useStore } from '~/stores/store'
 
 const props = withDefaults(defineProps<{
   content: string
@@ -25,6 +26,8 @@ const props = withDefaults(defineProps<{
   showTime: true,
   layout: 'loose',
 })
+
+const store = useStore()
 
 const faceUrl = ref('')
 
@@ -55,6 +58,13 @@ if (props.showAvatar) {
           <div leading-normal font-bold of-x-hidden wsn :style="{ color }">
             {{ uname }}
           </div>
+          <span
+            v-if="store.liverId === uid"
+            text="0.75rem amber"
+            border="~ rounded amber"
+            bg="amber/20"
+            px-1
+          >主播</span>
           <!-- 等级标签 -->
           <UGuardTag v-if="level && showGuardTag" :level="level" :label="label" :perhaps-guard="perhapsGuard" />
           <MyImg v-if="perhapsGuard !== 0 && level >= 20" self-center :src="guardType[perhapsGuard].badge" class="w-1.25rem h-1.25rem" mx-1 rounded-full />
@@ -86,6 +96,13 @@ if (props.showAvatar) {
       <span leading-normal font-bold wsn text-sm op-70 :style="{ color }">
         {{ uname }}
       </span>
+      <span
+        v-if="store.liverId === uid"
+        text="0.75rem amber"
+        border="~ rounded amber"
+        bg="amber/20"
+        px-1
+      >主播</span>
       <UGuardTag v-if="level && showGuardTag" inline-flex leading-normal :level="level" :label="label" :perhaps-guard="perhapsGuard" />
       <MyImg v-if="perhapsGuard !== 0 && level >= 20" inline-flex w-1rem h-1rem :src="guardType[perhapsGuard].badge" err-src="/loading.gif" rounded-full />
       <MyImg v-if="content.startsWith('http://')" class="h-2rem" :src="content" inline-flex err-src="/loading.gif" />

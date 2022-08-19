@@ -83,6 +83,7 @@ interface liveConfig {
 export const useStore = defineStore('stores', {
   state: () => ({
     roomId: '',
+    liverId: 0,
     giftInfoList: [] as GiftInfo[],
     userInfo: {} as UserInfo,
     config: Object.assign({ ...defaultConfig }, JSON.parse(localStorage.getItem('config') || 'null')),

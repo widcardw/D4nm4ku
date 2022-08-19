@@ -1,6 +1,9 @@
 import { fetch } from '@tauri-apps/api/http'
 import { roomInfo } from './api'
 import { getCardInfo, getSpaceInfo } from './getInfoFromUid'
+import { useStore } from '~/stores/store'
+
+const store = useStore()
 
 async function getLiverInfo(roomId: number) {
   const data = (await fetch(`${roomInfo}${roomId}`, {
@@ -9,6 +12,7 @@ async function getLiverInfo(roomId: number) {
   })).data as any
 
   //   console.log(data, data.data.uid)
+  store.liverId = data.data.uid
   const data2 = await getCardInfo(data.data.uid) as any
 
   const fansNumber = data2.data.follower
