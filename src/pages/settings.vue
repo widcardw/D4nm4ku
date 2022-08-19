@@ -70,7 +70,7 @@ function openAppDir() {
       </button>
     </div>
     <USettingsBox title="界面布局">
-      <div>
+      <div space-x-2>
         <URadio
           v-model="store.config.layout"
           value="loose" name="layout"
@@ -184,19 +184,39 @@ function openAppDir() {
       >
         文字颜色
       </UColorPicker>
-      <UCheckBox
-        v-model="store.config.enableTextShadow"
-        @update:model-value="settingChanged('enable-text-shadow', store.config.enableTextShadow)"
-      >
-        启用文字阴影
-      </UCheckBox>
-      <UColorPicker
-        v-model="store.config.textShadowColor"
-        :disabled="!store.config.enableTextShadow"
-        @update:model-value="settingChanged('text-shadow-color-changed', store.config.textShadowColor)"
-      >
-        阴影颜色
-      </UColorPicker>
+      <div flex space-x-2>
+        <UCheckBox
+          v-model="store.config.enableTextShadow"
+          @update:model-value="settingChanged('enable-text-shadow', store.config.enableTextShadow)"
+        >
+          文字阴影
+        </UCheckBox>
+        <UColorPicker
+          v-model="store.config.textShadowColor"
+          :disabled="!store.config.enableTextShadow"
+          @update:model-value="settingChanged('text-shadow-color-changed', store.config.textShadowColor)"
+        >
+          颜色
+        </UColorPicker>
+      </div>
+      <div flex space-x-1 items-center>
+        <div>
+          字体
+        </div>
+        <div flex-1>
+          <input
+            v-model="store.config.fontFamily"
+            w-full
+            m-input rounded text-sm
+            autocorrect="off"
+            autocapitalize="off"
+            autocomplete="off"
+            spellcheck="false"
+            :style="{ fontFamily: store.config.fontFamily }"
+            @input="settingChanged('font-changed', store.config.fontFamily)"
+          >
+        </div>
+      </div>
       <UColorPicker
         v-model="store.config.bgColor"
         @update:model-value="settingChanged('bg-color-changed', store.config.bgColor)"

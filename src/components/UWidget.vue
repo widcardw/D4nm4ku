@@ -81,6 +81,9 @@ async function initListens() {
   unlistens.push(await listen('show-subscribe', (event) => {
     store.config.showSubscribe = parseBoolean(event.payload as string)
   }))
+  unlistens.push(await listen('font-changed', (event) => {
+    store.config.fontFamily = event.payload as string
+  }))
 }
 
 initListens()
@@ -121,6 +124,7 @@ const hex2rgb = (hex: string, opacity: string) => {
       background: hex2rgb(store.getConfig.bgColor, store.getConfig.bgOpacity),
       color: store.getConfig.textColor,
       textShadow: store.getConfig.enableTextShadow ? `1px 1px 1px ${store.getConfig.textShadowColor}` : 'none',
+      fontFamily: store.getConfig.fontFamily,
     }"
   >
     <UWatch

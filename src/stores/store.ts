@@ -37,6 +37,7 @@ interface ConfigProps {
   readSc: boolean
   readGift: boolean
   pushGiftIntoHighlight: boolean
+  fontFamily: string
 }
 
 const defaultConfig: ConfigProps = {
@@ -61,6 +62,7 @@ const defaultConfig: ConfigProps = {
   autoReply: false,
   readSc: false,
   readGift: false,
+  fontFamily: '',
 }
 
 const defaultUserInfo: UserInfo = {
