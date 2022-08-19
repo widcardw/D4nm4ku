@@ -42,6 +42,30 @@ const createWebview = () => {
     content: '窗口已开启',
   })
 }
+
+function tryToCloseDanmaku() {
+  webview = WebviewWindow.getByLabel('danmakuWidget')
+  if (!webview) {
+    webview = new WebviewWindow('danmakuWidget', {
+      url: '/show',
+      decorations: false,
+      width: 400,
+      height: 600,
+      transparent: true,
+      alwaysOnTop: true,
+      title: 'D4nm4ku',
+      minWidth: 320,
+      minHeight: 150,
+    })
+  }
+  if (webview) {
+    webview.close()
+    webview = null
+    store.linked = false
+    // eslint-disable-next-line no-console
+    console.log('关闭窗口')
+  }
+}
 </script>
 
 <template>
@@ -72,6 +96,8 @@ const createWebview = () => {
         </button>
       </div>
     </div>
-    <div flex-1 />
+    <div flex-1 flex items-end>
+      <div mx-a my-2 i-ri-stop-circle-line icon-btn op="10 hover:100" title="应急关闭" @click="tryToCloseDanmaku" />
+    </div>
   </div>
 </template>

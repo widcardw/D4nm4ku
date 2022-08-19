@@ -202,7 +202,9 @@ function copy2(source: string) {
         </button>
       </div>
     </div>
-    <div flex-1 />
+    <div flex-1 flex items-end>
+      <div mx-a my-2 i-ri-stop-circle-line icon-btn op="10 hover:100" title="应急关闭" @click="stopLive2" />
+    </div>
   </div>
   <Transition name="selector">
     <UTabSelector
