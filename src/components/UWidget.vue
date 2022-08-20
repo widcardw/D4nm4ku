@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { listen } from '@tauri-apps/api/event'
-import { tryOnBeforeUnmount } from '@vueuse/core'
+import { tryOnBeforeUnmount, useStorage } from '@vueuse/core'
+import { inject } from 'vue'
 import UMessageSender from './send/UMessageSender.vue'
 import USuperChatPool from '~/components/superchat/USuperChatPool.vue'
 import {
@@ -16,9 +17,12 @@ import { isGiftProps } from '~/composables/components'
 import UWatch from '~/components/danmaku/UWatch.vue'
 import URenderer from '~/components/danmaku/URenderer.vue'
 import { useStore } from '~/stores/store'
+import { getLiverInfo } from '~/composables/getLiverInfo'
+import parseFanNumbers from '~/composables/parseFanNumbers'
 
 const store = useStore()
 const unlistens: Function[] = []
+const msgRef = inject('msgRef') as any
 
 function parseBoolean(obj: string) {
   return obj === 'true'
@@ -102,6 +106,17 @@ initListens()
 // }))
 
 connectRoom()
+
+const roomId = useStorage('roomId', '')
+
+getLiverInfo(Number.parseInt(roomId.value))
+  .then((res) => {
+    // console.log(res)
+    fans.value = parseFanNumbers(res)
+  })
+  .catch((err) => {
+    msgRef.value.pushMsg({ type: 'error', content: err.message })
+  })
 
 tryOnBeforeUnmount(() => {
   unlistens.map(fn => fn())

@@ -15,6 +15,9 @@ async function getLiverInfo(roomId: number) {
   store.liverId = data.data.uid
   const data2 = await getCardInfo(data.data.uid) as any
 
+  if (data2.code !== 0)
+    throw new Error('主播信息获取失败！')
+
   const fansNumber = data2.data.follower
 
   //   console.log(fansNumber)

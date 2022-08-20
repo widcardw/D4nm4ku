@@ -8,7 +8,6 @@ import type {
   InteractProps,
   SuperChatProps,
 } from './components'
-import { getLiverInfo } from './getLiverInfo'
 import type {
   DanmakuMessage,
   GiftInfo,
@@ -70,11 +69,6 @@ const connectRoom = () => {
               webp: it.webp,
             } as GiftInfo
           })
-        })
-      getLiverInfo(Number.parseInt(roomId.value))
-        .then((res) => {
-          // console.log(res)
-          fans.value = parseFanNumbers(res)
         })
     })
 

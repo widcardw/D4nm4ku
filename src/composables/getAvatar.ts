@@ -57,7 +57,7 @@ async function getAvatar2(uid: number): Promise<{ url: string; isBlob: boolean }
   // // eslint-disable-next-line no-console
   // console.log(store.requestBlockedTimes)
   if (store.requestBlockedTimes === MAX_REQUEST_BLOCK_TIMES)
-    throw new Error('头像获取失败！')
+    throw new Error('头像获取失败！请考虑关闭头像！')
 
   return { isBlob: false, url: '' }
 }
