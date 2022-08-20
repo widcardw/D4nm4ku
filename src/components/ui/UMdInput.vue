@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<{
   title: '请输入',
 })
 
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:modelValue', 'blur'])
 const value = useVModel(props, 'modelValue', emits)
 
 const inputRef = ref<HTMLInputElement>()
@@ -29,6 +29,7 @@ const shouldFloat = computed(() => focused.value || value.value !== '')
       p="x-2 y-1"
       w-15rem transition-all
       :disabled="disabled"
+      @blur="emits('blur')"
     >
     <div
       absolute transition-all m="x-3 y-10px" op-50

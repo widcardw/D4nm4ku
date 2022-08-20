@@ -6,7 +6,7 @@ import { getLiveRoomInfoFromUid } from '~/composables/getLiverInfo'
 import { useStore } from '~/stores/store'
 import UMdInput from '~/components/ui/UMdInput.vue'
 import UTabSelector from '~/components/ui/UTabSelector.vue'
-
+import { shortToLong } from '~/composables/shortIdToLong'
 const store = useStore()
 const roomId2 = useStorage('roomId2', '')
 const selectedAreaId = useStorage('selectedAreaId', 0)
@@ -129,6 +129,28 @@ function copy2(source: string) {
     type: 'success',
   })
 }
+
+const loadingRoomId = ref(false)
+
+function roomIdBlur() {
+  const fakeId = Number(roomId2.value)
+  if (fakeId <= 1000) {
+    loadingRoomId.value = true
+    shortToLong(fakeId)
+      .then((id) => {
+        roomId2.value = String(id)
+      })
+      .catch((err) => {
+        msgRef.value.pushMsg({
+          type: 'error',
+          content: err.message,
+        })
+      })
+      .finally(() => {
+        loadingRoomId.value = false
+      })
+  }
+}
 </script>
 
 <template>
@@ -139,8 +161,17 @@ function copy2(source: string) {
       </div>
     </div>
     <div text-center>
-      <div>
-        <UMdInput v-model="roomId2" title="房间号" :disabled="store.liveConfig.isLive" />
+      <div flex items-center>
+        <div flex-1 />
+        <UMdInput
+          v-model="roomId2"
+          title="房间号"
+          :disabled="store.liveConfig.isLive"
+          @blur="roomIdBlur"
+        />
+        <div flex-1 flex items-center>
+          <div v-if="loadingRoomId" i-ri-refresh-line icon-btn animate-spin />
+        </div>
       </div>
       <div flex items-center>
         <div flex-1 />
@@ -150,7 +181,7 @@ function copy2(source: string) {
             v-if="btnUpdateTitleEnabled"
             i-ri-save-line
             icon-btn
-            :disabled="liveTitle.trim() === ''"
+            :disabled="liveTitle.trim() === '' || !store.getUserInfo.mid"
             @click="updateLiveTitle2"
           />
           <div v-else i-ri-refresh-line animate-spin icon-btn />
@@ -187,7 +218,7 @@ function copy2(source: string) {
         <button
           v-if="!store.liveConfig.isLive"
           btn rounded
-          :disabled="!btnEnabled || !store.getUserInfo.mid || !selectedAreaId || liveTitle.trim() === ''"
+          :disabled="!btnEnabled || !roomId2.trim().match(/^\d+$/) || !store.getUserInfo.mid || !selectedAreaId || liveTitle.trim() === ''"
           @click="startLive2"
         >
           开启直播

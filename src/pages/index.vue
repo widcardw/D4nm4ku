@@ -1,15 +1,19 @@
 <script setup lang="ts">
 import { WebviewWindow } from '@tauri-apps/api/window'
 import { useStorage } from '@vueuse/core'
-import { inject } from 'vue'
+import { inject, ref } from 'vue'
 import UMdInput from '~/components/ui/UMdInput.vue'
+import { shortToLong } from '~/composables/shortIdToLong'
 import { useStore } from '~/stores/store'
+
 const roomId = useStorage('roomId', '')
 
 let webview: WebviewWindow | null = null
 const msgRef = inject('msgRef') as any
 const store = useStore()
-const createWebview = () => {
+const isLoadingRoomId = ref(false)
+
+function createWebview() {
   if (roomId.value.trim() === '') {
     msgRef.value.pushMsg({
       type: 'warning',
@@ -66,6 +70,25 @@ function tryToCloseDanmaku() {
     console.log('关闭窗口')
   }
 }
+
+function roomIdBlured() {
+  const fakeId = Number(roomId.value)
+  if (fakeId <= 1000) {
+    isLoadingRoomId.value = true
+    shortToLong(fakeId)
+      .then((id) => {
+        roomId.value = String(id)
+      })
+      .catch((err) => {
+        msgRef.value.pushMsg({
+          type: 'error', content: err.message,
+        })
+      })
+      .finally(() => {
+        isLoadingRoomId.value = false
+      })
+  }
+}
 </script>
 
 <template>
@@ -77,7 +100,12 @@ function tryToCloseDanmaku() {
     </div>
     <div flex items-center>
       <div flex-1 />
-      <UMdInput v-model="roomId" title="直播间号" :disabled="store.linked" />
+      <UMdInput
+        v-model="roomId"
+        title="直播间号"
+        :disabled="store.linked"
+        @blur="roomIdBlured"
+      />
       <div flex-1>
         <button
           p-2 m-2
@@ -88,10 +116,11 @@ function tryToCloseDanmaku() {
           text-white
           cursor-pointer
           class="disabled:bg-zinc disabled:dark:bg-zinc-600 disabled:dark:text-zinc-800 disabled:cursor-not-allowed"
-          :disabled="roomId.trim() === ''"
+          :disabled="!roomId.trim().match(/^\d+$/) || isLoadingRoomId"
           @click="createWebview"
         >
-          <div v-if="!store.linked" i-ri-arrow-right-line />
+          <div v-if="isLoadingRoomId" i-ri-refresh-line animate-spin />
+          <div v-else-if="!store.linked" i-ri-arrow-right-line />
           <div v-else i-ri-stop-fill />
         </button>
       </div>
