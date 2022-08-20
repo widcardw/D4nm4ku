@@ -45,15 +45,15 @@ if (props.face === '') {
 <template>
   <div
     rounded-full
-    inline-flex flex-shrink-0
+    inline-flex flex-shrink-0 items-center
     :style="{
-      background: `linear-gradient(to right, ${color}, ${color} ${100 - (timestamp - ts) / 10 / second}%, ${color2}  ${100 - (timestamp - ts) / 10 / second + 10}%, ${color2})`,
+      background: `linear-gradient(to right, ${color}, ${color} ${100 - (timestamp - ts) / 10 / second}%, ${color2}  ${100 - (timestamp - ts) / 10 / second + 5}%, ${color2})`,
       color: getLightnessFromHex(color) > LIGHTNESS_LIMIT ? '#000' : '#fff',
     }"
-    p-1 pr-2 text-white
+    p="0.75" pr-2 text-white space-x="0.5"
   >
-    <Avatar :src="faceUrl" :uid="uid" class="w-1.5rem h-1.5rem" />
-    <div>
+    <Avatar :src="faceUrl" :uid="uid" class="w-1.25rem h-1.25rem" />
+    <div text-sm>
       ￥{{ price / 1000 }}
     </div>
   </div>
