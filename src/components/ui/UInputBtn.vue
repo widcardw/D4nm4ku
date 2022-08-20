@@ -29,7 +29,7 @@ const value = useVModel(props, 'modelValue', emits)
       <input
         v-model="value"
         m-input rounded-l
-        p-1 w-full
+        py-1 px-2 w-full
         border-r-none
         :disabled="inputDisabled"
         :placeholder="placeholder"
