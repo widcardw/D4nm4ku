@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { inject } from 'vue'
-import { listen } from '@tauri-apps/api/event'
-import { tryOnBeforeUnmount } from '@vueuse/core'
 import UTag from './UTag.vue'
 import { useStore } from '~/stores/store'
 const emits = defineEmits(['settingsChanged'])
@@ -27,21 +25,6 @@ function deleteItem(i: number) {
   store.config.blackList.splice(i, 1)
   emits('settingsChanged')
 }
-
-const unlistens: Function[] = []
-
-async function unlistenAdd() {
-  unlistens.push(await listen('add-black', (event) => {
-    store.config.blackList.push(parseInt(event.payload as string))
-    emits('settingsChanged')
-  }))
-}
-
-unlistenAdd()
-
-tryOnBeforeUnmount(() => {
-  unlistens.map(fn => fn())
-})
 </script>
 
 <template>
