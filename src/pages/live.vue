@@ -35,6 +35,12 @@ function updateLiveRoomInfo() {
         roomId2.value = roomid.toString()
         liveTitle.value = title
       })
+      .catch((err) => {
+        msgRef.value.pushMsg({
+          content: `直播间信息获取失败！${err.message}`,
+          type: 'error',
+        })
+      })
   }
 }
 
