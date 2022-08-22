@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { WebviewWindow } from '@tauri-apps/api/window'
+import { confirm } from '@tauri-apps/api/dialog'
 import { invoke } from '@tauri-apps/api/tauri'
 import { appDir } from '@tauri-apps/api/path'
 import { useThrottleFn } from '@vueuse/core'
@@ -53,21 +54,41 @@ function openAppDir() {
 //     pinned.value = val
 //   settingChanged('click-transparent', val)
 // }
+async function clearConfig() {
+  const confirmed = await confirm('确定要清空当前设置吗？', {
+    title: '还原默认设置', type: 'warning',
+  })
+  if (confirmed) {
+    store.removeConfig()
+    msgRef.value.pushMsg({ content: '设置已还原！' })
+  }
+}
 </script>
 
 <template>
   <div p-4 space-y-4>
     <Login />
-    <div flex justify-between>
+    <div flex space-x-2>
       <div font-bold text-xl>
         设置项
       </div>
+      <div flex-1 />
       <button
         btn rounded
         :disabled="store.settingsSaved"
         @click="saveSettings"
       >
         保存设置
+      </button>
+      <button
+        border="~ zinc hover:#646cff"
+        p="x-4 y-1" op="80 hover:100"
+        transition-all
+        rounded
+        title="如果有些新加的设置项无法修改，请尝试重置设置"
+        @click="clearConfig"
+      >
+        还原默认
       </button>
     </div>
     <USettingsBox title="界面布局">
@@ -103,6 +124,7 @@ function openAppDir() {
     <USettingsBox title="常规">
       <UCheckBox
         v-model="store.config.showAvatar"
+        title="若弹幕数量过多，建议关闭，以免请求超时"
         @update:model-value="settingChanged('show-avatar', store.config.showAvatar)"
       >
         显示用户头像

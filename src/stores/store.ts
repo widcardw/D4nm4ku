@@ -42,6 +42,7 @@ interface ConfigProps {
 }
 
 const defaultConfig: ConfigProps = {
+  blackList: [],
   showGuardTag: false,
   showAvatar: true,
   showTime: false,
@@ -64,7 +65,6 @@ const defaultConfig: ConfigProps = {
   readSc: false,
   readGift: false,
   fontFamily: '',
-  blackList: [],
 }
 
 const defaultUserInfo: UserInfo = {
@@ -108,6 +108,7 @@ export const useStore = defineStore('stores', {
       code: '',
     } as liveConfig,
     mediaList: [] as { fileName: string; blob: string }[],
+    configLoaded: false,
   }),
   getters: {
     getUserInfo(): UserInfo {
@@ -134,12 +135,16 @@ export const useStore = defineStore('stores', {
         this.config = { ...defaultConfig }
         return this.config
       }
-      this.config = JSON.parse(localStorage.getItem('config') || 'null')
-
-      if (!this.config) {
-        this.config = Object.assign({ ...defaultConfig }, this.config)
-        localStorage.setItem('config', JSON.stringify(this.config))
+      if (!this.configLoaded) {
+        this.config = Object.assign({ ...defaultConfig }, JSON.parse(localStorage.getItem('config') || 'null'))
+        this.configLoaded = true
       }
+      // this.config = JSON.parse(localStorage.getItem('config') || 'null')
+
+      // if (!this.config) {
+      //   this.config = Object.assign({ ...defaultConfig }, this.config)
+      //   localStorage.setItem('config', JSON.stringify(this.config))
+      // }
 
       return this.config
     },
@@ -165,6 +170,10 @@ export const useStore = defineStore('stores', {
       // trim faqs
       this.faqs = this.faqs.filter(it => it.answer.trim() !== '' && it.keywords.length !== 0)
       localStorage.setItem('faqs', JSON.stringify(this.faqs))
+    },
+    removeConfig() {
+      localStorage.setItem('config', JSON.stringify(defaultConfig))
+      this.config = { ...defaultConfig }
     },
     setRoomId(id: string) {
       localStorage.setItem('roomId', id)
