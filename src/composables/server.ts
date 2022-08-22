@@ -168,6 +168,9 @@ const connectRoom = () => {
       const [, content, [uid, uname, , , , , ,color = ''], [level = 0, label = ''],,,,perhapsGuard] = info
       const ts = info[0][4]
 
+      if (store.getConfig.blackList.includes(uid))
+        return
+
       if (store.getConfig.autoReply) {
         setTimeout(() => {
           autoSendByWord(content)

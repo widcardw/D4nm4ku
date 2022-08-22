@@ -38,6 +38,7 @@ interface ConfigProps {
   readGift: boolean
   pushGiftIntoHighlight: boolean
   fontFamily: string
+  blackList: number[]
 }
 
 const defaultConfig: ConfigProps = {
@@ -63,6 +64,7 @@ const defaultConfig: ConfigProps = {
   readSc: false,
   readGift: false,
   fontFamily: '',
+  blackList: [],
 }
 
 const defaultUserInfo: UserInfo = {
@@ -92,9 +94,10 @@ export const useStore = defineStore('stores', {
     liverId: 0,
     giftInfoList: [] as GiftInfo[],
     userInfo: {} as UserInfo,
-    config: Object.assign({ ...defaultConfig }, JSON.parse(localStorage.getItem('config') || 'null')),
+    config: Object.assign({ ...defaultConfig }, JSON.parse(localStorage.getItem('config') || 'null')) as ConfigProps,
     requestBlockedTimes: 0,
     faqs: [] as Answer[],
+    blackList: [] as number[],
     settingsSaved: true,
     linked: false,
     liveConfig: {
@@ -128,9 +131,11 @@ export const useStore = defineStore('stores', {
     getConfig(): ConfigProps {
       if (!localStorage.getItem('config')) {
         localStorage.setItem('config', JSON.stringify(defaultConfig))
-        return defaultConfig
+        this.config = { ...defaultConfig }
+        return this.config
       }
       this.config = JSON.parse(localStorage.getItem('config') || 'null')
+
       if (!this.config) {
         this.config = Object.assign({ ...defaultConfig }, this.config)
         localStorage.setItem('config', JSON.stringify(this.config))

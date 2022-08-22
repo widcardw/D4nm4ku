@@ -13,6 +13,7 @@ import URadio from '~/components/ui/URadio.vue'
 import USlider from '~/components/ui/USlider.vue'
 import UMultiList from '~/components/ui/UMultiList.vue'
 import UGuardTag from '~/components/danmaku/UGuardTag.vue'
+import UBlackList from '~/components/ui/UBlackList.vue'
 
 const msgRef = inject('msgRef') as any
 const store = useStore()
@@ -237,6 +238,7 @@ function openAppDir() {
         毛玻璃效果（不稳定）
       </UCheckBox>
     </USettingsBox>
+    <UBlackList @settings-changed="settingChanged('blacklist', store.getConfig.blackList)" />
     <USettingsBox :title="store.getUserInfo.mid ? '弹幕扩展' : '弹幕扩展（需要登录）'">
       <UCheckBox
         v-model="store.config.canSendMessage"

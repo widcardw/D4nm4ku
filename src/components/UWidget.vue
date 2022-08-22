@@ -88,6 +88,9 @@ async function initListens() {
   unlistens.push(await listen('font-changed', (event) => {
     store.config.fontFamily = event.payload as string
   }))
+  unlistens.push(await listen('blacklist', (event) => {
+    store.config.blackList = JSON.parse(event.payload as string) as number[]
+  }))
 }
 
 initListens()
