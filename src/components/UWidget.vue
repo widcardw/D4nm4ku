@@ -174,14 +174,14 @@ const hex2rgb = (hex: string, opacity: string) => {
 
 <style scoped>
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px
+  width: 0;
+  height: 0;
 }
 
-::-webkit-scrollbar-thumb {
+/* ::-webkit-scrollbar-thumb {
   background: rgba(127, 127, 127, 0.5);
   border-radius: 5px;
-}
+} */
 .scroller {
   overscroll-behavior-y: contain;
   scroll-snap-type: y proximity;
