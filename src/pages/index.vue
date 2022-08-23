@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { WebviewWindow } from '@tauri-apps/api/window'
+import { emit } from '@tauri-apps/api/event'
 import { useStorage } from '@vueuse/core'
 import { inject, ref } from 'vue'
 import UMdInput from '~/components/ui/UMdInput.vue'
@@ -30,17 +31,18 @@ function createWebview() {
     console.log('关闭窗口')
     return
   }
-  webview = new WebviewWindow('danmakuWidget', {
-    url: '/show',
-    decorations: false,
-    width: 400,
-    height: 600,
-    transparent: true,
-    alwaysOnTop: true,
-    title: 'D4nm4ku',
-    minWidth: 320,
-    minHeight: 150,
-  })
+  // webview = new WebviewWindow('danmakuWidget', {
+  //   url: '/show',
+  //   decorations: false,
+  //   width: 400,
+  //   height: 600,
+  //   transparent: true,
+  //   alwaysOnTop: true,
+  //   title: 'D4nm4ku',
+  //   minWidth: 320,
+  //   minHeight: 150,
+  // })
+  emit('--create-danmaku-viewer')
   store.linked = true
   msgRef.value.pushMsg({
     content: '窗口已开启',
