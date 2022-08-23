@@ -39,6 +39,7 @@ interface ConfigProps {
   pushGiftIntoHighlight: boolean
   fontFamily: string
   blackList: number[]
+  clickThrough: boolean
 }
 
 const defaultConfig: ConfigProps = {
@@ -65,6 +66,7 @@ const defaultConfig: ConfigProps = {
   readSc: false,
   readGift: false,
   fontFamily: '',
+  clickThrough: false,
 }
 
 const defaultUserInfo: UserInfo = {

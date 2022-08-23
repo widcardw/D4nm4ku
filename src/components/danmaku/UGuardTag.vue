@@ -7,9 +7,9 @@ defineProps<{
 </script>
 
 <template>
-  <div flex class="text-0.75rem" border="~ rounded">
+  <div flex class="text-0.75rem" border="~ rounded blue">
     <div
-      border-r
+      border="r blue"
       rounded-l
       px-1
       wsn

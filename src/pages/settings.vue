@@ -49,11 +49,6 @@ function openAppDir() {
     })
 }
 
-// function setClickTranparent(val: boolean) {
-//   if (val)
-//     pinned.value = val
-//   settingChanged('click-transparent', val)
-// }
 async function clearConfig() {
   const confirmed = await confirm('确定要清空当前设置吗？', {
     title: '还原默认设置', type: 'warning',
@@ -184,12 +179,12 @@ async function clearConfig() {
       >
         窗口置顶
       </UCheckBox>
-      <!--       <UCheckBox
-        v-model="store.config.clickTransparent"
-        @update:model-value="setClickTranparent(store.config.clickTransparent)"
+      <UCheckBox
+        v-model="store.config.clickThrough"
+        @update:model-value="settingChanged('set-click-through', store.config.clickThrough)"
       >
-        点击穿透
-      </UCheckBox> -->
+        点击穿透（仅 macOS）
+      </UCheckBox>
       <div
         inline-flex items-center leading-relaxed select-none space-x-1 cursor-pointer
         @click="openAppDir"
