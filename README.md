@@ -56,9 +56,9 @@
 - [ ] 窗口
     - [x] 置顶
     - [ ] 点击穿透
-        - tauri 的 [issue](https://github.com/tauri-apps/tao/issues/184#issuecomment-1097109451) 中说要到 v2 时候才会正式公开这个 api
-        - [#184-comment1](https://github.com/tauri-apps/tao/issues/184#issuecomment-1134823892) 给出了 macOS 的解决方案，但一看到 unsafe 就不是很想用
-        - [#184-comment2](https://github.com/tauri-apps/tao/issues/184#issuecomment-1118176176) 给出了 Windows 的解决方案，依然是 unsafe
+        - [ ] tauri 的 [issue](https://github.com/tauri-apps/tao/issues/184#issuecomment-1097109451) 中说要到 v2 时候才会正式公开这个 api
+        - [x] [#184-comment1](https://github.com/tauri-apps/tao/issues/184#issuecomment-1134823892) 给出了 macOS 的解决方案，但一看到 unsafe 就不是很想用
+        - [ ] [#184-comment2](https://github.com/tauri-apps/tao/issues/184#issuecomment-1118176176) 给出了 Windows 的解决方案，依然是 unsafe
 
 ## 部分效果呈现
 
