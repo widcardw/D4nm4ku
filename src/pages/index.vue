@@ -29,6 +29,12 @@ function createWebview() {
     store.linked = false
     // eslint-disable-next-line no-console
     console.log('关闭窗口')
+    const senderWindow = WebviewWindow.getByLabel('senderWindow')
+    if (senderWindow)
+      senderWindow.close()
+
+    store.clickThrough = false
+
     return
   }
   // webview = new WebviewWindow('danmakuWidget', {

@@ -34,6 +34,10 @@ const mainWindow = WebviewWindow.getByLabel('main');
     const danmakuWindow = WebviewWindow.getByLabel('danmakuWidget')
     if (danmakuWindow)
       danmakuWindow.close()
+
+    const senderWindow = WebviewWindow.getByLabel('senderWindow')
+    if (senderWindow)
+      senderWindow.close()
   })
 
   tryOnUnmounted(() => {

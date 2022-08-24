@@ -2,6 +2,7 @@
 import { WebviewWindow } from '@tauri-apps/api/window'
 import { confirm } from '@tauri-apps/api/dialog'
 import { invoke } from '@tauri-apps/api/tauri'
+import { emit } from '@tauri-apps/api/event'
 import { appDir } from '@tauri-apps/api/path'
 import { useThrottleFn } from '@vueuse/core'
 import { inject, ref } from 'vue'
@@ -25,11 +26,17 @@ const saveSettings = useThrottleFn(() => {
   msgRef.value.pushMsg({ content: '保存成功', type: 'success' })
 }, 1000)
 
+let senderWindow: WebviewWindow | null
+
 const settingChanged = (event: string, payload: any) => {
   store.settingsSaved = false
   const showWindow = WebviewWindow.getByLabel('danmakuWidget')
   if (showWindow)
     showWindow.emit(event, payload)
+
+  const senderWindow = WebviewWindow.getByLabel('senderWindow')
+  if (senderWindow)
+    senderWindow.emit(event, payload)
 }
 
 const pinned = ref(true)
@@ -57,6 +64,54 @@ async function clearConfig() {
     store.removeConfig()
     msgRef.value.pushMsg({ content: '设置已还原！' })
   }
+}
+
+function setClickThrough() {
+  if (store.clickThrough) {
+    store.previousCanSend = store.config.canSendMessage
+    if (store.config.canSendMessage) {
+      settingChanged('can-send-message', false)
+      openSenderWindow()
+    }
+  }
+  else {
+    store.config.canSendMessage = store.previousCanSend
+    if (store.previousCanSend) {
+      settingChanged('can-send-message', store.config.canSendMessage)
+      openSenderWindow()
+    }
+  }
+
+  settingChanged('set-click-through', store.clickThrough)
+}
+
+function openSenderWindow() {
+  if (!store.getUserInfo.mid) {
+    msgRef.value.pushMsg({
+      content: '发送弹幕需要登录',
+    })
+    return
+  }
+  senderWindow = WebviewWindow.getByLabel('senderWindow')
+  if (senderWindow) {
+    store.senderEnabled = false
+    senderWindow.close()
+    senderWindow = null
+    return
+  }
+  // senderWindow = new WebviewWindow('senderWindow', {
+  //   decorations: false,
+  //   alwaysOnTop: true,
+  //   transparent: true,
+  //   url: '/sender',
+  //   width: 400,
+  //   height: 40,
+  // })
+  emit('--create-sender-window')
+  store.senderEnabled = true
+  msgRef.value.pushMsg({
+    content: '窗口已开启',
+  })
 }
 </script>
 
@@ -151,6 +206,15 @@ async function clearConfig() {
       >
         显示关注信息
       </UCheckBox>
+      <div
+        inline-flex items-center leading-relaxed select-none space-x-1 cursor-pointer
+        @click="openAppDir"
+      >
+        <div text-lg flex items-center>
+          <div icon-btn i-ri-folder-open-fill ml-1 />
+        </div>
+        <span>打开图片缓存目录</span>
+      </div>
     </USettingsBox>
     <USettingsBox title="礼物">
       <UCheckBox
@@ -172,29 +236,7 @@ async function clearConfig() {
         付费礼物加入高能榜
       </UCheckBox>
     </USettingsBox>
-    <USettingsBox title="窗口">
-      <UCheckBox
-        v-model="pinned"
-        @update:model-value="pinWidget"
-      >
-        窗口置顶
-      </UCheckBox>
-      <UCheckBox
-        v-model="store.config.clickThrough"
-        @update:model-value="settingChanged('set-click-through', store.config.clickThrough)"
-      >
-        点击穿透（仅 macOS）
-      </UCheckBox>
-      <div
-        inline-flex items-center leading-relaxed select-none space-x-1 cursor-pointer
-        @click="openAppDir"
-      >
-        <div text-lg flex items-center>
-          <div icon-btn i-ri-folder-open-fill ml-1 />
-        </div>
-        <span>打开图片缓存目录</span>
-      </div>
-    </USettingsBox>
+
     <USettingsBox title="样式">
       <UColorPicker
         v-model="store.config.textColor"
@@ -255,11 +297,36 @@ async function clearConfig() {
         毛玻璃效果（不稳定）
       </UCheckBox>
     </USettingsBox>
+    <USettingsBox title="窗口">
+      <UCheckBox
+        v-model="pinned"
+        @update:model-value="pinWidget"
+      >
+        窗口置顶
+      </UCheckBox>
+      <UCheckBox
+        v-model="store.clickThrough"
+        title="开启点击穿透后 弹幕窗口将不接受任何鼠标消息"
+        @update:model-value="setClickThrough"
+      >
+        点击穿透（仅 macOS）
+      </UCheckBox>
+      <div
+        inline-flex items-center leading-relaxed select-none space-x-1 cursor-pointer
+        title="开启额外浮动窗口发送弹幕"
+        @click="openSenderWindow"
+      >
+        <div text-lg flex items-center>
+          <div icon-btn i-ri-window-line ml-1 />
+        </div>
+        <span>打开/关闭弹幕发送窗口</span>
+      </div>
+    </USettingsBox>
     <UBlackList @settings-changed="settingChanged('blacklist', store.getConfig.blackList)" />
     <USettingsBox :title="store.getUserInfo.mid ? '弹幕扩展' : '弹幕扩展（需要登录）'">
       <UCheckBox
         v-model="store.config.canSendMessage"
-        :disabled="!store.getUserInfo.mid"
+        :disabled="!store.getUserInfo.mid || store.clickThrough"
         @update:model-value="settingChanged('can-send-message', store.config.canSendMessage)"
       >
         通过弹幕窗格发送弹幕

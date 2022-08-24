@@ -48,6 +48,11 @@ function getLightnessFromRgb(rgb: string) {
   return (r * 299 + g * 587 + b * 114) / 1000
 }
 
+function hex2rgb(hex: string, opacity: string) {
+  const matches = hex.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i) as [string, string, string, string]
+  return `rgba(${parseInt(matches[1], 16)}, ${parseInt(matches[2], 16)}, ${parseInt(matches[3], 16)}, ${parseInt(opacity) / 255})`
+}
+
 const LIGHTNESS_LIMIT = 120
 
 export default randomColor
@@ -58,4 +63,5 @@ export {
   getLightnessFromRgb,
   randomColorPair,
   LIGHTNESS_LIMIT,
+  hex2rgb,
 }

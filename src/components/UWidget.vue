@@ -4,6 +4,7 @@ import { tryOnBeforeUnmount, useStorage } from '@vueuse/core'
 import { inject } from 'vue'
 import UMessageSender from './send/UMessageSender.vue'
 import USuperChatPool from '~/components/superchat/USuperChatPool.vue'
+import { hex2rgb } from '~/composables/randomColor'
 import {
   chatPool,
   connectRoom,
@@ -27,8 +28,6 @@ const msgRef = inject('msgRef') as any
 function parseBoolean(obj: string) {
   return obj === 'true'
 }
-
-// const ct = ref('')
 
 async function initListens() {
   unlistens.push(await listen('show-avatar', (event) => {
@@ -94,20 +93,6 @@ async function initListens() {
 }
 
 initListens()
-// 点击穿透不能用 呜呜
-// unlistens.push(await listen('click-transparent', (event) => {
-//   ct.value = parseBoolean(event.payload as string) ? 'none' : 'auto'
-//   const html = document.querySelector('html')
-//   if (html)
-//     html.style.pointerEvents = ct.value
-//   const body = document.querySelector('body')
-//   if (body)
-//     body.style.pointerEvents = ct.value
-//   const app = document.querySelector('#app') as HTMLDivElement
-//   if (app)
-//     app.style.pointerEvents = ct.value
-// }))
-
 connectRoom()
 
 const roomId = useStorage('roomId', '')
@@ -125,11 +110,6 @@ tryOnBeforeUnmount(() => {
   unlistens.map(fn => fn())
   disconnectRoom()
 })
-
-const hex2rgb = (hex: string, opacity: string) => {
-  const matches = hex.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i) as [string, string, string, string]
-  return `rgba(${parseInt(matches[1], 16)}, ${parseInt(matches[2], 16)}, ${parseInt(matches[3], 16)}, ${parseInt(opacity) / 255})`
-}
 </script>
 
 <template>

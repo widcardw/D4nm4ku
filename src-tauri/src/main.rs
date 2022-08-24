@@ -8,7 +8,9 @@ mod fetch_img;
 mod open_app_dir;
 mod load_local_img;
 mod new_view;
+mod new_sender;
 
+use new_sender::create_sender_window;
 use new_view::create_new_view;
 use send_msg::send_message;
 use fetch_img::fetch_image;
@@ -38,8 +40,13 @@ fn main() {
                     ])
     .setup(|app| {
       let app_handle = app.app_handle();
-      let _unlisten = app.listen_global("--create-danmaku-viewer", move |_event| {
+      let _unlisten1 = app.listen_global("--create-danmaku-viewer", move |_event| {
         create_new_view(&app_handle);
+      });
+
+      let app_handle = app.app_handle();
+      let _unlisten2 = app.listen_global("--create-sender-window", move |_event| {
+        create_sender_window(&app_handle);
       });
 
       Ok(())

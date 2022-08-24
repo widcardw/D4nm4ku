@@ -39,7 +39,6 @@ interface ConfigProps {
   pushGiftIntoHighlight: boolean
   fontFamily: string
   blackList: number[]
-  clickThrough: boolean
 }
 
 const defaultConfig: ConfigProps = {
@@ -66,7 +65,6 @@ const defaultConfig: ConfigProps = {
   readSc: false,
   readGift: false,
   fontFamily: '',
-  clickThrough: false,
 }
 
 const defaultUserInfo: UserInfo = {
@@ -111,6 +109,9 @@ export const useStore = defineStore('stores', {
     } as liveConfig,
     mediaList: [] as { fileName: string; blob: string }[],
     configLoaded: false,
+    clickThrough: false,
+    senderEnabled: false,
+    previousCanSend: false,
   }),
   getters: {
     getUserInfo(): UserInfo {
