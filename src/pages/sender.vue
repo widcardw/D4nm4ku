@@ -52,7 +52,7 @@ tryOnBeforeUnmount(() => {
       fontFamily: store.getConfig.fontFamily,
     }"
   >
-    <div cursor-move i-ri-drag-move-line icon-btn data-tauri-drag-region ml-2 />
+    <div cursor-move i-ri-drag-move-line icon-btn data-tauri-drag-region text-gray ml-2 />
     <UMessageSender :no-border="true" flex-1 />
   </div>
 </template>
