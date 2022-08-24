@@ -103,7 +103,7 @@ getLiverInfo(Number.parseInt(roomId.value))
     fans.value = parseFanNumbers(res)
   })
   .catch((err) => {
-    msgRef.value.pushMsg({ type: 'error', content: err.message })
+    msgRef.value.pushMsg(err.message, { type: 'error' })
   })
 
 tryOnBeforeUnmount(() => {

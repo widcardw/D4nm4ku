@@ -17,9 +17,8 @@ const store = useStore()
 
 const sendMessage = () => {
   if (msg.value.trim() === '') {
-    msgRef.value.pushMsg({
+    msgRef.value.pushMsg('发送的消息不能为空！', {
       type: 'warning',
-      content: '发送的消息不能为空！',
     })
     return
   }
@@ -30,9 +29,8 @@ const sendMessage = () => {
     msg.value = ''
   }
   catch (e) {
-    msgRef.value.pushMsg({
+    msgRef.value.pushMsg('消息发送失败！请重新登录！', {
       type: 'error',
-      content: '消息发送失败！请重新登录！',
     })
   }
 }

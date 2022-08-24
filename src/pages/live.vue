@@ -21,12 +21,8 @@ const btnShowAreaEnabled = ref(true)
 
 const { copy } = useClipboard()
 
-if (!store.getUserInfo.mid) {
-  msgRef.value.pushMsg({
-    content: '需要登录才能开启直播哦',
-    type: 'info',
-  })
-}
+if (!store.getUserInfo.mid)
+  msgRef.value.pushMsg('需要登录才能开启直播哦')
 
 function updateLiveRoomInfo() {
   if (roomId2.value.trim() === '' || liveTitle.value.trim() === '') {
@@ -36,8 +32,7 @@ function updateLiveRoomInfo() {
         liveTitle.value = title
       })
       .catch((err) => {
-        msgRef.value.pushMsg({
-          content: `直播间信息获取失败！${err.message}`,
+        msgRef.value.pushMsg(`直播间信息获取失败！${err.message}`, {
           type: 'error',
         })
       })
@@ -51,8 +46,7 @@ function updateLiveTitle2() {
   btnUpdateTitleEnabled.value = false
   updateLiveTitle(roomId2.value, liveTitle.value)
     .then(() => {
-      msgRef.value.pushMsg({
-        content: '标题修改成功',
+      msgRef.value.pushMsg('标题修改成功', {
         type: 'success',
       })
     })
@@ -70,10 +64,7 @@ function updateLiveTitle2() {
 function showAreaSelection() {
   btnShowAreaEnabled.value = false
   if (firstLoad.value === 0) {
-    msgRef.value.pushMsg({
-      content: '首次加载可能需要一段时间',
-      type: 'info',
-    })
+    msgRef.value.pushMsg('首次加载可能需要一段时间')
     firstLoad.value++
   }
   getAreaInfoList()
@@ -89,8 +80,7 @@ function startLive2() {
     .then((rtmp) => {
       store.liveConfig.addr = rtmp.addr
       store.liveConfig.code = rtmp.code
-      msgRef.value.pushMsg({
-        content: '直播开启成功',
+      msgRef.value.pushMsg('直播开启成功', {
         type: 'success',
       })
       store.liveConfig.isLive = true
@@ -110,8 +100,7 @@ function stopLive2() {
   btnEnabled.value = false
   stopLive(roomId2.value)
     .then(() => {
-      msgRef.value.pushMsg({
-        content: '直播关闭成功',
+      msgRef.value.pushMsg('直播关闭成功', {
         type: 'success',
       })
       store.liveConfig.addr = ''
@@ -130,8 +119,7 @@ function stopLive2() {
 
 function copy2(source: string) {
   copy(source)
-  msgRef.value.pushMsg({
-    content: '复制成功',
+  msgRef.value.pushMsg('复制成功', {
     type: 'success',
   })
 }
@@ -147,9 +135,8 @@ function roomIdBlur() {
         roomId2.value = String(id)
       })
       .catch((err) => {
-        msgRef.value.pushMsg({
+        msgRef.value.pushMsg(err.message, {
           type: 'error',
-          content: err.message,
         })
       })
       .finally(() => {

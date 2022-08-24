@@ -16,17 +16,19 @@ const iconsDict = {
 
 const messageQueue = ref<PopMessage[]>([])
 
-const pushMsg = (msg: Partial<Extract<PopMessage, { ts: number }>>) => {
+const pushMsg = (msg: string, config?: {
+  type?: 'success' | 'error' | 'warning' | 'info'
+  ttl?: number
+}) => {
   messageQueue.value.push({
-    type: 'info',
-    content: 'msg',
-    ...msg,
+    type: config?.type || 'info',
+    content: msg,
     ts: Date.now(),
   })
 
   setTimeout(() => {
     messageQueue.value.shift()
-  }, 3000)
+  }, config?.ttl || 3000)
 }
 
 defineExpose({ pushMsg })
@@ -68,8 +70,6 @@ defineExpose({ pushMsg })
   transform: translateY(-30px) scale(0.01);
 }
 
-/* 确保将离开的元素从布局流中删除
-  以便能够正确地计算移动的动画。 */
 .msggroup-leave-active {
   position: absolute;
 }

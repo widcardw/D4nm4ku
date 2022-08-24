@@ -26,7 +26,7 @@ if (props.face === '') {
       urlIsBlob.value = isBlob
     })
     .catch(() => {
-      msgRef.value.pushMsg({ content: '头像获取失败', type: 'error' })
+      msgRef.value.pushMsg('头像获取失败', { type: 'error' })
     })
 }
 // console.log(getLightnessFromRgb(props.bgBottomColor), getLightnessFromRgb(props.bgColor))

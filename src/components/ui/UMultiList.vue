@@ -21,9 +21,8 @@ function pushFaq() {
 function pushKeyWord(event: Event, faq: Answer) {
   const val = (event.target as HTMLInputElement).value.trim()
   if (val === '' || faq.keywords.includes(val)) {
-    msgRef.value.pushMsg({
+    msgRef.value.pushMsg('关键词重复！', {
       type: 'warning',
-      content: '关键词重复！',
     })
     return
   }

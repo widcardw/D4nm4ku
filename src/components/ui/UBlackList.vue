@@ -13,8 +13,7 @@ function pushItem(event: Event) {
     emits('settingsChanged')
   }
   else {
-    msgRef.value.pushMsg({
-      content: '该用户的 uid 已存在或不合法！',
+    msgRef.value.pushMsg('该用户的 uid 已存在或不合法！', {
       type: 'warning',
     })
   }

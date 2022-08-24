@@ -34,8 +34,8 @@ const login = async () => {
 
   const success = await createLoginLoop(data.oauthKey)
   if (success)
-    msgRef.value.pushMsg({ type: 'success', content: '登录成功！' })
-  msgRef.value.pushMsg({ type: 'info', content: '若头像信息未更新，可点击按钮刷新' })
+    msgRef.value.pushMsg('登录成功！', { type: 'success' })
+  msgRef.value.pushMsg('若头像信息未更新，可点击按钮刷新', { type: 'info' })
 }
 
 const cancelLogin = () => {
@@ -48,12 +48,12 @@ const logout = async () => {
     const resData = await logoutAccount() as any
     if (resData.code === 0) {
       store.removeUserInfo()
-      msgRef.value.pushMsg({ type: 'success', content: '退出成功' })
+      msgRef.value.pushMsg('退出成功', { type: 'success' })
       store.config.autoReply = false
       store.config.canSendMessage = false
     }
     else {
-      msgRef.value.pushMsg({ type: 'error', content: '退出失败' })
+      msgRef.value.pushMsg('退出失败', { type: 'error' })
     }
   }
 }
@@ -78,8 +78,13 @@ const refreshLogin = (event: Event) => {
           </button>
           <div i-ri-refresh-line icon-btn @click="refreshLogin" />
         </div>
-        <div v-if="interval" absolute z-998 class="left-1/2 translate--1/2 top-1/2">
-          <MyQrCode ma :url="qrurl" @close="cancelLogin" />
+        <div
+          v-if="interval" absolute z-998 fixed
+          left-0 top-0 bottom-0 right-0
+          flex items-center justify-center
+          bg="white/80 dark:black/60"
+        >
+          <MyQrCode absolute :url="qrurl" @close="cancelLogin" />
         </div>
       </div>
       <div v-else>

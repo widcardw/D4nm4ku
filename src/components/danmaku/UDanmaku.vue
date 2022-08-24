@@ -44,7 +44,7 @@ if (props.showAvatar) {
       urlIsBlob.value = isBlob
     })
     .catch((err: Error) => {
-      msgRef.value.pushMsg({ content: err.message, type: 'error' })
+      msgRef.value.pushMsg(err.message, { type: 'error' })
     })
 }
 
