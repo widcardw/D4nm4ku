@@ -137,7 +137,9 @@ tryOnBeforeUnmount(() => {
       data-tauri-drag-region
       :chat-pool="chatPool" z-999 shadow
     />
-    <div
+    <TransitionGroup
+      tag="div"
+      name="list"
       class="scroller"
       flex-1 of-y-auto
       data-tauri-drag-region
@@ -147,7 +149,7 @@ tryOnBeforeUnmount(() => {
         :key="`${it.ts}${it.uname}${it.type}${isGiftProps(it) ? it.giftId : ''}`"
         :obj="it"
       />
-    </div>
+    </TransitionGroup>
     <UMessageSender v-if="store.getConfig.canSendMessage" :no-border="true" />
   </div>
 </template>
@@ -172,5 +174,13 @@ tryOnBeforeUnmount(() => {
 /** {
   pointer-events: v-bind(ct);
 }*/
+
+.list-enter-active {
+  transition: all 0.25s ease;
+}
+.list-enter-from {
+  opacity: 0;
+  transform: translateX(30px);
+}
 </style>
 

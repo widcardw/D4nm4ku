@@ -110,7 +110,7 @@ function openSenderWindow() {
   emit('--create-sender-window')
   store.senderEnabled = true
   msgRef.value.pushMsg({
-    content: '窗口已开启',
+    content: '弹幕发送浮窗已开启',
   })
 }
 </script>
@@ -319,7 +319,7 @@ function openSenderWindow() {
         <div text-lg flex items-center>
           <div icon-btn i-ri-window-line ml-1 />
         </div>
-        <span>打开/关闭弹幕发送窗口</span>
+        <span>打开/关闭弹幕发送浮窗</span>
       </div>
     </USettingsBox>
     <UBlackList @settings-changed="settingChanged('blacklist', store.getConfig.blackList)" />
