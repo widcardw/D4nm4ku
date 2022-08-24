@@ -16,8 +16,8 @@ const checked = useVModel(props, 'modelValue', emits)
 
 <template>
   <label
-    class="inline-flex items-center leading-relaxed select-none space-x-1 cursor-pointer"
-    :class="{ 'op-50': disabled }"
+    class="inline-flex items-center leading-relaxed select-none space-x-1"
+    :class="{ 'op-50 cursor-not-allowed': disabled, 'cursor-pointer': !disabled }"
     :checked="checked || null"
     :disabled="disabled || null"
   >
