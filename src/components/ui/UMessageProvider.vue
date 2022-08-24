@@ -20,14 +20,15 @@ const pushMsg = (msg: string, config?: {
   type?: 'success' | 'error' | 'warning' | 'info'
   ttl?: number
 }) => {
+  const ts = Date.now()
   messageQueue.value.push({
     type: config?.type || 'info',
     content: msg,
-    ts: Date.now(),
+    ts,
   })
 
   setTimeout(() => {
-    messageQueue.value.shift()
+    messageQueue.value.splice(messageQueue.value.findIndex(it => it.ts === ts), 1)
   }, config?.ttl || 3000)
 }
 
