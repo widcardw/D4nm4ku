@@ -23,13 +23,6 @@ use tauri::Manager;
 #[macro_use]
 extern crate objc;
 
-// use tauri::Manager;
-
-// #[derive(Clone, serde::Serialize, serde::Deserialize)]
-// struct ClickTransparentPayload {
-//   enable: bool
-// }
-
 fn main() {
   tauri::Builder::default()
     .invoke_handler(tauri::generate_handler![
