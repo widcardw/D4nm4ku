@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { WebviewWindow } from '@tauri-apps/api/window'
-import { emit } from '@tauri-apps/api/event'
+// import { emit } from '@tauri-apps/api/event'
+import { invoke } from '@tauri-apps/api/tauri'
 import { useStorage } from '@vueuse/core'
 import { inject, ref } from 'vue'
 import UMdInput from '~/components/ui/UMdInput.vue'
@@ -16,7 +17,7 @@ const msgRef = inject('msgRef') as any
 const store = useStore()
 const isLoadingRoomId = ref(false)
 
-function createWebview() {
+async function createWebview() {
   if (roomId.value.trim() === '') {
     msgRef.value.pushMsg('房间号不能为空！', {
       type: 'warning',
@@ -38,18 +39,9 @@ function createWebview() {
 
     return
   }
-  // webview = new WebviewWindow('danmakuWidget', {
-  //   url: '/show',
-  //   decorations: false,
-  //   width: 400,
-  //   height: 600,
-  //   transparent: true,
-  //   alwaysOnTop: true,
-  //   title: 'D4nm4ku',
-  //   minWidth: 320,
-  //   minHeight: 150,
-  // })
-  emit('--create-danmaku-viewer', { vibrancy: store.getConfig.blur })
+
+  await invoke('create_new_danmaku_view')
+
   store.linked = true
   msgRef.value.pushMsg('窗口已开启')
 }
@@ -97,7 +89,7 @@ function roomIdBlured() {
   }
 }
 
-function setClickThrough() {
+async function setClickThrough() {
   if (store.clickThrough) {
     store.previousCanSend = store.config.canSendMessage
     if (store.config.canSendMessage) {
@@ -113,11 +105,12 @@ function setClickThrough() {
     }
   }
 
-  eventEmitter('set-click-through', store.clickThrough)
-  msgRef.value.pushMsg(`点击穿透功能已${store.clickThrough ? '开启' : '关闭'}`)
+  // eventEmitter('set-click-through', store.clickThrough)
+  const res: boolean = await invoke('set_click_through', { enable: store.clickThrough })
+  msgRef.value.pushMsg(`点击穿透功能已${res ? '开启' : '关闭'}`)
 }
 
-function openSenderWindow() {
+async function openSenderWindow() {
   if (!store.getUserInfo.mid) {
     msgRef.value.pushMsg('发送弹幕需要登录')
     return
@@ -129,15 +122,8 @@ function openSenderWindow() {
     senderWindow = null
     return
   }
-  // senderWindow = new WebviewWindow('senderWindow', {
-  //   decorations: false,
-  //   alwaysOnTop: true,
-  //   transparent: true,
-  //   url: '/sender',
-  //   width: 400,
-  //   height: 40,
-  // })
-  emit('--create-sender-window')
+
+  await invoke('create_sender_window')
   store.senderEnabled = true
   msgRef.value.pushMsg('弹幕发送浮窗已开启')
 }

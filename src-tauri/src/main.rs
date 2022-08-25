@@ -10,14 +10,12 @@ mod load_local_img;
 mod new_view;
 mod new_sender;
 
-use new_sender::create_sender_window;
-use new_view::create_new_view;
 use send_msg::send_message;
 use fetch_img::fetch_image;
 use open_app_dir::open_app_img_dir;
 use load_local_img::load_local_image;
 
-use tauri::Manager;
+// use tauri::Manager;
 
 #[cfg(target_os = "macos")]
 #[macro_use]
@@ -29,21 +27,11 @@ fn main() {
                       send_message,
                       fetch_image,
                       open_app_img_dir,
-                      load_local_image
+                      load_local_image,
+                      new_sender::create_sender_window,
+                      new_view::create_new_danmaku_view,
+                      new_view::set_click_through
                     ])
-    .setup(|app| {
-      let app_handle = app.app_handle();
-      let _unlisten1 = app.listen_global("--create-danmaku-viewer", move |_event| {
-        create_new_view(&app_handle);
-      });
-
-      let app_handle = app.app_handle();
-      let _unlisten2 = app.listen_global("--create-sender-window", move |_event| {
-        create_sender_window(&app_handle);
-      });
-
-      Ok(())
-    })
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
 }

@@ -1,8 +1,9 @@
-use tauri::Manager;
+use tauri::{Manager, Wry};
 
-pub fn create_new_view(app_handle: &tauri::AppHandle) {
+#[tauri::command]
+pub fn create_new_danmaku_view(app_handle: tauri::AppHandle<Wry>) {
     let viewer = tauri::WindowBuilder::new(
-        app_handle,
+        &app_handle,
         "danmakuWidget",
         tauri::WindowUrl::App("/show".into())
     )
@@ -23,22 +24,20 @@ pub fn create_new_view(app_handle: &tauri::AppHandle) {
     window_shadows::set_shadow(&viewer, false)
       .expect("Failed to set window shadows to false!");
 
-    let viewer2 = viewer.clone();
-
-    viewer2
-      .listen_global("set-click-through", move |event| {
-        let enable: bool = serde_json::from_str(event.payload().unwrap()).unwrap();
-        set_click_through(&viewer, enable);
-      });
-
 }
 
-pub fn set_click_through(window: &tauri::Window, enable: bool) {
-  window.with_webview(move |webview| {
-    #[cfg(target_os = "macos")]
-    unsafe {
-      let () = msg_send![webview.ns_window(), setIgnoresMouseEvents: enable];
-    }
-  })
-  .expect("Failed to set click through");
+#[tauri::command]
+pub fn set_click_through(app_handle: tauri::AppHandle<Wry>, enable: bool) -> Result<bool, String> {
+  let option_window = app_handle.get_window("danmakuWidget");
+  if let Some(window) = option_window {
+    window.with_webview(move |webview| {
+      #[cfg(target_os = "macos")]
+      unsafe {
+        let () = msg_send![webview.ns_window(), setIgnoresMouseEvents: enable];
+      }
+    })
+    .expect("Failed to set click through");
+  }
+
+  Ok(enable)
 }
