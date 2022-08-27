@@ -15,6 +15,8 @@ const props = withDefaults(defineProps<{
   color: string
   level: number
   label: string
+  tagColor: number
+  fang: number
   perhapsGuard: 0 | 1 | 2 | 3
   ts: number
   uid: number
@@ -82,8 +84,21 @@ async function confirmAddingToBlacklist(e: Event) {
               bg="amber/20"
               px-1
             >主播</span>
+            <span
+              v-if="fang === 1"
+              text="0.75rem amber"
+              border="~ rounded amber"
+              bg="amber/20"
+              px="0.5"
+            >房</span>
             <!-- 等级标签 -->
-            <UGuardTag v-if="level && showGuardTag" :level="level" :label="label" :perhaps-guard="perhapsGuard" />
+            <UGuardTag
+              v-if="level && showGuardTag && tagColor !== 12632256"
+              :level="level"
+              :label="label"
+              :perhaps-guard="perhapsGuard"
+              :tag-color="tagColor"
+            />
             <MyImg v-if="perhapsGuard !== 0 && level >= 20" self-center :src="guardType[perhapsGuard].badge" class="w-1.25rem h-1.25rem" mx-1 rounded-full />
           </div>
           <!-- 弹幕发送时间 -->
@@ -120,7 +135,21 @@ async function confirmAddingToBlacklist(e: Event) {
           bg="amber/20"
           px-1
         >主播</span>
-        <UGuardTag v-if="level && showGuardTag" inline-flex leading-normal :level="level" :label="label" :perhaps-guard="perhapsGuard" />
+        <span
+          v-if="fang === 1"
+          text="0.75rem amber"
+          border="~ rounded amber"
+          bg="amber/20"
+          px="0.5"
+        >房</span>
+        <UGuardTag
+          v-if="level && showGuardTag && tagColor !== 12632256"
+          inline-flex leading-normal
+          :level="level"
+          :label="label"
+          :perhaps-guard="perhapsGuard"
+          :tag-color="tagColor"
+        />
         <MyImg v-if="perhapsGuard !== 0 && level >= 20" inline-flex w-1rem h-1rem :src="guardType[perhapsGuard].badge" err-src="/loading.gif" rounded-full />
         <MyImg v-if="content.startsWith('http://')" class="h-2rem" :src="content" inline-flex err-src="/loading.gif" />
         <span v-else break-words>{{ content }}</span>

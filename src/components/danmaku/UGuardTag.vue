@@ -3,24 +3,25 @@ defineProps<{
   level: number
   label: string
   perhapsGuard: 0 | 1 | 2 | 3
+  tagColor: number
 }>()
 </script>
 
 <template>
-  <div flex class="text-0.75rem" border="~ rounded blue">
+  <div
+    flex class="text-0.75rem"
+  >
     <div
-      border="r blue"
       rounded-l
       px-1
       wsn
       :style="{
-        backgroundColor: `rgba(54, 105, 230, ${level / 25})`,
-        color: level <= 20 ? '' : 'white',
+        backgroundColor: `#${tagColor.toString(16)}`,
       }"
     >
       {{ label }}
     </div>
-    <div px-1 wsn>
+    <div px-1 wsn bg-white text-black rounded-r text-shadow-none>
       {{ level }}
     </div>
   </div>
