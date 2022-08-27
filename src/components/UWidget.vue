@@ -114,7 +114,7 @@ tryOnBeforeUnmount(() => {
 
 <template>
   <div
-    flex flex-col h-100vh rounded
+    flex flex-col h-100vh
     :class="{
       'backdrop-blur-sm': store.getConfig.blur,
     }"
