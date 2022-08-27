@@ -48,7 +48,7 @@ interface DanmakuMessage extends MessageType {
     ],
     content: string,
     userInfo: [uid: number, uname: string, n2: number, n3: number, n4: number, n5: number, n6: number, color: string],
-    label: [level: number, label: string, extLabel: string],
+    label: [level: number, label: string, extLabel: string, roomId: number, colorInt: number, n5: string, n6: number, n7: number, n8: number, n9: number],
     rank: Array<any>,
     title: [string, string],
     n6: number,

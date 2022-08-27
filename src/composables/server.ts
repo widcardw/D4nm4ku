@@ -161,12 +161,15 @@ const connectRoom = () => {
     })
 
     live.on('DANMU_MSG', (data: DanmakuMessage) => {
+      // // eslint-disable-next-line no-console
+      // console.log(data)
       const { info } = data
       const perhapsLottery = info[0][9]
       if (perhapsLottery !== 0)
         return
-      const [, content, [uid, uname, , , , , ,color = ''], [level = 0, label = ''],,,,perhapsGuard] = info
+      const [, content, [uid, uname, fang, , , , ,color = ''], [level = 0, label = ''],,,,perhapsGuard] = info
       const ts = info[0][4]
+      const tagColor = info[3][9] || 0
 
       if (store.getConfig.blackList.includes(uid))
         return
@@ -183,6 +186,8 @@ const connectRoom = () => {
         uname,
         content: processTooLongSymbols(content),
         color,
+        tagColor,
+        fang,
         level,
         label,
         perhapsGuard,

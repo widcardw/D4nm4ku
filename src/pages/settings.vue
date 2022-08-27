@@ -134,7 +134,14 @@ function setCanSend() {
         >
           显示标签和等级
         </UCheckBox>
-        <UGuardTag v-if="store.config.showGuardTag" label="bilibili" :level="25" :perhaps-guard="3" />
+        <UGuardTag
+          v-if="store.config.showGuardTag"
+          label="bilibili"
+          :level="25"
+          :perhaps-guard="3"
+          :tag-color="15635629"
+          shadow
+        />
       </div>
       <UCheckBox
         v-model="store.config.showEnter"

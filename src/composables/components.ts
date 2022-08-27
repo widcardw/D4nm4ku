@@ -3,6 +3,8 @@ interface DanmakuProps {
   content: string
   uname: string
   color: string
+  tagColor: number
+  fang: number
   level: number
   label: string
   perhapsGuard: 0 | 1 | 2 | 3
