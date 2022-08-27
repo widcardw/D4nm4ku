@@ -175,6 +175,7 @@ tryOnBeforeUnmount(() => {
   pointer-events: v-bind(ct);
 }*/
 
+.list-move,
 .list-enter-active {
   transition: all 0.25s ease;
 }
