@@ -53,7 +53,7 @@ if (props.face === '') {
     p="0.75" pr-2 text-white space-x="0.5"
   >
     <Avatar :src="faceUrl" :uid="uid" class="w-1.25rem h-1.25rem" />
-    <div text-sm>
+    <div text="sm amber">
       ￥{{ price / 1000 }}
     </div>
   </div>

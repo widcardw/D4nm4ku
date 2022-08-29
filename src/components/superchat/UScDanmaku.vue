@@ -47,7 +47,7 @@ if (props.face === '') {
         <div font-bold text-lg>
           {{ uname }}
         </div>
-        <div text-sm>
+        <div text="sm amber">
           ￥{{ price / 1000 }}
         </div>
       </div>

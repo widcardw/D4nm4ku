@@ -45,7 +45,9 @@ if (props.face === '') {
       <div flex-1>
         {{ uname }}
       </div>
-      <div>￥{{ price / 1000 }}</div>
+      <div text-amber>
+        ￥{{ price / 1000 }}
+      </div>
     </div>
     <div
       p-2 rounded-b break-words

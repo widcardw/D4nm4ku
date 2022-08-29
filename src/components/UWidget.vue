@@ -194,16 +194,20 @@ tryOnBeforeUnmount(() => {
 }*/
 
 .list-move,
-.list-enter-active {
+.list-enter-active,
+.list-leave-active {
   transition: all 0.25s ease;
 }
 .list-enter-from {
   opacity: 0;
   transform: translateX(30px);
 }
+.list-leave-to {
+  opacity: 0;
+}
 
 .enter-enter-active {
-  transition: all 0.0625s ease;
+  transition: all 0.125s ease;
 }
 .enter-enter-from {
   opacity: 0;
