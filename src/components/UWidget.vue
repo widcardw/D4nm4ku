@@ -152,7 +152,12 @@ tryOnBeforeUnmount(() => {
         :obj="it"
       />
     </TransitionGroup>
-    <TransitionGroup v-if="enterQueue.length > 0" tag="div" name="enter" class="h-1.8rem of-y-hidden">
+    <TransitionGroup
+      v-if="enterQueue.length > 0 && store.getConfig.showEnter"
+      tag="div"
+      name="enter"
+      class="h-2rem of-y-hidden"
+    >
       <UInteraction
         :key="enterQueue[0].ts"
         type="interact"
@@ -198,7 +203,7 @@ tryOnBeforeUnmount(() => {
 }
 
 .enter-enter-active {
-  transition: all 0.25s ease;
+  transition: all 0.0625s ease;
 }
 .enter-enter-from {
   opacity: 0;

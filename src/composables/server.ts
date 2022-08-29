@@ -1,7 +1,7 @@
 import { KeepLiveWS } from 'bilibili-live-ws'
 import { fetch } from '@tauri-apps/api/http'
 import { useStorage } from '@vueuse/core'
-import { ref, watchEffect } from 'vue'
+import { ref } from 'vue'
 import type {
   DanmakuProps,
   GiftProps,
@@ -36,13 +36,10 @@ const selectedSc = ref<SuperChatProps | null>(null)
 const chatPool = ref<Array<SuperChatProps>>([])
 const enterQueue = ref<InteractProps[]>([])
 
-watchEffect(() => {
-  if (enterQueue.value.length > 1) {
-    setTimeout(() => {
-      enterQueue.value.shift()
-    }, 400)
-  }
-})
+setInterval(() => {
+  if (enterQueue.value.length >= 2)
+    enterQueue.value.shift()
+}, 500)
 
 let live: KeepLiveWS | null = null
 
@@ -114,6 +111,8 @@ const connectRoom = () => {
         // 用户进入直播间
         // pushObject(interact)
         enterQueue.value.push(interact)
+        if (enterQueue.value.length > 20)
+          enterQueue.value.splice(0, 15)
       }
       else if (store.getConfig.showSubscribe && msg_type === 2) {
         // 用户关注主播
