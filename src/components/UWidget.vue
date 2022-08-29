@@ -3,6 +3,7 @@ import { listen } from '@tauri-apps/api/event'
 import { tryOnBeforeUnmount, useStorage } from '@vueuse/core'
 import { inject } from 'vue'
 import UMessageSender from './send/UMessageSender.vue'
+import UInteraction from './danmaku/UInteraction.vue'
 import USuperChatPool from '~/components/superchat/USuperChatPool.vue'
 import { hex2rgb } from '~/composables/randomColor'
 import {
@@ -10,6 +11,7 @@ import {
   connectRoom,
   danmakuPool,
   disconnectRoom,
+  enterQueue,
   fans,
   population,
   selectedSc,
@@ -150,6 +152,17 @@ tryOnBeforeUnmount(() => {
         :obj="it"
       />
     </TransitionGroup>
+    <TransitionGroup v-if="enterQueue.length > 0" tag="div" name="enter" class="h-1.8rem of-y-hidden">
+      <UInteraction
+        :key="enterQueue[0].ts"
+        type="interact"
+        :action="enterQueue[0].action"
+        :ts="enterQueue[0].ts"
+        :uid="enterQueue[0].uid"
+        :uname="enterQueue[0].uname"
+        :uname-color="enterQueue[0].unameColor"
+      />
+    </TransitionGroup>
     <UMessageSender v-if="store.getConfig.canSendMessage" :no-border="true" />
   </div>
 </template>
@@ -182,6 +195,14 @@ tryOnBeforeUnmount(() => {
 .list-enter-from {
   opacity: 0;
   transform: translateX(30px);
+}
+
+.enter-enter-active {
+  transition: all 0.25s ease;
+}
+.enter-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
 }
 </style>
 
