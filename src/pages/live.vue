@@ -2,7 +2,7 @@
 import { useClipboard, useStorage } from '@vueuse/core'
 import { inject, ref } from 'vue'
 import { getAreaInfoList, startLive, stopLive, updateLiveTitle } from '~/composables/openLive'
-import { getLiveRoomInfoFromUid } from '~/composables/getLiverInfo'
+import { getLiveRoomInfoFromRoomId, getLiveRoomInfoFromUid } from '~/composables/getLiverInfo'
 import { useStore } from '~/stores/store'
 import UMdInput from '~/components/ui/UMdInput.vue'
 import UTabSelector from '~/components/ui/UTabSelector.vue'
@@ -30,9 +30,21 @@ function updateLiveRoomInfo() {
       .then(({ roomid, title }) => {
         roomId2.value = roomid.toString()
         liveTitle.value = title
+        return roomid
       })
       .catch((err) => {
         msgRef.value.pushMsg(`直播间信息获取失败！${err.message}`, {
+          type: 'error',
+        })
+      })
+  }
+  if (roomId2.value.trim() !== '' && liveTitle.value.trim() !== '' && selectedAreaId.value) {
+    getLiveRoomInfoFromRoomId(parseInt(roomId2.value))
+      .then(({ data }) => {
+        store.liveConfig.isLive = data.live_status === 1
+      })
+      .catch((err) => {
+        msgRef.value.pushMsg(err.message, {
           type: 'error',
         })
       })
@@ -150,7 +162,7 @@ function roomIdBlur() {
   <div h-100vh flex flex-col>
     <div flex-1 text-2xl flex justify-center>
       <div self-end>
-        Live!
+        {{ store.liveConfig.isLive ? '正在直播' : 'Live!' }}
       </div>
     </div>
     <div text-center>

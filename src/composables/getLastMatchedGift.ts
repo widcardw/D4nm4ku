@@ -14,7 +14,7 @@ const getLastMatchedGift = (
     if (item.uname === uname && item.giftId === giftId) {
       const item = danmakuPool.splice(i, 1) as GiftProps[]
       item[0].num += num
-      item[0].ts = ts
+      // item[0].ts = ts
       danmakuPool.push(item[0])
       return true
     }

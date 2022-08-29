@@ -11,6 +11,7 @@ const startLiveApi = 'http://api.live.bilibili.com/room/v1/Room/startLive'
 const stopLiveApi = 'http://api.live.bilibili.com/room/v1/Room/stopLive'
 const updateLiveTitleApi = 'http://api.live.bilibili.com/room/v1/Room/update'
 const shortIdToLongApi = 'https://api.live.bilibili.com/room/v1/Room/mobileRoomInit?id='
+const getRoomInfoOldApi = 'https://api.live.bilibili.com/room/v1/Room/getRoomInfoOld?mid='
 
 export {
   spaceInfo,
@@ -26,4 +27,5 @@ export {
   startLiveApi,
   updateLiveTitleApi,
   shortIdToLongApi,
+  getRoomInfoOldApi,
 }
