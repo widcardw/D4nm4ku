@@ -2,13 +2,15 @@
 import { WebviewWindow } from '@tauri-apps/api/window'
 // import { emit } from '@tauri-apps/api/event'
 import { invoke } from '@tauri-apps/api/tauri'
-import { useStorage } from '@vueuse/core'
+import { useStorage, useThrottleFn } from '@vueuse/core'
 import { inject, ref } from 'vue'
 import UMdInput from '~/components/ui/UMdInput.vue'
 import UCheckBox from '~/components/ui/UCheckBox.vue'
 import { shortToLong } from '~/composables/shortIdToLong'
 import { useStore } from '~/stores/store'
 import { eventEmitter } from '~/composables/eventEmitter'
+import { usePosition } from '~/stores/position'
+import { loadPos } from '~/composables/load_pos'
 
 const roomId = useStorage('roomId', '')
 
@@ -16,6 +18,7 @@ let webview: WebviewWindow | null = null
 const msgRef = inject('msgRef') as any
 const store = useStore()
 const isLoadingRoomId = ref(false)
+const pos = usePosition()
 
 async function createWebview() {
   if (roomId.value.trim() === '') {
@@ -134,6 +137,27 @@ const pinWidget = () => {
   if (danmakuWidget)
     danmakuWidget.setAlwaysOnTop(pinned.value)
 }
+
+const storePosition = useThrottleFn(() => {
+  pos.storeConfig()
+    .then(() => {
+      msgRef.value.pushMsg('保存成功', { type: 'success' })
+    })
+    .catch((err) => {
+      msgRef.value.pushMsg(`保存失败, ${err.message}`, { type: 'error' })
+    })
+})
+
+const loadPosition = useThrottleFn(() => {
+  const conf = pos.getConfig()
+  loadPos(conf)
+    .then(() => {
+      msgRef.value.pushMsg('加载成功', { type: 'success' })
+    })
+    .catch((err) => {
+      msgRef.value.pushMsg(`加载失败, ${err.message}`, { type: 'error' })
+    })
+})
 </script>
 
 <template>
@@ -197,6 +221,18 @@ const pinWidget = () => {
               <div icon-btn i-ri-window-line ml-1 />
             </div>
             <span>打开/关闭弹幕发送浮窗</span>
+          </div>
+          <div inline-flex items-center leading-relaxed select-none space-x-1>
+            <div text-lg flex items-center>
+              <div icon-btn i-ri-save-line ml-1 />
+            </div>
+            <div>
+              <button text-btn :disabled="!store.linked" @click="storePosition">
+                保存
+              </button>/<button :disabled="!store.linked" text-btn @click="loadPosition">
+                加载
+              </button>窗口大小和位置
+            </div>
           </div>
         </div>
         <div flex-1 />

@@ -30,7 +30,9 @@ fn main() {
                       load_local_image,
                       new_sender::create_sender_window,
                       new_view::create_new_danmaku_view,
-                      new_view::set_click_through
+                      new_view::set_click_through,
+                      new_view::get_viewer_pos_and_size,
+                      new_view::set_viewer_pos_and_size
                     ])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");

@@ -14,7 +14,7 @@ pub fn create_sender_window(app_handle: tauri::AppHandle<Wry>) {
       .unwrap();
 
     viewer
-      .set_min_size(std::option::Option::Some(tauri::LogicalSize::new(300, 40)))
+      .set_min_size(std::option::Option::Some(tauri::LogicalSize::new(200, 40)))
       .expect("Failed to set min size!");
 
     viewer

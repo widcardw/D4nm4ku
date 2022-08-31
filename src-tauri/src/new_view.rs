@@ -14,7 +14,7 @@ pub fn create_new_danmaku_view(app_handle: tauri::AppHandle<Wry>) {
       .unwrap();
 
     viewer
-      .set_min_size(std::option::Option::Some(tauri::LogicalSize::new(300, 200)))
+      .set_min_size(std::option::Option::Some(tauri::LogicalSize::new(200, 200)))
       .expect("Failed to set min size!");
 
     viewer
@@ -40,4 +40,40 @@ pub fn set_click_through(app_handle: tauri::AppHandle<Wry>, enable: bool) -> Res
   }
 
   Ok(enable)
+}
+
+#[derive(Copy, Clone, serde::Serialize, serde::Deserialize)]
+pub struct PosProps {
+  width: u32,
+  height: u32,
+  x: i32,
+  y: i32
+}
+
+#[tauri::command]
+pub fn get_viewer_pos_and_size(app_handle: tauri::AppHandle<Wry>) -> Result<PosProps, String> {
+  let option_window = app_handle.get_window("danmakuWidget");
+  if let Some(viewer) = option_window {
+    let size = viewer.inner_size().unwrap();
+    let pos = viewer.inner_position().unwrap();
+    let ret = PosProps { width: size.width, height: size.height, x: pos.x, y: pos.y };
+
+    return Ok(ret);
+  }
+
+  Err("Failed to get danmaku window!".into())
+}
+
+#[tauri::command]
+pub fn set_viewer_pos_and_size(app_handle: tauri::AppHandle<Wry>, conf: PosProps) -> Result<bool, String> {
+  let option_window = app_handle.get_window("danmakuWidget");
+  let PosProps {width, height, x, y} = conf;
+  if let Some(viewer) = option_window {
+    viewer.set_size(tauri::PhysicalSize { width, height }).unwrap();
+    viewer.set_position(tauri::PhysicalPosition { x, y }).unwrap();
+
+    return Ok(true);
+  }
+
+  Err("Failed to get danmaku window!".into())
 }
