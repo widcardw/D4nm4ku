@@ -98,6 +98,7 @@ async function confirmAddingToBlacklist(e: Event) {
               :label="label"
               :perhaps-guard="perhapsGuard"
               :tag-color="tagColor"
+              shadow
             />
             <MyImg v-if="perhapsGuard !== 0 && level >= 20" self-center :src="guardType[perhapsGuard].badge" class="w-1.25rem h-1.25rem" mx-1 rounded-full />
           </div>
@@ -144,7 +145,7 @@ async function confirmAddingToBlacklist(e: Event) {
         >房</span>
         <UGuardTag
           v-if="level && showGuardTag && tagColor !== 12632256"
-          inline-flex leading-normal
+          inline-flex leading-normal shadow
           :level="level"
           :label="label"
           :perhaps-guard="perhapsGuard"

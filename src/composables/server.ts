@@ -178,7 +178,9 @@ const connectRoom = () => {
         return
       const [, content, [uid, uname, fang, , , , ,color = ''], [level = 0, label = ''],,,,perhapsGuard] = info
       const ts = info[0][4]
-      const tagColor = info[3][9] || 0
+      let tagColor = info[3][9] || 0
+      if (store.getConfig.showGuardTag === 2)
+        tagColor = info[3][4] || 0
 
       if (store.getConfig.blackList.includes(uid))
         return

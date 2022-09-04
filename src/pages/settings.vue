@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { inject, ref } from 'vue'
 import { confirm } from '@tauri-apps/api/dialog'
 import { invoke } from '@tauri-apps/api/tauri'
 import { appDir } from '@tauri-apps/api/path'
 import { useThrottleFn } from '@vueuse/core'
-import { inject } from 'vue'
 import USettingsBox from '~/components/ui/USettingsBox.vue'
 import UCheckBox from '~/components/ui/UCheckBox.vue'
 import UColorPicker from '~/components/ui/UColorPicker.vue'
@@ -15,6 +15,7 @@ import UMultiList from '~/components/ui/UMultiList.vue'
 import UGuardTag from '~/components/danmaku/UGuardTag.vue'
 import UBlackList from '~/components/ui/UBlackList.vue'
 import { eventEmitter } from '~/composables/eventEmitter'
+import USelector from '~/components/ui/USelector.vue'
 
 const msgRef = inject('msgRef') as any
 const store = useStore()
@@ -127,20 +128,17 @@ function setCanSend() {
       >
         显示弹幕发送时间
       </UCheckBox>
-      <div flex space-x-2>
-        <UCheckBox
+      <div flex space-x-1 items-center>
+        <div text-lg flex items-center>
+          <div i-ri-bank-card-line icon-btn ml-1 />
+        </div>
+        <span>
+          标签和等级
+        </span>
+        <USelector
           v-model="store.config.showGuardTag"
+          :options="[{ label: '不显示', value: 0 }, { label: '官方', value: 1 }, { label: '全部显示', value: 2 }]"
           @update:model-value="settingChanged('show-guard-tag', store.config.showGuardTag)"
-        >
-          显示标签和等级
-        </UCheckBox>
-        <UGuardTag
-          v-if="store.config.showGuardTag"
-          label="bilibili"
-          :level="25"
-          :perhaps-guard="3"
-          :tag-color="15635629"
-          shadow
         />
       </div>
       <UCheckBox

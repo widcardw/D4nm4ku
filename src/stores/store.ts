@@ -16,7 +16,7 @@ interface UserInfo {
 }
 
 interface ConfigProps {
-  showGuardTag: boolean
+  showGuardTag: number
   showAvatar: boolean
   showTime: boolean
   showSilverGift: boolean
@@ -43,7 +43,7 @@ interface ConfigProps {
 
 const defaultConfig: ConfigProps = {
   blackList: [],
-  showGuardTag: false,
+  showGuardTag: 0,
   showAvatar: true,
   showTime: false,
   showSilverGift: false,

@@ -36,7 +36,7 @@ async function initListens() {
     store.config.showAvatar = parseBoolean(event.payload as string)
   }))
   unlistens.push(await listen('show-guard-tag', (event) => {
-    store.config.showGuardTag = parseBoolean(event.payload as string)
+    store.config.showGuardTag = parseInt(event.payload as string)
   }))
   unlistens.push(await listen('show-time', (event) => {
     store.config.showTime = parseBoolean(event.payload as string)

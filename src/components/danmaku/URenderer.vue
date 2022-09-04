@@ -28,7 +28,7 @@ const store = useStore()
     :ts="obj.ts"
     :uid="obj.uid"
     :show-avatar="store.getConfig.showAvatar"
-    :show-guard-tag="store.getConfig.showGuardTag"
+    :show-guard-tag="store.getConfig.showGuardTag > 0"
     :show-time="store.getConfig.showTime"
     :layout="store.getConfig.layout"
   />

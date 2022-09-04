@@ -1,10 +1,13 @@
 <script setup lang="ts">
-defineProps<{
+import { computed } from 'vue'
+const props = defineProps<{
   level: number
   label: string
   perhapsGuard: 0 | 1 | 2 | 3
   tagColor: number
 }>()
+const c = props.tagColor.toString(16)
+const tc = `#${Array(6 - c.length).fill('0').join('')}${c}`
 </script>
 
 <template>
@@ -16,7 +19,7 @@ defineProps<{
       px-1
       wsn
       :style="{
-        backgroundColor: `#${tagColor.toString(16)}`,
+        backgroundColor: tc,
       }"
     >
       {{ label }}
