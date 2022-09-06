@@ -1,6 +1,6 @@
 # D4nm4ku
 
-![](https://img.shields.io/github/workflow/status/widcardw/D4nm4ku/Release%20CI) ![](https://img.shields.io/github/downloads/widcardw/D4nm4ku/latest/total)
+![](https://img.shields.io/github/workflow/status/widcardw/D4nm4ku/Release%20CI) ![](https://img.shields.io/github/downloads/widcardw/D4nm4ku/total)
 
 使用 Tauri 和 Vue 实现一个弹幕姬。
 
