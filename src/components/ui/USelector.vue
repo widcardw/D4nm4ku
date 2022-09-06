@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useVModel } from '@vueuse/core'
 const props = withDefaults(defineProps<{
   options?: Array<{ label: string; value: number }>
