@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import type { GiftInfo, LiveAreaInfo } from '../composables/types'
 import type { Answer } from '~/composables/autoSendMsg'
+import { eventEmitter } from '~/composables/eventEmitter'
 
 interface UserInfo {
   oauthKey: string
@@ -173,10 +174,12 @@ export const useStore = defineStore('stores', {
       // trim faqs
       this.faqs = this.faqs.filter(it => it.answer.trim() !== '' && it.keywords.length !== 0)
       localStorage.setItem('faqs', JSON.stringify(this.faqs))
+      eventEmitter('new-faq', this.faqs)
     },
     removeConfig() {
       localStorage.setItem('config', JSON.stringify(defaultConfig))
       this.config = { ...defaultConfig }
+      eventEmitter('reset-config', this.config)
     },
     setRoomId(id: string) {
       localStorage.setItem('roomId', id)

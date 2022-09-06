@@ -3,6 +3,7 @@ import { useIntervalFn } from '@vueuse/core'
 import { inject, ref, watchEffect } from 'vue'
 import Avatar from '~/components/img/Avatar.vue'
 import { getAvatar2 } from '~/composables/getAvatar'
+import { msgKey } from '~/composables/injectionKeys'
 import { LIGHTNESS_LIMIT, getLightnessFromHex } from '~/composables/randomColor'
 
 const props = defineProps<{
@@ -27,7 +28,7 @@ watchEffect(() => {
 })
 
 const faceUrl = ref(props.face)
-const msgRef = inject('msgRef') as any
+const msgRef = inject(msgKey)
 const urlIsBlob = ref(false)
 
 if (props.face === '') {
@@ -37,7 +38,7 @@ if (props.face === '') {
       urlIsBlob.value = isBlob
     })
     .catch(() => {
-      msgRef.value.pushMsg('头像获取失败', { type: 'error' })
+      msgRef?.value.pushMsg('头像获取失败', { type: 'error' })
     })
 }
 </script>

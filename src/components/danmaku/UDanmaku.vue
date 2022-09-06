@@ -8,6 +8,7 @@ import UGuardTag from '~/components/danmaku/UGuardTag.vue'
 import Avatar from '~/components/img/Avatar.vue'
 import { getAvatar2 } from '~/composables/getAvatar'
 import { useStore } from '~/stores/store'
+import { msgKey } from '~/composables/injectionKeys'
 
 const props = withDefaults(defineProps<{
   content: string
@@ -35,7 +36,7 @@ const store = useStore()
 
 const faceUrl = ref('')
 
-const msgRef = inject('msgRef') as any
+const msgRef = inject(msgKey)
 const urlIsBlob = ref(false)
 
 if (props.showAvatar) {
@@ -46,7 +47,7 @@ if (props.showAvatar) {
       urlIsBlob.value = isBlob
     })
     .catch((err: Error) => {
-      msgRef.value.pushMsg(err.message, { type: 'error' })
+      msgRef?.value.pushMsg(err.message, { type: 'error' })
     })
 }
 

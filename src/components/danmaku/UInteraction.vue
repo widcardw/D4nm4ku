@@ -3,6 +3,7 @@ import { inject, ref } from 'vue'
 import { getAvatar2 } from '../../composables/getAvatar'
 import { useStore } from '../../stores/store'
 import Avatar from '../img/Avatar.vue'
+import { msgKey } from '~/composables/injectionKeys'
 
 const props = defineProps<{
   type: 'interact'
@@ -16,7 +17,7 @@ const props = defineProps<{
 const store = useStore()
 const faceUrl = ref('')
 const urlIsBlob = ref(false)
-const msgRef = inject('msgRef') as any
+const msgRef = inject(msgKey)
 
 if (store.getConfig.showAvatar) {
   getAvatar2(props.uid)
@@ -25,7 +26,7 @@ if (store.getConfig.showAvatar) {
       urlIsBlob.value = isBlob
     })
     .catch((err: Error) => {
-      msgRef.value.pushMsg(err.message, { type: 'error' })
+      msgRef?.value.pushMsg(err.message, { type: 'error' })
     })
 }
 </script>

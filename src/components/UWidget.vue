@@ -22,10 +22,11 @@ import URenderer from '~/components/danmaku/URenderer.vue'
 import { useStore } from '~/stores/store'
 import { getLiverInfo } from '~/composables/getLiverInfo'
 import parseFanNumbers from '~/composables/parseFanNumbers'
+import { msgKey } from '~/composables/injectionKeys'
 
 const store = useStore()
 const unlistens: Function[] = []
-const msgRef = inject('msgRef') as any
+const msgRef = inject(msgKey)
 
 function parseBoolean(obj: string) {
   return obj === 'true'
@@ -92,6 +93,12 @@ async function initListens() {
   unlistens.push(await listen('blacklist', (event) => {
     store.config.blackList = JSON.parse(event.payload as string) as number[]
   }))
+  unlistens.push(await listen('reset-config', (event) => {
+    store.config = JSON.parse(event.payload as string)
+  }))
+  unlistens.push(await listen('new-faq', (event) => {
+    store.faqs = JSON.parse(event.payload as string)
+  }))
 }
 
 initListens()
@@ -105,7 +112,7 @@ getLiverInfo(Number.parseInt(roomId.value))
     fans.value = parseFanNumbers(res)
   })
   .catch((err) => {
-    msgRef.value.pushMsg(err.message, { type: 'error' })
+    msgRef?.value.pushMsg(err.message, { type: 'error' })
   })
 
 tryOnBeforeUnmount(() => {

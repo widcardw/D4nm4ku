@@ -3,6 +3,7 @@ import { inject, ref } from 'vue'
 import { sendMsg } from '~/composables/msgSend'
 import UInputBtn from '~/components/ui/UInputBtn.vue'
 import { useStore } from '~/stores/store'
+import { msgKey } from '~/composables/injectionKeys'
 
 withDefaults(defineProps<{
   noBorder?: boolean
@@ -12,12 +13,12 @@ withDefaults(defineProps<{
 
 const msg = ref('')
 const btnDisabled = ref(false)
-const msgRef = inject('msgRef') as any
+const msgRef = inject(msgKey)
 const store = useStore()
 
 const sendMessage = () => {
   if (msg.value.trim() === '') {
-    msgRef.value.pushMsg('发送的消息不能为空！', {
+    msgRef?.value.pushMsg('发送的消息不能为空！', {
       type: 'warning',
     })
     return
@@ -29,7 +30,7 @@ const sendMessage = () => {
     msg.value = ''
   }
   catch (e) {
-    msgRef.value.pushMsg('消息发送失败！请重新登录！', {
+    msgRef?.value.pushMsg('消息发送失败！请重新登录！', {
       type: 'error',
     })
   }

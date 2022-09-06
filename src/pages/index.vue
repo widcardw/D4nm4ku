@@ -11,18 +11,19 @@ import { useStore } from '~/stores/store'
 import { eventEmitter } from '~/composables/eventEmitter'
 import { usePosition } from '~/stores/position'
 import { loadPos } from '~/composables/load_pos'
+import { msgKey } from '~/composables/injectionKeys'
 
 const roomId = useStorage('roomId', '')
 
 let webview: WebviewWindow | null = null
-const msgRef = inject('msgRef') as any
+const msgRef = inject(msgKey)
 const store = useStore()
 const isLoadingRoomId = ref(false)
 const pos = usePosition()
 
 async function createWebview() {
   if (roomId.value.trim() === '') {
-    msgRef.value.pushMsg('房间号不能为空！', {
+    msgRef?.value.pushMsg('房间号不能为空！', {
       type: 'warning',
     })
     return
@@ -46,7 +47,7 @@ async function createWebview() {
   await invoke('create_new_danmaku_view')
 
   store.linked = true
-  msgRef.value.pushMsg('窗口已开启')
+  msgRef?.value.pushMsg('窗口已开启')
 }
 
 function tryToCloseDanmaku() {
@@ -82,7 +83,7 @@ function roomIdBlured() {
         roomId.value = String(id)
       })
       .catch((err) => {
-        msgRef.value.pushMsg(err.message, {
+        msgRef?.value.pushMsg(err.message, {
           type: 'error',
         })
       })
@@ -110,12 +111,12 @@ async function setClickThrough() {
 
   // eventEmitter('set-click-through', store.clickThrough)
   const res: boolean = await invoke('set_click_through', { enable: store.clickThrough })
-  msgRef.value.pushMsg(`点击穿透功能已${res ? '开启' : '关闭'}`)
+  msgRef?.value.pushMsg(`点击穿透功能已${res ? '开启' : '关闭'}`)
 }
 
 async function openSenderWindow() {
   if (!store.getUserInfo.mid) {
-    msgRef.value.pushMsg('发送弹幕需要登录')
+    msgRef?.value.pushMsg('发送弹幕需要登录')
     return
   }
   let senderWindow = WebviewWindow.getByLabel('senderWindow')
@@ -128,7 +129,7 @@ async function openSenderWindow() {
 
   await invoke('create_sender_window')
   store.senderEnabled = true
-  msgRef.value.pushMsg('弹幕发送浮窗已开启')
+  msgRef?.value.pushMsg('弹幕发送浮窗已开启')
 }
 
 const pinned = ref(true)
@@ -141,10 +142,10 @@ const pinWidget = () => {
 const storePosition = useThrottleFn(() => {
   pos.storeConfig()
     .then(() => {
-      msgRef.value.pushMsg('保存成功', { type: 'success' })
+      msgRef?.value.pushMsg('保存成功', { type: 'success' })
     })
     .catch((err) => {
-      msgRef.value.pushMsg(`保存失败, ${err.message}`, { type: 'error' })
+      msgRef?.value.pushMsg(`保存失败, ${err.message}`, { type: 'error' })
     })
 })
 
@@ -152,10 +153,10 @@ const loadPosition = useThrottleFn(() => {
   const conf = pos.getConfig()
   loadPos(conf)
     .then(() => {
-      msgRef.value.pushMsg('加载成功', { type: 'success' })
+      msgRef?.value.pushMsg('加载成功', { type: 'success' })
     })
     .catch((err) => {
-      msgRef.value.pushMsg(`加载失败, ${err.message}`, { type: 'error' })
+      msgRef?.value.pushMsg(`加载失败, ${err.message}`, { type: 'error' })
     })
 })
 </script>

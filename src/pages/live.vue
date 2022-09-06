@@ -38,7 +38,9 @@ function updateLiveRoomInfo() {
         })
       })
   }
-  if (roomId2.value.trim() !== '' && liveTitle.value.trim() !== '' && selectedAreaId.value) {
+  // 当前如果是开播的状态，但是主播可能手动关闭了弹幕姬，导致弹幕姬只有开播按钮
+  // 因此自动检测当前是否在开播状态，如果是，则自动变更按钮
+  if (!store.liveConfig.isLive && roomId2.value.trim() !== '' && liveTitle.value.trim() !== '' && selectedAreaId.value) {
     getLiveRoomInfoFromRoomId(parseInt(roomId2.value))
       .then(({ data }) => {
         store.liveConfig.isLive = data.live_status === 1
@@ -94,6 +96,9 @@ function startLive2() {
       store.liveConfig.code = rtmp.code
       msgRef.value.pushMsg('直播开启成功', {
         type: 'success',
+      })
+      msgRef.value.pushMsg('请将串流地址和密钥复制到直播软件（如 OBS）后开启推流', {
+        ttl: 6000,
       })
       store.liveConfig.isLive = true
     })

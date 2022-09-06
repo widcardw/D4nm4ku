@@ -8,9 +8,10 @@ import { clearLoop, createLoginLoop, interval } from '~/composables/loginLoop'
 import logoutAccount from '~/composables/logout'
 import { qrcodeGet } from '~/composables/api'
 import { useStore } from '~/stores/store'
+import { msgKey } from '~/composables/injectionKeys'
 
 const store = useStore()
-const msgRef = inject('msgRef') as any
+const msgRef = inject(msgKey)
 
 interface QrProps {
   url: string
@@ -34,8 +35,8 @@ const login = async () => {
 
   const success = await createLoginLoop(data.oauthKey)
   if (success)
-    msgRef.value.pushMsg('登录成功！', { type: 'success' })
-  msgRef.value.pushMsg('若头像信息未更新，可点击按钮刷新', { type: 'info' })
+    msgRef?.value.pushMsg('登录成功！', { type: 'success' })
+  msgRef?.value.pushMsg('若头像信息未更新，可点击按钮刷新', { type: 'info' })
 }
 
 const cancelLogin = () => {
@@ -48,12 +49,12 @@ const logout = async () => {
     const resData = await logoutAccount() as any
     if (resData.code === 0) {
       store.removeUserInfo()
-      msgRef.value.pushMsg('退出成功', { type: 'success' })
+      msgRef?.value.pushMsg('退出成功', { type: 'success' })
       store.config.autoReply = false
       store.config.canSendMessage = false
     }
     else {
-      msgRef.value.pushMsg('退出失败', { type: 'error' })
+      msgRef?.value.pushMsg('退出失败', { type: 'error' })
     }
   }
 }

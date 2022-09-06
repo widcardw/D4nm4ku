@@ -2,9 +2,10 @@
 import { inject } from 'vue'
 import UTag from './UTag.vue'
 import { useStore } from '~/stores/store'
+import { msgKey } from '~/composables/injectionKeys'
 const emits = defineEmits(['settingsChanged'])
 const store = useStore()
-const msgRef = inject('msgRef') as any
+const msgRef = inject(msgKey)
 
 function pushItem(event: Event) {
   const uid = Number((event.target as HTMLInputElement).value.trim())
@@ -13,7 +14,7 @@ function pushItem(event: Event) {
     emits('settingsChanged')
   }
   else {
-    msgRef.value.pushMsg('该用户的 uid 已存在或不合法！', {
+    msgRef?.value.pushMsg('该用户的 uid 已存在或不合法！', {
       type: 'warning',
     })
   }

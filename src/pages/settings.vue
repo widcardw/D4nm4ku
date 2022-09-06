@@ -15,14 +15,15 @@ import UMultiList from '~/components/ui/UMultiList.vue'
 import UBlackList from '~/components/ui/UBlackList.vue'
 import { eventEmitter } from '~/composables/eventEmitter'
 import USelector from '~/components/ui/USelector.vue'
+import { msgKey } from '~/composables/injectionKeys'
 
-const msgRef = inject('msgRef') as any
+const msgRef = inject(msgKey)
 const store = useStore()
 
 const saveSettings = useThrottleFn(() => {
   store.settingsSaved = true
   store.storeConfig()
-  msgRef.value.pushMsg('保存成功', { type: 'success' })
+  msgRef?.value.pushMsg('保存成功', { type: 'success' })
 }, 1000)
 
 const settingChanged = (event: string, payload: any) => {
@@ -36,7 +37,7 @@ function openAppDir() {
       return await invoke('open_app_img_dir', { dir })
     })
     .catch((err) => {
-      msgRef.value.pushMsg(err.message, { type: 'error' })
+      msgRef?.value.pushMsg(err.message, { type: 'error' })
     })
 }
 
@@ -46,14 +47,20 @@ async function clearConfig() {
   })
   if (confirmed) {
     store.removeConfig()
-    msgRef.value.pushMsg('设置已还原！')
+    msgRef?.value.pushMsg('设置已还原！')
   }
 }
 
 function setCanSend() {
   settingChanged('can-send-message', store.config.canSendMessage)
   if (store.getConfig.canSendMessage)
-    msgRef.value.pushMsg('在点击穿透模式下，窗口将自动分裂为弹幕窗格和发送浮窗', { ttl: 8000 })
+    msgRef?.value.pushMsg('在点击穿透模式下，窗口将自动分裂为弹幕窗格和发送浮窗', { ttl: 8000 })
+}
+
+function setAutoReply() {
+  settingChanged('auto-reply', store.config.autoReply)
+  if (store.getConfig.autoReply)
+    msgRef?.value.pushMsg('保存设置后生效')
 }
 </script>
 
@@ -136,7 +143,7 @@ function setCanSend() {
         </span>
         <USelector
           v-model="store.config.showGuardTag"
-          :options="[{ label: '不显示', value: 0 }, { label: '官方', value: 1 }, { label: '全部显示', value: 2 }]"
+          :options="[{ label: '不显示', value: 0 }, { label: '官方配置', value: 1 }, { label: '全部显示', value: 2 }]"
           @update:model-value="settingChanged('show-guard-tag', store.config.showGuardTag)"
         />
       </div>
@@ -255,7 +262,7 @@ function setCanSend() {
       <UCheckBox
         v-model="store.config.autoReply"
         :disabled="!store.getUserInfo.mid"
-        @update:model-value="settingChanged('auto-reply', store.config.autoReply)"
+        @update:model-value="setAutoReply"
       >
         自动回复
       </UCheckBox>

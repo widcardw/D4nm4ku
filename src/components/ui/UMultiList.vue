@@ -4,10 +4,11 @@ import { inject } from 'vue'
 import type { Answer } from '../../composables/autoSendMsg'
 import UTag from './UTag.vue'
 import { useStore } from '~/stores/store'
+import { msgKey } from '~/composables/injectionKeys'
 
 const emits = defineEmits(['settingsChanged'])
 const store = useStore()
-const msgRef = inject('msgRef') as any
+const msgRef = inject(msgKey)
 
 function pushFaq() {
   store.faqs.push({
@@ -21,7 +22,7 @@ function pushFaq() {
 function pushKeyWord(event: Event, faq: Answer) {
   const val = (event.target as HTMLInputElement).value.trim()
   if (val === '' || faq.keywords.includes(val)) {
-    msgRef.value.pushMsg('关键词重复！', {
+    msgRef?.value.pushMsg('关键词重复！', {
       type: 'warning',
     })
     return
