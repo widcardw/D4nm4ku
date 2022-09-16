@@ -37,6 +37,7 @@ pub fn set_click_through(app_handle: tauri::AppHandle<Wry>, enable: bool) -> Res
       }
     })
     .expect("Failed to set click through");
+    // tao::window::Window::set_ignore_cursor_events(&window, enable);  // 怎么把 tauri::Window cast 到 tao::window::Window 呢？
   }
 
   Ok(enable)
