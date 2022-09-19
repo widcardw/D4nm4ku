@@ -10,11 +10,12 @@
 
 至 [release](https://github.com/widcardw/D4nm4ku/releases) 页面下载
 
-- Windows: D4nm4ku_version_x64_en-US.msi
-- macOS
-    - Apple Silicon: D4nm4ku_version_aarch64.dmg
-    - Intel x64: D4nm4ku_version_x64.dmg
-- Linux: d4nm4ku_version_amd64.deb / d4nm4ku_version_amd64.AppImage
+| Platform | Installer |
+|:--------:|:-------:|
+| Windows | D4nm4ku_version_x64_en-US.msi |
+| macOS Apple Silicon | D4nm4ku_version_aarch64.dmg |
+| macOS Intel x64 | D4nm4ku_version_x64.dmg |
+| Linux | d4nm4ku_version_amd64.deb <br> d4nm4ku_version_amd64.AppImage |
 
 ## 构建
 
@@ -35,6 +36,8 @@ pnpm tauri build    # build
     - [x] 用户等级
     - [x] 谁的舰长
     - [ ] 是否为粉丝
+    - [x] 入场
+    - [x] 关注主播
 
 #### 主播回复
 
@@ -67,6 +70,7 @@ pnpm tauri build    # build
     - [x] 可隐藏时间
     - [ ] 粉丝加背景色
     - [ ] 考虑要不要加原生 API 的毛玻璃效果
+        - 来自 tauri 的 API [`run_on_main_thread`](https://docs.rs/tauri/1.1.1/tauri/struct.AppHandle.html#method.run_on_main_thread) 和插件 [window-vibrancy](https://docs.rs/window-vibrancy/0.3.0/window_vibrancy/) 可以实现原生的毛玻璃效果
 - [ ] 优化界面
     - [x] 考虑是否将启动小窗的界面合并到主界面
         - 但是之前测试根目录组件使用带有 store 的组件会报错，说 pinia 未定义
@@ -77,10 +81,12 @@ pnpm tauri build    # build
     - [x] 开播
 - [ ] 窗口
     - [x] 置顶
-    - [ ] 点击穿透（在 tao 的 API 中已经有了，但是没有开放到 tauri 中）
+    - [x] 保存和加载窗口的位置和大小
+    - [ ] 点击穿透（在 [tao](https://docs.rs/tao/0.14.0/tao/) 的 [API](https://docs.rs/tao/0.14.0/tao/window/struct.Window.html#method.set_ignore_cursor_events) 中已经有了，但是没有开放到 tauri 中）
         - [ ] tauri 的 [issue](https://github.com/tauri-apps/tao/issues/184#issuecomment-1097109451) 中说要到 v2 时候才会正式公开这个 api
         - [x] [#184-comment1](https://github.com/tauri-apps/tao/issues/184#issuecomment-1134823892) 给出了 macOS 的解决方案
         - [ ] [#184-comment2](https://github.com/tauri-apps/tao/issues/184#issuecomment-1118176176) 给出了 Windows 的解决方案
+    - [ ] 将弹幕浏览器显示到所有桌面 (macOS) 详见 [#1](https://github.com/widcardw/D4nm4ku/issues/1)
 
 ## 部分效果呈现
 
