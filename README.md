@@ -6,6 +6,24 @@
 
 > 后续会考虑使用 rust 作为后端来接收弹幕，而前端仅做数据的显示。目前时间和精力不是很足，因此暂时先搁置。
 
+## 下载 APP
+
+至 [release](https://github.com/widcardw/D4nm4ku/releases) 页面下载
+
+- Windows: D4nm4ku_version_x64_en-US.msi
+- macOS
+    - Apple Silicon: D4nm4ku_version_aarch64.dmg
+    - Intel x64: D4nm4ku_version_x64.dmg
+- Linux: d4nm4ku_version_amd64.deb / d4nm4ku_version_amd64.AppImage
+
+## 构建
+
+```sh
+pnpm install
+pnpm tauri dev      # dev
+pnpm tauri build    # build
+```
+
 ## 功能预想
 
 ### 弹幕部分
@@ -59,10 +77,10 @@
     - [x] 开播
 - [ ] 窗口
     - [x] 置顶
-    - [ ] 点击穿透
+    - [ ] 点击穿透（在 tao 的 API 中已经有了，但是没有开放到 tauri 中）
         - [ ] tauri 的 [issue](https://github.com/tauri-apps/tao/issues/184#issuecomment-1097109451) 中说要到 v2 时候才会正式公开这个 api
-        - [x] [#184-comment1](https://github.com/tauri-apps/tao/issues/184#issuecomment-1134823892) 给出了 macOS 的解决方案，但一看到 unsafe 就不是很想用
-        - [ ] [#184-comment2](https://github.com/tauri-apps/tao/issues/184#issuecomment-1118176176) 给出了 Windows 的解决方案，依然是 unsafe
+        - [x] [#184-comment1](https://github.com/tauri-apps/tao/issues/184#issuecomment-1134823892) 给出了 macOS 的解决方案
+        - [ ] [#184-comment2](https://github.com/tauri-apps/tao/issues/184#issuecomment-1118176176) 给出了 Windows 的解决方案
 
 ## 部分效果呈现
 
