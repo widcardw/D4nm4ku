@@ -144,8 +144,11 @@ function copy2(source: string) {
 const loadingRoomId = ref(false)
 
 function roomIdBlur() {
+  if (roomId2.value.trim() === '')
+    return
+
   const fakeId = Number(roomId2.value)
-  if (fakeId <= 1000) {
+  if (fakeId <= 1000 && fakeId > 0) {
     loadingRoomId.value = true
     shortToLong(fakeId)
       .then((id) => {

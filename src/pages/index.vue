@@ -75,8 +75,10 @@ function tryToCloseDanmaku() {
 }
 
 function roomIdBlured() {
+  if (roomId.value.trim() === '')
+    return
   const fakeId = Number(roomId.value)
-  if (fakeId <= 1000) {
+  if (fakeId <= 1000 && fakeId > 0) {
     isLoadingRoomId.value = true
     shortToLong(fakeId)
       .then((id) => {
