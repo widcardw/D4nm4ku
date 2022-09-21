@@ -1,7 +1,7 @@
 use tauri::{Manager, Wry};
 
 #[tauri::command]
-pub fn create_new_danmaku_view(app_handle: tauri::AppHandle<Wry>) {
+pub async fn create_new_danmaku_view(app_handle: tauri::AppHandle<Wry>) {
     let viewer = tauri::WindowBuilder::new(
         &app_handle,
         "danmakuWidget",
