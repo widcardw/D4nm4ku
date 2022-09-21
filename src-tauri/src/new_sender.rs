@@ -1,7 +1,7 @@
 use tauri::Wry;
 
 #[tauri::command]
-pub fn create_sender_window(app_handle: tauri::AppHandle<Wry>) {
+pub async fn create_sender_window(app_handle: tauri::AppHandle<Wry>) {
     let viewer = tauri::WindowBuilder::new(
         &app_handle,
         "senderWindow",
