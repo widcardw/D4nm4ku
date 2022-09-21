@@ -5,8 +5,6 @@ const props = defineProps<{
   perhapsGuard: 0 | 1 | 2 | 3
   tagColor: number
 }>()
-const c = props.tagColor.toString(16)
-const tc = `#${Array(6 - c.length).fill('0').join('')}${c}`
 </script>
 
 <template>
@@ -18,7 +16,7 @@ const tc = `#${Array(6 - c.length).fill('0').join('')}${c}`
       px-1
       wsn
       :style="{
-        backgroundColor: tc,
+        backgroundColor: `#${props.tagColor.toString(16).padStart(6, '0')}`,
       }"
     >
       {{ label }}
