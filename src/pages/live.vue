@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useClipboard, useStorage } from '@vueuse/core'
+import type { Ref } from 'vue'
 import { inject, ref } from 'vue'
 import { getAreaInfoList, startLive, stopLive, updateLiveTitle } from '~/composables/openLive'
 import { getLiveRoomInfoFromRoomId, getLiveRoomInfoFromUid } from '~/composables/getLiverInfo'
@@ -7,12 +8,15 @@ import { useStore } from '~/stores/store'
 import UMdInput from '~/components/ui/UMdInput.vue'
 import UTabSelector from '~/components/ui/UTabSelector.vue'
 import { shortToLong } from '~/composables/shortIdToLong'
+import type { MessageProvider } from '~/types'
+import { msgKey } from '~/composables/injectionKeys'
+
 const store = useStore()
 const roomId2 = useStorage('roomId2', '')
 const selectedAreaId = useStorage('selectedAreaId', 0)
 const selectedAreaInfo = useStorage('selectedAreaInfo', '')
 const liveTitle = useStorage('liveTitle', '')
-const msgRef = inject('msgRef') as any
+const msgRef = inject<Ref<MessageProvider>>(msgKey)
 const isShowAreaSelection = ref(false)
 const btnEnabled = ref(true)
 const firstLoad = ref(0)
@@ -22,7 +26,7 @@ const btnShowAreaEnabled = ref(true)
 const { copy } = useClipboard()
 
 if (!store.getUserInfo.mid)
-  msgRef.value.pushMsg('需要登录才能开启直播哦')
+  msgRef?.value.pushMsg('需要登录才能开启直播哦')
 
 function updateLiveRoomInfo() {
   if (roomId2.value.trim() === '' || liveTitle.value.trim() === '') {
@@ -33,7 +37,7 @@ function updateLiveRoomInfo() {
         return roomid
       })
       .catch((err) => {
-        msgRef.value.pushMsg(`直播间信息获取失败！${err.message}`, {
+        msgRef?.value.pushMsg(`直播间信息获取失败！${err.message}`, {
           type: 'error',
         })
       })
@@ -46,7 +50,7 @@ function updateLiveRoomInfo() {
         store.liveConfig.isLive = data.live_status === 1
       })
       .catch((err) => {
-        msgRef.value.pushMsg(err.message, {
+        msgRef?.value.pushMsg(err.message, {
           type: 'error',
         })
       })
@@ -60,15 +64,15 @@ function updateLiveTitle2() {
   btnUpdateTitleEnabled.value = false
   updateLiveTitle(roomId2.value, liveTitle.value)
     .then(() => {
-      msgRef.value.pushMsg('标题修改成功', {
+      msgRef?.value.pushMsg('标题修改成功', {
         type: 'success',
       })
     })
     .catch((e: Error) => {
-      msgRef.value.pushMsg({
-        content: e.message,
-        type: 'error',
-      })
+      msgRef?.value.pushMsg(
+        e.message,
+        { type: 'error' },
+      )
     })
     .finally(() => {
       btnUpdateTitleEnabled.value = true
@@ -78,7 +82,7 @@ function updateLiveTitle2() {
 function showAreaSelection() {
   btnShowAreaEnabled.value = false
   if (firstLoad.value === 0) {
-    msgRef.value.pushMsg('首次加载可能需要一段时间')
+    msgRef?.value.pushMsg('首次加载可能需要一段时间')
     firstLoad.value++
   }
   getAreaInfoList()
@@ -94,19 +98,19 @@ function startLive2() {
     .then((rtmp) => {
       store.liveConfig.addr = rtmp.addr
       store.liveConfig.code = rtmp.code
-      msgRef.value.pushMsg('直播开启成功', {
+      msgRef?.value.pushMsg('直播开启成功', {
         type: 'success',
       })
-      msgRef.value.pushMsg('请将串流地址和密钥复制到直播软件（如 OBS）后开启推流', {
+      msgRef?.value.pushMsg('请将串流地址和密钥复制到直播软件（如 OBS）后开启推流', {
         ttl: 6000,
       })
       store.liveConfig.isLive = true
     })
     .catch((e: Error) => {
-      msgRef.value.pushMsg({
-        content: e.message,
-        type: 'error',
-      })
+      msgRef?.value.pushMsg(
+        e.message,
+        { type: 'error' },
+      )
     })
     .finally(() => {
       btnEnabled.value = true
@@ -117,7 +121,7 @@ function stopLive2() {
   btnEnabled.value = false
   stopLive(roomId2.value)
     .then(() => {
-      msgRef.value.pushMsg('直播关闭成功', {
+      msgRef?.value.pushMsg('直播关闭成功', {
         type: 'success',
       })
       store.liveConfig.addr = ''
@@ -125,10 +129,10 @@ function stopLive2() {
       store.liveConfig.isLive = false
     })
     .catch((e: Error) => {
-      msgRef.value.pushMsg({
-        content: e.message,
-        type: 'error',
-      })
+      msgRef?.value.pushMsg(
+        e.message,
+        { type: 'error' },
+      )
     }).finally(() => {
       btnEnabled.value = true
     })
@@ -136,7 +140,7 @@ function stopLive2() {
 
 function copy2(source: string) {
   copy(source)
-  msgRef.value.pushMsg('复制成功', {
+  msgRef?.value.pushMsg('复制成功', {
     type: 'success',
   })
 }
@@ -155,7 +159,7 @@ function roomIdBlur() {
         roomId2.value = String(id)
       })
       .catch((err) => {
-        msgRef.value.pushMsg(err.message, {
+        msgRef?.value.pushMsg(err.message, {
           type: 'error',
         })
       })
