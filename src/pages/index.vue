@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { WebviewWindow } from '@tauri-apps/api/window'
-// import { emit } from '@tauri-apps/api/event'
 import { invoke } from '@tauri-apps/api/tauri'
 import { useStorage, useThrottleFn } from '@vueuse/core'
+import type { Ref } from 'vue'
 import { inject, ref } from 'vue'
 import UMdInput from '~/components/ui/UMdInput.vue'
 import UCheckBox from '~/components/ui/UCheckBox.vue'
@@ -12,11 +12,12 @@ import { eventEmitter } from '~/composables/eventEmitter'
 import { usePosition } from '~/stores/position'
 import { loadPos } from '~/composables/load_pos'
 import { msgKey } from '~/composables/injectionKeys'
+import type { MessageProvider } from '~/types'
 
 const roomId = useStorage('roomId', '')
 
 let webview: WebviewWindow | null = null
-const msgRef = inject(msgKey)
+const msgRef = inject<Ref<MessageProvider>>(msgKey)
 const store = useStore()
 const isLoadingRoomId = ref(false)
 const pos = usePosition()
