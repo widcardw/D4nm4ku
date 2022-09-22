@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { inject, ref } from 'vue'
+import { computed, inject, ref } from 'vue'
 import Avatar from '~/components/img/Avatar.vue'
 import { getAvatar2 } from '~/composables/getAvatar'
 import { msgKey } from '~/composables/injectionKeys'
 import { LIGHTNESS_LIMIT, getLightnessFromHex } from '~/composables/randomColor'
+import { useStore } from '~/stores/store'
 
 const props = defineProps<{
   uname: string
   content: string
+  contentJpn: string
   face: string
   price: number
   ts: number
@@ -15,6 +17,17 @@ const props = defineProps<{
   bgBottomColor: string
   bgColor: string
 }>()
+
+const store = useStore()
+const lang = ref(store.config.scLang)
+const showToggleLang = computed(() => props.contentJpn.trim() !== '')
+
+function toggleLang() {
+  if (lang.value === 'zh-cn')
+    lang.value = 'ja-jp'
+  else
+    lang.value = 'zh-cn'
+}
 
 const faceUrl = ref(props.face)
 const msgRef = inject(msgKey)
@@ -43,12 +56,13 @@ if (props.face === '') {
       }"
     >
       <Avatar :src="faceUrl" :uid="uid" class="w-1.5rem h-1.5rem" />
-      <div flex-1>
+      <div flex-1 text-shadow-none>
         {{ uname }}
       </div>
-      <div text-amber>
+      <div text-shadow-none>
         ￥{{ price / 1000 }}
       </div>
+      <div v-if="showToggleLang" icon-btn i-ri-translate-2 @click="toggleLang" />
     </div>
     <div
       p-2 rounded-b break-words
@@ -57,7 +71,7 @@ if (props.face === '') {
         color: getLightnessFromHex(bgBottomColor) > LIGHTNESS_LIMIT ? '#000' : '#fff',
       }"
     >
-      {{ content }}
+      {{ lang === 'zh-cn' ? content : (contentJpn.trim() !== '' ? contentJpn : content) }}
     </div>
   </div>
 </template>

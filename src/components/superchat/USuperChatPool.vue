@@ -46,6 +46,7 @@ const clickSuperChat = (currentSc: SuperChatProps) => {
       :ts="sc.ts"
       :uname="sc.uname"
       :content="sc.content"
+      :content-jpn="sc.contentJpn"
       :face="sc.face"
       :price="sc.price"
       :uid="sc.uid"

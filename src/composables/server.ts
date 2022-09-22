@@ -160,6 +160,7 @@ const connectRoom = () => {
           face,
           price: total_coin, // 实际价格 * 1000
           content: `${action}${giftName}`,
+          contentJpn: '',
           ts: timestamp * 1000,
           second: priceToSeconds(total_coin),
           bgColor,
@@ -221,7 +222,8 @@ const connectRoom = () => {
         uname,
         face,
         price: price * 1000, // 实际价格 * 1000
-        content: message_jpn === '' ? processTooLongSymbols(message) : processTooLongSymbols(message_jpn),
+        content: message,
+        contentJpn: message_jpn.trim() !== '' ? message_jpn : message,
         ts: ts * 1000,
         second: time,
         bgColor: background_color,
@@ -253,6 +255,7 @@ const connectRoom = () => {
         uid,
         price: price * num, // 实际价格 * 1000
         content: '欢迎加入大航海',
+        contentJpn: '',
         second: guardType[guard_level].second,
         ts: ts * 1000,
         bgColor: guardType[guard_level].bgColor,

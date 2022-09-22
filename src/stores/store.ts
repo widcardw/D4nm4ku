@@ -40,6 +40,7 @@ interface ConfigProps {
   pushGiftIntoHighlight: boolean
   fontFamily: string
   blackList: number[]
+  scLang: 'zh-cn' | 'ja-jp'
 }
 
 const defaultConfig: ConfigProps = {
@@ -66,6 +67,7 @@ const defaultConfig: ConfigProps = {
   readSc: false,
   readGift: false,
   fontFamily: '',
+  scLang: 'zh-cn',
 }
 
 const defaultUserInfo: UserInfo = {

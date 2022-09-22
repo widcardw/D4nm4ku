@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { inject, ref } from 'vue'
+import { computed, inject, ref } from 'vue'
 import Avatar from '~/components/img/Avatar.vue'
 import { getAvatar2 } from '~/composables/getAvatar'
 import { msgKey } from '~/composables/injectionKeys'
+import { useStore } from '~/stores/store'
 
 import { LIGHTNESS_LIMIT, getLightnessFromHex } from '~/composables/randomColor'
 
 const props = defineProps<{
   uname: string
   content: string
+  contentJpn: string
   face: string
   price: number
   ts: number
@@ -18,9 +20,19 @@ const props = defineProps<{
   second: number
 }>()
 
+const store = useStore()
 const faceUrl = ref(props.face)
 const msgRef = inject(msgKey)
 const urlIsBlob = ref(false)
+const lang = ref(store.config.scLang)
+const showToggleLang = computed(() => props.contentJpn.trim() !== '')
+
+function toggleLang() {
+  if (lang.value === 'zh-cn')
+    lang.value = 'ja-jp'
+  else
+    lang.value = 'zh-cn'
+}
 
 if (props.face === '') {
   getAvatar2(props.uid)
@@ -45,13 +57,14 @@ if (props.face === '') {
     >
       <Avatar w-3rem h-3rem :src="faceUrl" :uid="uid" :is-blob="urlIsBlob" />
       <div flex-1>
-        <div font-bold text-lg>
+        <div font-bold text-lg text-shadow-none>
           {{ uname }}
         </div>
-        <div text="sm amber">
+        <div text="sm" text-shadow-none>
           ￥{{ price / 1000 }}
         </div>
       </div>
+      <div v-if="showToggleLang" icon-btn i-ri-translate-2 @click="toggleLang" />
     </div>
     <div
       :style="{
@@ -60,7 +73,7 @@ if (props.face === '') {
       }"
       p-2 rounded-b break-words
     >
-      {{ content }}
+      {{ lang === 'zh-cn' ? content : (contentJpn.trim() !== '' ? contentJpn : content) }}
     </div>
   </div>
 </template>

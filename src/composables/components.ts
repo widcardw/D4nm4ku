@@ -48,6 +48,7 @@ interface SuperChatProps {
   type: 'superchat'
   uname: string
   content: string
+  contentJpn: string
   face: string
   price: number
   ts: number

@@ -57,6 +57,7 @@ const store = useStore()
     :bg-bottom-color="obj.bgBottomColor"
     :bg-color="obj.bgColor"
     :content="obj.content"
+    :content-jpn="obj.contentJpn"
     :price="obj.price"
   />
   <UInteraction
