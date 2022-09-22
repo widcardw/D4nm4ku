@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import type { MessageProviderOptions } from '~/types'
 
 interface PopMessage {
   ts: number
@@ -16,10 +17,7 @@ const iconsDict = {
 
 const messageQueue = ref<PopMessage[]>([])
 
-const pushMsg = (msg: string, config?: {
-  type?: 'success' | 'error' | 'warning' | 'info'
-  ttl?: number
-}) => {
+const pushMsg = (msg: string, config?: MessageProviderOptions) => {
   const ts = Date.now()
   messageQueue.value.push({
     type: config?.type || 'info',
