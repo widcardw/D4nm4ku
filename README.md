@@ -1,4 +1,4 @@
-# D4nm4ku
+# D4nm4ku (WIP)
 
 ![](https://img.shields.io/github/workflow/status/widcardw/D4nm4ku/Release%20CI) ![](https://img.shields.io/github/downloads/widcardw/D4nm4ku/total)
 
@@ -6,16 +6,22 @@
 
 > 后续会考虑使用 rust 作为后端来接收弹幕，而前端仅做数据的显示。目前时间和精力不是很足，因此暂时先搁置。
 
+## 注意
+
+目前存在内存访问越界的问题，可能会经常闪退，我会尽量去尝试修复
+
 ## 下载 APP
 
 至 [release](https://github.com/widcardw/D4nm4ku/releases) 页面下载
 
 | Platform | Installer |
 |:--------:|:-------:|
-| Windows | D4nm4ku_version_x64_en-US.msi |
+| Windows 11 | D4nm4ku_version_x64_en-US.msi |
 | macOS Apple Silicon | D4nm4ku_version_aarch64.dmg |
 | macOS Intel x64 | D4nm4ku_version_x64.dmg |
 | Linux | d4nm4ku_version_amd64.deb <br> d4nm4ku_version_amd64.AppImage |
+
+> Windows 10 可能无法打开弹幕窗口，由于没有实测，原因暂时未知
 
 ## 构建
 
