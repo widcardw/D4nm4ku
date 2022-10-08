@@ -22,6 +22,46 @@ const store = useStore()
 const isLoadingRoomId = ref(false)
 const pos = usePosition()
 
+async function toggleViewerVisibility() {
+  if (roomId.value.trim() === '' || isNaN(Number(roomId.value))) {
+    msgRef?.value.pushMsg('房间号不合法！', {
+      type: 'warning',
+    })
+    return
+  }
+  // Not linked
+  if (!store.linked) {
+    // show viewer
+    await invoke('show_danmaku_viewer')
+    // TODO: connect room
+  }
+  // linked
+  else {
+    // hide viewer
+    await invoke('hide_danmaku_viewer')
+    // TODO: disconnect room
+    store.clickThrough = false
+    // TODO: invoke set clickthrough to false
+  }
+
+  store.linked = !store.linked
+  // TODO: popup message
+}
+
+function forceCloseViewer() {
+  invoke('close_danmaku_viewer')
+    .then(() => {
+      msgRef?.value.pushMsg('关闭成功')
+    })
+    .catch((err) => {
+      msgRef?.value.pushMsg(String(err), { type: 'error' })
+    })
+}
+
+async function toggleSenderVisibility() {
+
+}
+
 async function createWebview() {
   if (roomId.value.trim() === '') {
     msgRef?.value.pushMsg('房间号不能为空！', {
@@ -159,7 +199,7 @@ const loadPosition = useThrottleFn(() => {
       msgRef?.value.pushMsg('加载成功', { type: 'success' })
     })
     .catch((err) => {
-      msgRef?.value.pushMsg(`加载失败, ${err.message}`, { type: 'error' })
+      msgRef?.value.pushMsg(`加载失败, ${err}`, { type: 'error' })
     })
 })
 </script>

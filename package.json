@@ -11,7 +11,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@tauri-apps/api": "^1.0.2",
+    "@tauri-apps/api": "^1.1.0",
     "@vueuse/core": "^8.9.4",
     "@vueuse/integrations": "^9.0.2",
     "pinia": "^2.0.16",

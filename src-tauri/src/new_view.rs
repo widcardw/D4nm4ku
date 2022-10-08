@@ -1,4 +1,36 @@
-use tauri::{Manager, Wry};
+use tauri::{Manager, Wry, async_runtime::block_on};
+use tokio::task;
+
+pub async fn show_danmaku_viewer(app_handle: tauri::AppHandle<Wry>) {
+  let viewer_window = app_handle.get_window("danmakuWidget");
+
+  if let Some(viewer_window) = viewer_window {
+    viewer_window.show().expect("Failed to show danmaku viewer window!");
+  } else {
+    task::block_in_place(|| block_on(create_new_danmaku_view(app_handle)));
+  }
+}
+
+pub async fn close_danmaku_viewer(app_handle: tauri::AppHandle<Wry>) -> Result<(), String> {
+  let viewer_window = app_handle.get_window("danmakuWidget");
+
+  if let Some(viewer_window) = viewer_window {
+    if viewer_window.close().is_ok() {
+      return Ok(());
+    }
+    return Err("Failed to close danmaku viewer window!".into());
+  }
+
+  Err("No viewer window!".into())
+}
+
+pub async fn hide_danmaku_viewer(app_handle: tauri::AppHandle<Wry>) {
+  let viewer_window = app_handle.get_window("danmakuWidget");
+
+  if let Some(viewer_window) = viewer_window {
+    viewer_window.hide().expect("Failed to hide danmaku viewer window!");
+  }
+}
 
 #[tauri::command]
 pub async fn create_new_danmaku_view(app_handle: tauri::AppHandle<Wry>) {
@@ -7,6 +39,7 @@ pub async fn create_new_danmaku_view(app_handle: tauri::AppHandle<Wry>) {
         "danmakuWidget",
         tauri::WindowUrl::App("/show".into())
     )
+      .title("D4nm4ku Viewer")
       .transparent(true)
       .decorations(false)
       .inner_size(400., 600.)
